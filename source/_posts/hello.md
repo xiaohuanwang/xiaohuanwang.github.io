@@ -4,6 +4,10 @@ catalog: true
 date: 2018-01-30 14:32:28
 subtitle:
 header-img: "/img/header_img/beijing-yejing.jpg"
+categories:
+- 人生感悟
+tags:
+- 随笔
 ---
 
 ## 北京这座城市有很多灯
