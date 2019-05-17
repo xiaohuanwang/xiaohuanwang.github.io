@@ -46,11 +46,11 @@ anchorjs: true                          # if you want to customize anchor. check
 
 
 # Disqus settings
-#disqus_username: your-disqus-ID
+disqus_username: your-disqus-ID
 
-# Duoshuo settings
-# duoshuo_username: kaijun
-# Share component is depend on Comment so we can NOT use share only.
+#Duoshuo settings
+#duoshuo_username: kaijun
+#Share component is depend on Comment so we can NOT use share only.
 #duoshuo_share: true                     # set to false if you want to use Comment without Sharing
 
 
@@ -182,7 +182,7 @@ markdown:
 # MeingJS support for Aplayer
 # reference: https://github.com/metowolf/MetingJS & https://github.com/MoePlayer/APlayer
 metingjs: false
-data-id: 2423410161
+data-id: 2591476053
 data-server: netease  
 data-type: playlist
 data-fixed: true
