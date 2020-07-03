@@ -213,5 +213,5 @@ sitemap:
 deploy:
   type: git
   repo: 
-    coding: git@git.coding.net:wangxiaohuan/xiaohuanwang.git,master
+    #coding: https://e.coding.net/wangxiaohuan/xiaohuanwang.git,master
     github: git@github.com:xiaohuanwang/xiaohuanwang.github.io.git,master
