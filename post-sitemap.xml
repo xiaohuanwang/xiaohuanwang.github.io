@@ -15,7 +15,7 @@
     </url>
 
     <url>
-        <loc>http://www.wangxiaohuan.com/%E6%95%B0%E7%BB%84/array/</loc>
+        <loc>http://www.wangxiaohuan.com/%E6%97%A5%E5%BF%97/2019-05-17/</loc>
         <lastmod>2019-10-22T12:22:44.343Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -23,7 +23,7 @@
     </url>
 
     <url>
-        <loc>http://www.wangxiaohuan.com/%E6%97%A5%E5%BF%97/2019-05-17/</loc>
+        <loc>http://www.wangxiaohuan.com/%E6%95%B0%E7%BB%84/array/</loc>
         <lastmod>2019-10-22T12:22:44.343Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -87,14 +87,6 @@
     </url>
 
     <url>
-        <loc>http://www.wangxiaohuan.com/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/2018-11-11/</loc>
-        <lastmod>2019-01-31T14:30:15.199Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://www.wangxiaohuan.com/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/2017-12-21/</loc>
         <lastmod>2019-01-31T14:30:15.199Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -103,7 +95,7 @@
     </url>
 
     <url>
-        <loc>http://www.wangxiaohuan.com/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/2018-11-21/</loc>
+        <loc>http://www.wangxiaohuan.com/%E6%8A%80%E6%9C%AF/2018-06-06/</loc>
         <lastmod>2019-01-31T14:30:15.199Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -111,7 +103,15 @@
     </url>
 
     <url>
-        <loc>http://www.wangxiaohuan.com/%E6%8A%80%E6%9C%AF/2018-06-06/</loc>
+        <loc>http://www.wangxiaohuan.com/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/2018-11-11/</loc>
+        <lastmod>2019-01-31T14:30:15.199Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://www.wangxiaohuan.com/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/2018-11-21/</loc>
         <lastmod>2019-01-31T14:30:15.199Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
