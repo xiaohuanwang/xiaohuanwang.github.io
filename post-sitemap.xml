@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://www.wangxiaohuan.com/%E7%BA%BF%E7%A8%8B/2020-02-26/</loc>
+        <lastmod>2021-02-01T03:35:44.784Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://www.wangxiaohuan.com/Redis%E6%8C%81%E4%B9%85%E5%8C%96/2020-02-19/</loc>
         <lastmod>2021-01-30T17:33:50.610Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -47,7 +55,7 @@
     </url>
 
     <url>
-        <loc>http://www.wangxiaohuan.com/%E6%8A%80%E6%9C%AF/2019-03-01/</loc>
+        <loc>http://www.wangxiaohuan.com/%E5%85%B6%E4%BB%96/2019-04-19/</loc>
         <lastmod>2021-01-30T16:42:08.898Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -63,7 +71,7 @@
     </url>
 
     <url>
-        <loc>http://www.wangxiaohuan.com/%E5%85%B6%E4%BB%96/2019-04-19/</loc>
+        <loc>http://www.wangxiaohuan.com/%E6%8A%80%E6%9C%AF/2019-03-01/</loc>
         <lastmod>2021-01-30T16:42:08.898Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -71,7 +79,7 @@
     </url>
 
     <url>
-        <loc>http://www.wangxiaohuan.com/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/2019-02-22/</loc>
+        <loc>http://www.wangxiaohuan.com/%E6%8A%80%E6%9C%AF/2019-02-16/</loc>
         <lastmod>2021-01-30T16:42:08.897Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -79,7 +87,7 @@
     </url>
 
     <url>
-        <loc>http://www.wangxiaohuan.com/%E6%8A%80%E6%9C%AF/2019-02-16/</loc>
+        <loc>http://www.wangxiaohuan.com/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/2019-02-22/</loc>
         <lastmod>2021-01-30T16:42:08.897Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
