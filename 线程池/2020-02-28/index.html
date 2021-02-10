@@ -142,7 +142,7 @@
 
                         
                         <li>
-                            <a href="/archive/">Archive</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -156,7 +156,7 @@
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/archive/">Archive</a>
                         </li>
                         
                     
@@ -240,7 +240,18 @@
 <li>ThreadPoolExecutor：最原始的创建线程池的方式，它包含了 7 个参数可供设置。</li>
 </ul>
 <p>线程池的执行流程如下图所示：</p>
-<p><img src="http://image.wangxiaohuan.com/blog/image/640.png" alt="图片"></p>
+<ol>
+<li>
+<p>线程池判断核心线程池里的线程是否都在执行任务。如果不是，则创建一个新的工作 线程来执行任务。如果核心线程池里的线程都在执行任务，则进入下个流程。</p>
+</li>
+<li>
+<p>线程池判断工作队列是否已经满。如果工作队列没有满，则将新提交的任务存储在这 个工作队列里。如果工作队列满了，则进入下个流程。</p>
+</li>
+<li>
+<p>线程池判断线程池的线程是否都处于工作状态。如果没有，则创建一个新的工作线程 来执行任务。如果已经满了，则交给饱和策略来处理这个任务。</p>
+</li>
+</ol>
+<p><img src="http://image.wangxiaohuan.com/blog/image/image-20210210090335431.png" alt="image-20210210090335431"></p>
 <p>ThreadPoolExecutor创建线程代码如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public ThreadPoolExecutor(int corePoolSize, int maximumPoolSize,long keepAliveTime,TimeUnit unit,</span><br><span class="line">   BlockingQueue&lt;Runnable&gt; workQueue,</span><br><span class="line">   ThreadFactory threadFactory,</span><br><span class="line">   RejectedExecutionHandler handler)</span><br></pre></td></tr></table></figure>
 <ul>
