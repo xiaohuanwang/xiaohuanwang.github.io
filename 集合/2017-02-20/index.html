@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          从Timberland到踢不烂 - 吃素的左撇子 | Blog
+          Java-Map集合介绍-HashMap和TreeMap区别 - 吃素的左撇子 | Blog
         
     </title>
 
-    <link rel="canonical" href="http://www.wangxiaohuan.com/人生感悟/2018-11-11/">
+    <link rel="canonical" href="http://www.wangxiaohuan.com/集合/2017-02-20/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -71,7 +71,7 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('/img/header_img/Timberland.jpg')
+            background-image: url('http://image.wangxiaohuan.com/blog/image/map.jpg')
             /*post*/
         
     }
@@ -88,14 +88,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#随笔" title="随笔">随笔</a>
+                              <a class="tag" href="/tags/#Java" title="Java">Java</a>
                             
                         </div>
-                        <h1>从Timberland到踢不烂</h1>
+                        <h1>Java-Map集合介绍-HashMap和TreeMap区别</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by 吃素的左撇子 on
-                            2018-11-10
+                            2017-02-18
                         </span>
                     </div>
                 
@@ -212,68 +212,32 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>如果有什么东西不会随着岁月改变，那应该是一双像老朋友一样靠谱的靴子，它会陪你去完成那些山高路远的心愿</p>
-<p>今天穿在脚上的是昨晚脱下的鞋，但是今天走过的路却是昨日不曾走过的路，踢不烂，走出新的人生</p>
-<iframe height="1000" width="1000" src="https://v.qq.com/x/page/u0761ilpwak.html" frameborder="0" allowfullscreen>
-</iframe>
-<p>忘了从什么时候起</p>
-<p>人们叫我「踢不烂」</p>
-<p>而不是「Timberland」</p>
-<p>从那阵风开始</p>
-<p>当我被那阵风轻吻</p>
-<p>被月光、星光、阳光浸染</p>
-<p>被一颗石头挑衅</p>
-<p>然后用溪流抚平伤痕</p>
-<p>当我开始听到花开的声音</p>
-<p>当我不小心闯对路</p>
-<p>又认真的迷过路</p>
-<p>当我经历过离别</p>
-<p>又曾被人等待</p>
-<p>当我需要、被需要</p>
-<p>我知道</p>
-<p>已和一开始</p>
-<p>那双崭新的「Timberland」完全不同</p>
-<p>在时光里</p>
-<p>我变旧、变皱</p>
-<p>用伤痕</p>
-<p>覆盖伤痕</p>
-<p>每天等太阳升起</p>
-<p>我又是全新的</p>
-<p>我走的时候叫「Timberland」</p>
-<p>回来时才叫「踢不烂」</p>
-<p>有人对我说</p>
-<p>现实是踢不烂的</p>
-<p>走在这样的现实里</p>
-<p>让我更加确定</p>
-<p>要从这里跨出去</p>
-<p>跨出别人指定的路线</p>
-<p>自然到达别人到不了的地方</p>
-<p>我忘了是多久学会走路的</p>
-<p>但我记得</p>
-<p>从跨出第一步开始</p>
-<p>我就只走在自己相信的路上</p>
-<p>如果人们走得慢</p>
-<p>我就走快些</p>
-<p>如果潮流推着所有人向前</p>
-<p>我会停下脚步</p>
-<p>如果可以</p>
-<p>我不会走在路上</p>
-<p>如果走在路上</p>
-<p>我选择没人敢走的路</p>
-<p>如果在路上遇到麻烦</p>
-<p>我不会逃走</p>
-<p>只会走向它</p>
-<p>直到你</p>
-<p>终于走向我</p>
-<p>当你跨进来</p>
-<p>两个我成为我们</p>
-<p>让我们一起走向现实</p>
-<p>走向高不可攀的山巅</p>
-<p>走向遥不可及的溪谷</p>
-<p>走向海浪与风</p>
-<p>走向自由</p>
-<p>走向爱</p>
-
+                <h3><span id="map-集合介绍">Map 集合介绍</span></h3>
+<p><img src="http://image.wangxiaohuan.com/blog/image/image-20210216202959348.png" alt="image-20210216202959348"></p>
+<p>Map 集合是以 Key-Value 键值对作为存储元素实现的哈希结构，Key 按某种哈希函数计算后是唯一的，Value 则是可以重复的。 常用的 Map 集合主要有 HashMap 和 TreeMap 这两个类。</p>
+<h4><span id="hashmap-集合介绍">HashMap 集合介绍</span></h4>
+<p>HashMap 是基于哈希表的数据结构实现的（数组+链表），无序，Value 值可以重复，可以存入null键和null值，线程不同步不安全，效率较高。</p>
+<p><strong>哈希表</strong>：根据关键码值（Key value）直接进行访问的数据结构。通过把关键码值映射到表中一个位置来访问记录，以加快查找的速度。这个映射函数叫做哈希函数，存放记录的数组就叫做哈希表。</p>
+<h5><span id="hashmap-组成">HashMap 组成</span></h5>
+<p>HashMap 是基于哈希表的数据结构实现的（数组+链表）。两个重要的属性：加载因子（loadFactor）和边界值（threshold）。底层源码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> static class Node&lt;K,V&gt; implements Map.Entry&lt;K,V&gt; &#123;</span><br><span class="line">     final int hash;</span><br><span class="line">     final K key;</span><br><span class="line">     V value;</span><br><span class="line">     Node&lt;K,V&gt; next;</span><br><span class="line"></span><br><span class="line">     Node(int hash, K key, V value, Node&lt;K,V&gt; next) &#123;</span><br><span class="line">         this.hash = hash;</span><br><span class="line">         this.key = key;</span><br><span class="line">         this.value = value;</span><br><span class="line">         this.next = next;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5><span id="hashmap-put-方法介绍">HashMap Put 方法介绍</span></h5>
+<p>初始化完成后，HashMap 就可以使用 put() 方法添加键值对了。从下面源码可以看出，当程序将一个 key-value 对添加到 HashMap 中，程序首先会根据该 key 的 hashCode() 返回值，再通过 hash() 方法计算出 hash 值，再通过 putVal 方法中的 (n - 1) &amp; hash 决定该 Node 的存储位置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">public V put(K key, V value) &#123;</span><br><span class="line">    return putVal(hash(key), key, value, false, true);</span><br><span class="line">&#125;</span><br><span class="line">final V putVal(int hash, K key, V value, boolean onlyIfAbsent,</span><br><span class="line">               boolean evict) &#123;</span><br><span class="line">    Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; p; int n, i;</span><br><span class="line">    if ((tab = table) == null || (n = tab.length) == 0)</span><br><span class="line">        n = (tab = resize()).length;</span><br><span class="line">    if ((p = tab[i = (n - 1) &amp; hash]) == null)</span><br><span class="line">        tab[i] = newNode(hash, key, value, null);</span><br><span class="line">    else &#123;</span><br><span class="line">        Node&lt;K,V&gt; e; K k;</span><br><span class="line">        if (p.hash == hash &amp;&amp;</span><br><span class="line">            ((k = p.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">            e = p;</span><br><span class="line">        else if (p instanceof TreeNode)</span><br><span class="line">            e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(this, tab, hash, key, value);</span><br><span class="line">        else &#123;</span><br><span class="line">            for (int binCount = 0; ; ++binCount) &#123;</span><br><span class="line">                if ((e = p.next) == null) &#123;</span><br><span class="line">                    p.next = newNode(hash, key, value, null);</span><br><span class="line">                    if (binCount &gt;= TREEIFY_THRESHOLD - 1) // -1 for 1st</span><br><span class="line">                        treeifyBin(tab, hash);</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">                if (e.hash == hash &amp;&amp;</span><br><span class="line">                    ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">                    break;</span><br><span class="line">                p = e;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        if (e != null) &#123; // existing mapping for key</span><br><span class="line">            V oldValue = e.value;</span><br><span class="line">            if (!onlyIfAbsent || oldValue == null)</span><br><span class="line">                e.value = value;</span><br><span class="line">            afterNodeAccess(e);</span><br><span class="line">            return oldValue;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ++modCount;</span><br><span class="line">    if (++size &gt; threshold)</span><br><span class="line">        resize();</span><br><span class="line">    afterNodeInsertion(evict);</span><br><span class="line">    return null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5><span id="hasnmap-线程不安去">HasnMap 线程不安去</span></h5>
+<p>HashMap线程不安全，它的线程不安全主要发生在put等对HashEntry有直接写操作的地方，从put操作的源码不难看出，线程不安全主要可能发生在这两个地方：</p>
+<ul>
+<li>key已经存在，需要修改HashEntry对应的value。</li>
+<li>key不存在，在HashEntry中做插入。</li>
+</ul>
+<p><strong>解决方法</strong>：</p>
+<ul>
+<li>可以用 Collections的synchronizedMap方法。</li>
+<li>使用ConcurrentHashMap类，相较于HashTable锁住的是对象整体， ConcurrentHashMap基于lock实现锁分段技术。首先将Map存放的数据分成一段一段的存储方式，然后给每一段数据分配一把锁，当一个线程占用锁访问其中一个段的数据时，其他段的数据也能被其他线程访问。</li>
+</ul>
+<h4><span id="treemap-集合介绍">TreeMap 集合介绍</span></h4>
+<p>TreeMap 底层结构是红黑树，有序，具体顺序可以由指定的 Comparator 来决定，或者根据键的自然顺序来判断，默认是升序排序。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">public V put(K key, V value) &#123;</span><br><span class="line">        Entry&lt;K,V&gt; t = root;</span><br><span class="line">        if (t == null) &#123;</span><br><span class="line">            compare(key, key); // type (and possibly null) check</span><br><span class="line"></span><br><span class="line">            root = new Entry&lt;&gt;(key, value, null);</span><br><span class="line">            size = 1;</span><br><span class="line">            modCount++;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">        int cmp;</span><br><span class="line">        Entry&lt;K,V&gt; parent;</span><br><span class="line">        // split comparator and comparable paths</span><br><span class="line">        Comparator&lt;? super K&gt; cpr = comparator;</span><br><span class="line">        if (cpr != null) &#123;</span><br><span class="line">            do &#123;</span><br><span class="line">                parent = t;</span><br><span class="line">                cmp = cpr.compare(key, t.key);</span><br><span class="line">                if (cmp &lt; 0)</span><br><span class="line">                    t = t.left;</span><br><span class="line">                else if (cmp &gt; 0)</span><br><span class="line">                    t = t.right;</span><br><span class="line">                else</span><br><span class="line">                    return t.setValue(value);</span><br><span class="line">            &#125; while (t != null);</span><br><span class="line">        &#125;</span><br><span class="line">        else &#123;</span><br><span class="line">            if (key == null)</span><br><span class="line">                throw new NullPointerException();</span><br><span class="line">            @SuppressWarnings(&quot;unchecked&quot;)</span><br><span class="line">                Comparable&lt;? super K&gt; k = (Comparable&lt;? super K&gt;) key;</span><br><span class="line">            do &#123;</span><br><span class="line">                parent = t;</span><br><span class="line">                cmp = k.compareTo(t.key);</span><br><span class="line">                if (cmp &lt; 0)</span><br><span class="line">                    t = t.left;</span><br><span class="line">                else if (cmp &gt; 0)</span><br><span class="line">                    t = t.right;</span><br><span class="line">                else</span><br><span class="line">                    return t.setValue(value);</span><br><span class="line">            &#125; while (t != null);</span><br><span class="line">        &#125;</span><br><span class="line">        Entry&lt;K,V&gt; e = new Entry&lt;&gt;(key, value, parent);</span><br><span class="line">        if (cmp &lt; 0)</span><br><span class="line">            parent.left = e;</span><br><span class="line">        else</span><br><span class="line">            parent.right = e;</span><br><span class="line">        fixAfterInsertion(e);</span><br><span class="line">        size++;</span><br><span class="line">        modCount++;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
                 
 
                 <hr>
@@ -281,12 +245,12 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/人生感悟/2018-11-21/" data-toggle="tooltip" data-placement="top" title="如何认识更多的朋友扩展社交朋友圈的质量">&larr; Previous Post</a>
+                            <a href="/人生感悟/2017-04-21/" data-toggle="tooltip" data-placement="top" title="程序猿如何打发乱七八糟的时间">&larr; Previous Post</a>
                         </li>
                     
                     
                         <li class="next">
-                            <a href="/技术/2018-06-06/" data-toggle="tooltip" data-placement="top" title="面试中最难回答的非技术问题">Next Post &rarr;</a>
+                            <a href="/集合/2017-02-10/" data-toggle="tooltip" data-placement="top" title="Java-List 集合介绍- ArrayList和 LinkedList 区别">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -346,7 +310,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="nav">none</ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text"><span id="map-&#x96C6;&#x5408;&#x4ECB;&#x7ECD;">Map &#x96C6;&#x5408;&#x4ECB;&#x7ECD;</span></span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text"><span id="hashmap-&#x96C6;&#x5408;&#x4ECB;&#x7ECD;">HashMap &#x96C6;&#x5408;&#x4ECB;&#x7ECD;</span></span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text"><span id="hashmap-&#x7EC4;&#x6210;">HashMap &#x7EC4;&#x6210;</span></span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.1.2.</span> <span class="toc-nav-text"><span id="hashmap-put-&#x65B9;&#x6CD5;&#x4ECB;&#x7ECD;">HashMap Put &#x65B9;&#x6CD5;&#x4ECB;&#x7ECD;</span></span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.1.3.</span> <span class="toc-nav-text"><span id="hasnmap-&#x7EBF;&#x7A0B;&#x4E0D;&#x5B89;&#x53BB;">HasnMap &#x7EBF;&#x7A0B;&#x4E0D;&#x5B89;&#x53BB;</span></span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text"><span id="treemap-&#x96C6;&#x5408;&#x4ECB;&#x7ECD;">TreeMap &#x96C6;&#x5408;&#x4ECB;&#x7ECD;</span></span></a></li></ol></li></ol>
         
         </div>
       </aside>
@@ -366,7 +330,7 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#随笔" title="随笔">随笔</a>
+                          <a class="tag" href="/tags/#Java" title="Java">Java</a>
                         
                     </div>
                 </section>
@@ -386,8 +350,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "your-disqus-ID";
-    var disqus_identifier = "http://www.wangxiaohuan.com/人生感悟/2018-11-11/";
-    var disqus_url = "http://www.wangxiaohuan.com/人生感悟/2018-11-11/";
+    var disqus_identifier = "http://www.wangxiaohuan.com/集合/2017-02-20/";
+    var disqus_url = "http://www.wangxiaohuan.com/集合/2017-02-20/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
