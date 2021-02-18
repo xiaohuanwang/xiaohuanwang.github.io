@@ -7,22 +7,22 @@
     </url>
     
     <url>
-        <loc>http://www.wangxiaohuan.com/about/</loc>
-        <lastmod>2021-02-18T09:47:12.282Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    
-    <url>
         <loc>http://www.wangxiaohuan.com/tags/</loc>
-        <lastmod>2021-01-30T16:42:09.002Z</lastmod>
+        <lastmod>2021-02-18T09:53:25.098Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     
     <url>
         <loc>http://www.wangxiaohuan.com/archive/</loc>
-        <lastmod>2021-01-30T16:42:08.899Z</lastmod>
+        <lastmod>2021-02-18T09:52:57.776Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>http://www.wangxiaohuan.com/about/</loc>
+        <lastmod>2021-02-18T09:47:12.282Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
