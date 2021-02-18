@@ -3,7 +3,7 @@ layout: "about"
 title: "About Me"
 date: 2017-10-03 10:48:33
 description: "I am a Vegetarian. "
-header-img: "/img/header_img/about.jpg"
+header-img: "http://image.wangxiaohuan.com/blog/image/about.jpg"
 aplayer: true
 fixed: false
 ---
