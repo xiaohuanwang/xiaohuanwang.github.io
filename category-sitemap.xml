@@ -14,14 +14,14 @@
     </url>
 
     <url>
-        <loc>http://www.wangxiaohuan.com/categories/%E5%85%B6%E4%BB%96/</loc>
+        <loc>http://www.wangxiaohuan.com/categories/%E6%97%A5%E5%BF%97/</loc>
         <lastmod>2021-01-30T16:42:08.898Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://www.wangxiaohuan.com/categories/%E6%97%A5%E5%BF%97/</loc>
+        <loc>http://www.wangxiaohuan.com/categories/%E5%85%B6%E4%BB%96/</loc>
         <lastmod>2021-01-30T16:42:08.898Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -49,13 +49,6 @@
     </url>
 
     <url>
-        <loc>http://www.wangxiaohuan.com/categories/Redis%E6%8C%81%E4%B9%85%E5%8C%96/</loc>
-        <lastmod>2021-02-04T03:39:06.793Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://www.wangxiaohuan.com/categories/%E7%BA%BF%E7%A8%8B%E6%B1%A0/</loc>
         <lastmod>2021-02-10T01:04:56.263Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -72,6 +65,13 @@
     <url>
         <loc>http://www.wangxiaohuan.com/categories/%E7%BA%BF%E7%A8%8B/</loc>
         <lastmod>2021-02-19T13:24:16.703Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://www.wangxiaohuan.com/categories/Redis%E6%8C%81%E4%B9%85%E5%8C%96/</loc>
+        <lastmod>2021-02-24T12:45:04.399Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
