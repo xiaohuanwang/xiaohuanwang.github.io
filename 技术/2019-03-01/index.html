@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          微服务的监控追踪和治理 - 吃素的左撇子 | Blog
+        
+    </title>
+
+    <link rel="canonical" href="http://www.wangxiaohuan.com/技术/2019-03-01/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+<link rel="stylesheet" href="/css/beantech.min.css">
+
+
+    
+<link rel="stylesheet" href="/css/donate.css">
+
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="/css/widget.css">
+
+
+    
+<link rel="stylesheet" href="/css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="/css/signature.css">
+
+
+    
+<link rel="stylesheet" href="/css/toc.css">
+
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/header_img/jiankong0001.jpeg')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#微服务" title="微服务">微服务</a>
+                            
+                        </div>
+                        <h1>微服务的监控追踪和治理</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 吃素的左撇子 on
+                            2019-03-02
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">吃素的左撇子</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About Me</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archive</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h3 id="微服务的监控">微服务的监控</h3>
+<p>把单体应用拆分为微服务之后，各种不同的服务相互调用，关系变得复杂，就需要对各个服务进行监控。主要就是监控以下三个问题：监控对象、监控指标和监控的维度</p>
+<h4 id="监控对象">监控对象</h4>
+<p>监控对象可以分为四个层次，由上到下分别为：</p>
+<ul>
+<li>用户端监控。通常是指业务直接对用户提供的功能进行监控。</li>
+<li>接口监控。通常是指业务提供的功能所依赖的具体RPC接口的监控。</li>
+<li>资源监控。通常是指某个接口依赖的资源的监控。</li>
+<li>基础监控。通常是指对服务器本身的健康状况的监控。</li>
+</ul>
+<h4 id="监控指标">监控指标</h4>
+<ul>
+<li>请求量。主要分为：实时请求量，用QPS表示，每秒查询次数来衡量。统计请求量，用PV表示，一段时间内用户的访问量来衡量。</li>
+<li>响应时间。一段时间内所有调用的平均耗时来反应请求的响应时间。</li>
+<li>错误率。一段时间内调用失败的次数占用总次数的比率来衡量。</li>
+</ul>
+<h4 id="监控维度">监控维度</h4>
+<ul>
+<li>全局维度</li>
+<li>分机房维度</li>
+<li>单机维度</li>
+<li>时间维度</li>
+<li>核心维度</li>
+</ul>
+<h3 id="监控系统环节">监控系统环节</h3>
+<p>监控系统主要包括四个环节：数据采集、数据传输、数据处理以及数据展示。</p>
+<h4 id="数据采集">数据采集</h4>
+<ul>
+<li>服务主动上报，这种处理方式通过在业务代码或者服务框架里加入数据收集代码逻辑，在每一次服务调用完成后，主动上报服务的调用信息。</li>
+<li>代理收集，这种处理方式通过服务调用后把调用的详细信息记录到本地日志文件中，然后再通过代理去解析本地日志文件，然后再上报服务的调用信息。</li>
+</ul>
+<h4 id="数据传输">数据传输</h4>
+<ul>
+<li>UDP 传输，这种处理方式是数据处理单元提供服务器的请求地址，数据采集后通过 UDP 协议与服务器建立连接，然后把数据发送过去。</li>
+<li>Kafka 传输，这种处理方式是数据采集后发送到指定的 Topic，然后数据处理单元再订阅对应的 Topic，就可以从 Kafka 消息队列中读取到对应的数据。</li>
+</ul>
+<p><strong>无论采用哪种传输方式，数据格式都十分重要，尤其是对带宽敏感以及解析性能要求比较高的场景，一般数据传输时采用的数据格式有两种：</strong></p>
+<ul>
+<li>二进制协议，最常用的就是 PB 对象，它的优点是高压缩比和高性能，可以减少传输带宽并且序列化和反序列化效率特别高。</li>
+<li>文本协议，最常用的就是 JSON 字符串，它的优点是可读性好，但相比于 PB 对象，传输占用带宽高，并且解析性能也要差一些。</li>
+</ul>
+<h4 id="数据处理">数据处理</h4>
+<ul>
+<li>接口维度聚合，这个维度是把实时收到的数据按照接口名维度实时聚合在一起，这样就可以得到每个接口的实时请求量、平均耗时等信息。</li>
+<li>机器维度聚合，这个维度是把实时收到的数据按照调用的节点维度聚合在一起，这样就可以从单机维度去查看每个接口的实时请求量、平均耗时等信息。</li>
+</ul>
+<p><strong>聚合后的数据需要持久化到数据库中存储，所选用的数据库一般分为两种：</strong></p>
+<ul>
+<li>索引数据库，比如 Elasticsearch，以倒排索引的数据结构存储，需要查询的时候，根据索引来查询。</li>
+<li>时序数据库，比如 OpenTSDB，以时序序列数据的方式存储，查询的时候按照时序如 1min、5min 等维度来查询。</li>
+</ul>
+<h4 id="数据展示">数据展示</h4>
+<p>数据展示是把处理后的数据以 Dashboard 的方式展示给用户。</p>
+<ul>
+<li>曲线图。一般是用来监控变化趋势的。</li>
+<li>饼状图。一般是用来监控占比分布的。</li>
+<li>格子图。主要做一些细粒度的监控。</li>
+</ul>
+<h3 id="微服务的追踪">微服务的追踪</h3>
+<p>一个系统拆分为微服务后，把各个微服务进行监控，但是一旦发现监控的服务出现异常，如何快速定位问题呢？比如有一个系统，专门跟踪记录用户请求都发起了那些调用，经过那些服务处理，并且记录每一次调用的详细情况，如果出现异常失败，就可以快速定位问题。微服务追踪系统的就是来专门搞定这个问题，除此之外，还有那些用途呢？</p>
+<h4 id="微服务追踪系统的作用">微服务追踪系统的作用</h4>
+<ul>
+<li>优化系统瓶颈</li>
+<li>优化链路调整</li>
+<li>生成网络拓扑</li>
+<li>透明传输数据</li>
+</ul>
+<h4 id="微服务追踪系统的原理">微服务追踪系统的原理</h4>
+<p>核心理念是调用链：：通过一个全局唯一的 ID 将分布在各个服务节点上的同一次请求串联起来，从而还原原有的调用关系，可以追踪系统问题、分析调用数据并统计各种系统指标。</p>
+<ul>
+<li>traceId，用于标识某一次具体的请求 ID。当用户的请求进入系统后，会在 RPC 调用网络的第一层生成一个全局唯一的 traceId，并且会随着每一层的 RPC 调用，不断往后传递，这样的话通过 traceId 就可以把一次用户请求在系统中调用的路径串联起来。</li>
+<li>spanId，用于标识一次 RPC 调用在分布式请求中的位置。当用户的请求进入系统后，处在 RPC 调用网络的第一层 A 时 spanId 初始值是 0，进入下一层 RPC 调用 B 的时候 spanId 是 0.1，继续进入下一层 RPC 调用 C 时 spanId 是 0.1.1，而与 B 处在同一层的 RPC 调用 E 的 spanId 是 0.2，这样的话通过 spanId 就可以定位某一次 RPC 请求在系统调用中所处的位置，以及它的上下游依赖分别是谁。</li>
+<li>annotation，用于业务自定义埋点数据，可以是业务感兴趣的想上传到后端的数据，比如一次请求的用户 UID。</li>
+</ul>
+<h4 id="微服务追踪系统的实现">微服务追踪系统的实现</h4>
+<ul>
+<li>数据采集层，负责数据埋点并上报。</li>
+<li>数据处理层，实时计算需求，离线计算需求。负责数据的存储与计算。</li>
+<li>数据展示层，调用链路图，调用拓扑图。负责数据的图形化展示。</li>
+</ul>
+<h3 id="微服务追踪系统的治理">微服务追踪系统的治理</h3>
+<p>微服务在运行的时候好，经过实时监控和追踪能够及时的查询和追踪微服务，但是一旦要是出现问题了。能不能把问题的造成的影响降低到最小，能不能体现监控到问题的出现，就及时处理，不至于到后边一发不可收拾。这个时候就该需要服务治理出现了。<br>
+常用的服务治理手段有以下集中情况</p>
+<h4 id="节点管理">节点管理</h4>
+<p>服务调用失败一般有两类原因引起。一类是服务提供者自身出现问题，如服务器宕机、进程意外退出等；一类是网络问题，如服务提供者、注册中心、服务消费者这三者任意两者之间的网络出现问题。这类问题有两种节点管理手段</p>
+<ul>
+<li>注册中心主动摘除机制</li>
+<li>服务消费者摘除机制</li>
+</ul>
+<h4 id="负载均衡">负载均衡</h4>
+<p>一般情况下，服务提供者节点不是唯一的，多是以集群的方式存在，对于大规模的服务调用来说，如何把这一批中每个请求，分散而均衡的分配到每个服务器。这就需要负载均衡算法来进行一些调整。常用的包括以下几种：</p>
+<ul>
+<li>随机算法</li>
+<li>轮询算法</li>
+<li>最少活跃调用算法</li>
+<li>一致性Hash算法</li>
+</ul>
+<h4 id="服务路由">服务路由</h4>
+<p>服务路由，就是通过一定的规则，如条件表达式或正则表达式来限定服务节点的选择。定制路由的规则原因如下：该业务存在灰度发布的需求或者多机房的就近访问需求。路由的配置规则一般有两种配置方式</p>
+<ul>
+<li>静态配置</li>
+<li>动态配置</li>
+</ul>
+<h4 id="服务容错">服务容错</h4>
+<p>服务调用发生异常，需要一些手段自动恢复，来保证调用成功。超用的手段有以下几种。</p>
+<ul>
+<li>FailOver，失败自动切换。</li>
+<li>FailBack,失败通知。</li>
+<li>FailCache,失败缓存。</li>
+<li>FailFast，快速失败。</li>
+</ul>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/Git命令/2019-03-07/" data-toggle="tooltip" data-placement="top" title="Git命令总结">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/人生感悟/2019-02-22/" data-toggle="tooltip" data-placement="top" title="人生的轨迹">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                    <!--  css & js -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#微服务的监控"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">微服务的监控</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#监控对象"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">监控对象</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#监控指标"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">监控指标</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#监控维度"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">监控维度</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#监控系统环节"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">监控系统环节</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#数据采集"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">数据采集</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#数据传输"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">数据传输</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#数据处理"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">数据处理</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#数据展示"><span class="toc-nav-number">2.4.</span> <span class="toc-nav-text">数据展示</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#微服务的追踪"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">微服务的追踪</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#微服务追踪系统的作用"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">微服务追踪系统的作用</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#微服务追踪系统的原理"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">微服务追踪系统的原理</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#微服务追踪系统的实现"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">微服务追踪系统的实现</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#微服务追踪系统的治理"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">微服务追踪系统的治理</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#节点管理"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">节点管理</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#负载均衡"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">负载均衡</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#服务路由"><span class="toc-nav-number">4.3.</span> <span class="toc-nav-text">服务路由</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#服务容错"><span class="toc-nav-number">4.4.</span> <span class="toc-nav-text">服务容错</span></a></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#微服务" title="微服务">微服务</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "http://www.wangxiaohuan.com/%E6%8A%80%E6%9C%AF/2019-03-01/";
+    var disqus_url = "http://www.wangxiaohuan.com/%E6%8A%80%E6%9C%AF/2019-03-01/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/work_wxh">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/2742646782">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/wxh.work">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/xiaohuanwang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 吃素的左撇子 2021 
+                    <br>
+                    Theme by <a href="http://beantech.org" target="_blank" rel="noopener">BeanTech</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="http://www.wangxiaohuan.com">吃素的左撇子</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=xiaohuanwang&repo=hexo-theme-xiaohuanwang&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/hux-blog.min.js"></script>
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://www.wangxiaohuan.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = 'xxx';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://www.wangxiaohuan.com/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

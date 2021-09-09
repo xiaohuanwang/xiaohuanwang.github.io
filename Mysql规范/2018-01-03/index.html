@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          MySQL数据库设计规范 - 吃素的左撇子 | Blog
+        
+    </title>
+
+    <link rel="canonical" href="http://www.wangxiaohuan.com/Mysql规范/2018-01-03/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+<link rel="stylesheet" href="/css/beantech.min.css">
+
+
+    
+<link rel="stylesheet" href="/css/donate.css">
+
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="/css/widget.css">
+
+
+    
+<link rel="stylesheet" href="/css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="/css/signature.css">
+
+
+    
+<link rel="stylesheet" href="/css/toc.css">
+
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('http://image.wangxiaohuan.com/blog/image/20210516230025.png')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#数据库" title="数据库">数据库</a>
+                            
+                        </div>
+                        <h1>MySQL数据库设计规范</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 吃素的左撇子 on
+                            2018-01-03
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">吃素的左撇子</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About Me</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archive</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h3 id="配置规范">配置规范</h3>
+<ol>
+<li>MySQL 数据库默认使用 InnoDB 存储引擎。</li>
+<li>保证字符集设置统一，MySQL 数据库相关系统、数据库、表和字段的字符集都用 UTF8，应用程序连接、展示、客户端等可以设置字符集的地方也都统一设置为 UTF8 字符集。</li>
+<li>Mysql数据库的事务隔离级别默认为 RR(Repeatable-Read)，建议初始化时统一设置为 RC(Read-Committed)，对于 OLTP 业务更合适。</li>
+<li>数据库中的表要合理规划，控制单表数据量，对于 MySQL 数据库来说，建议单表记录数控制在2000万条数据之内。</li>
+<li>MySQL 实例下，数据库、表数量尽可能少:数据库一般不超过50个，每个数据库下，数据表数量一般不超过500个(包括分区表)。</li>
+</ol>
+<h3 id="建表规范">建表规范</h3>
+<ol>
+<li>表和列的名称建议控制在12个字符以内，表名只能使用字母、数字和下划线，一律小写。</li>
+<li>表名要求以 tb_ 为前缀,并与模块名强相关，如师资系统采用”tb_teacher”作为前缀，渠道系统采用”tb_channel”作为前缀等(禁止使用拼音全称或缩写来命名表名!!!)。</li>
+<li>建表时关于主键:主键字段建议为 int 或 bigint，如果配置表可以为auto_increment。如果是业务表，数据量大的表可用统一id生成工具生成</li>
+<li>InnoDB 禁止使用外键约束，可以使用虚拟外键</li>
+<li>核心表必须有创建时间字段 create_date 和最后更新时间字段 update_date，便于查问题和数据清洗。<br>
+创建时间设置默认值，更新时间设置默认值，且每次更新自动更新，如果是可以为空的 datetime 类型字段则设置默认值1970-01-01 00:00:00</li>
+<li>存储精确浮点数必须使用 decimal 代替 float 和 double。</li>
+<li>整形定义中无需定义显示宽度，比如:使用int，而不是int(4), 如确认定长则需要宽度。int(4) 不是指存储范围是0-9999，如果存储范围只要0-9999，可以改用 smallint 型，具体各数据类型长度请查看附录表格。括号里面<br>
+的数字仅在字段加上 zerofill 属性时显示宽度，否则 int(2)、int(4) 和 int(10) 无任何差别。</li>
+<li>不建议使用 enum 枚举类型，可使用 tinyint 来代替。 enum 类型属于字符型数据，在表定义时就把枚举值写死了，且浪费存储空间。如果增加枚举值需要执行相应的 DDL 操作。TINYINT 则是数值型，存储只占用1个字节，对于类型扩展很方便操作，不需要执行 DDL。</li>
+<li>尽可能不使用 text、blob 类型，如果必须使用，建议将过大字段或是不常用的描述型大字段拆分到其他表中;另外，禁止用关系型数据库存储图片或文件。</li>
+<li>全部字段都为not null，但如果确实业务不要求为空的，设置默认值，为了后期查询语句方便，is not null是不走索引的。</li>
+<li>反范式设计: 把经常需要 join 查询的字段，在其他表里冗余一份。如:user_name 属性在 user_account，user_login_log 等表里冗余一份，减少 join 查询。</li>
+<li>业务中IP地址字段推荐使用 int 类型，不推荐使用 char(15)。因为 int 只占4字节，可以用如下函数相互转换，而 char(15) 占用至少15字节。一旦表数据行数到了1亿行以上，那么要多用 1.1G 存储空间。select inet_aton(‘192.168.1.1’); select inet_ntoa(3232235777);</li>
+<li>订单表 varchar 单个字段类型最大建议长度为1024 即 varchar(1024),建议是 varchar(255)以下</li>
+<li>单表字段数不超过30个，超过需要拆分父子表。</li>
+<li>不要用 json 字段类型。</li>
+</ol>
+<h3 id="命名规范">命名规范</h3>
+<ol>
+<li>库、表、字段全部采用小写。</li>
+<li>库名、表名、字段名、索引名称均使用小写字母，并以“_”分隔。</li>
+<li>库名、表名、字段名建议不超过12个字符。</li>
+<li>(对多支持64个字符) 4. 库名、表名、字段名见名知意，并且添加注释。</li>
+<li>库名、表名、字段不允许出现数字，需要全英文命名</li>
+<li>命名时避开 MySQL 关键字。</li>
+</ol>
+<h3 id="索引规范">索引规范</h3>
+<ol>
+<li>索引建议命名规则:idx_col1_col2[_colN]、uk_col1_col2[_colN] (如果字段过长建议采用缩写)。</li>
+<li>索引中的字段数建议不超过5个。</li>
+<li>单张表的索引个数控制在5个以内。</li>
+<li>InnoDB 表强制要求有主键列。</li>
+<li>建立复合索引时，优先将选择性高的字段放在前面。</li>
+<li>UPDATE、DELETE 语句需要根据 WHERE 条件添加索引。</li>
+<li>不建议使用%前缀模式查询。例如 LIKE ‘%WEIBO’，无法使用索引，会导致全表扫描。</li>
+<li>合理利用覆盖索引。例如:SELECT email,uid FROM user_email WHERE uid=xxx，如果 uid 不是主键，可以创建覆盖索引 idx_uid_email (uid,email) 来提高查询效率。</li>
+<li>避免在索引字段上使用函数，否则会导致查询时索引失效。</li>
+<li>避免不必要的重复或冗余索引，根据索引最左前缀使用原则，如表中的存在索引 key(a,b)，则索引 key(a)。</li>
+</ol>
+<h3 id="sql规范-dml语句">SQL规范 DML语句</h3>
+<ol>
+<li>select 语句必须指定具体字段名称，禁止写成 * 。因为 select * 会将不该读的数据也从 MySQL 里读出来，造成网卡压力。且表字段一 旦更新，但 model 层没有来得及更新的话，系统会报错。</li>
+<li>insert 语句指定具体字段名称，不要写成 insert into t1 values(…)，道理同上。</li>
+<li>insert into…values(XX),(XX),(XX)…。这里 XX 的值不要超过5000个。值过多虽然上线很很快，但会引起主从同步延迟。</li>
+<li>select 语句慎重使用 union，推荐使用 union all，并且 union 子句个数限制在5个以内。因为 union all 不需要去重，节省数据库资源，提高性能。</li>
+<li>in 值列表限制在500以内。例如 select… where userid in(…500个以内…)，这么做是为了减少底层扫描，减轻数据库压力从而加速查询。</li>
+<li>事务里批量更新数据需要控制数量，进行必要的 sleep，做到少量多次。</li>
+<li>事务涉及的表必须全部是 InnoDB 表。否则一旦失败不会全部回滚，且易造成主从库同步终端。</li>
+<li>写入和事务发往主库，只读 sql 发往从库。</li>
+<li>除静态表或小表(1000行以内)，DML 语句必须有 where 条件，且使用索引查找。</li>
+<li>生产环境禁止使用 hint，如 sql_no_cache，force index，ignore key，straight join 等。</li>
+<li>where 条件里等号左右字段类型必须一致，否则无法利用索引。</li>
+<li>select|update|delete|replace 要有 where 子句，且 where 子句的条件必需使用索引查找。</li>
+<li>生产数据库中强烈不推荐大表上发生全表扫描，但对于1000行以下的静态表可以全表扫描。查询数据量不要超过表行数的25%，否则不会利用索引。</li>
+<li>where 子句中禁止只使用全模糊的 like 条件进行查找，必须有其他等值或范围查询条件，否则无法利用索引。</li>
+<li>索引列不要使用函数或表达式，否则无法利用索引。如 where length(name)=‘Admin’ 或 where user_id+2=10023。</li>
+<li>减少使用 or 语句，可将 or 语句优化为 union，然后在各个 where 条件上建立索引。如 where a=1 or b=2 优化为 where a=1… union …where b=2, key(a),key(b)。</li>
+<li>分页查询，当 limit 起点较高时，可先用过滤条件进行过滤。如 select a,b,c from t1 limit 10000,20; 优化为: select a,b,c from t1 where id&gt;10000 limit 20;。</li>
+</ol>
+<h3 id="多表连接">多表连接</h3>
+<ol>
+<li>禁止跨 db 的 join 语句。因为这样可以减少模块间耦合，为数据库拆分奠定坚实基础。</li>
+<li>禁止在业务的更新类 SQL 语句中使用 join，比如 update t1 join t2…。</li>
+<li>不建议使用子查询，建议将子查询 SQL 拆开结合程序多次查询，或使用 join 来代替子查询。</li>
+<li>线上环境，多表 join 不要超过3个表。</li>
+<li>多表连接查询推荐使用别名，且 select 列表中要用别名引用字段，数据库.表格式，如 select a from db1.table1 alias1 where …。</li>
+<li>在多表 join 中，尽量选取结果集较小的表作为驱动表，来 join 其他表。</li>
+</ol>
+<h3 id="事务">事务</h3>
+<ol>
+<li>事务中 insert|update|delete|replace 语句操作的行数控制在2000以内，以及 where 子句中 in 列表 的传参个数控制在500以内。</li>
+<li>批量操作数据时，需要控制事务处理间隔时间，进行必要的 sleep，一般建议值5-10秒。</li>
+<li>对于有 auto_increment 属性字段的表的插入操作，并发需要控制在200以内。</li>
+<li>程序设计必须考虑“数据库事务隔离级别”带来的影响，包括脏读、不可重复读和幻读。线上建议事务隔离级别为 Read-Commit。</li>
+<li>事务里包含 SQL 不超过5个(支付业务除外)。因为过长的事务会导致锁数据较久、MySQL 内部缓存、连接消耗过多等雪崩问题。</li>
+<li>事务里更新语句尽量基于主键或 unique key，如 update … where id=XX; 否则会产生间隙锁，内部扩大锁定范围，导致系统性能下降，产生死锁。</li>
+<li>尽量把一些典型外部调用移出事务，如调用 webservice，访问文件存储等，从而避免事务过长。</li>
+<li>对于 MySQL 主从延迟严格敏感的 select 语句，请开启事务强制访问主库。</li>
+</ol>
+<h3 id="排序分组">排序分组</h3>
+<ol>
+<li>减少使用 order by，和业务沟通能不排序就不排序，或将排序放到程序端去做。order by、group by、dis<br>
+tinct 这些语句较为耗费 CPU，数据库的 CPU 资源是极其宝贵的。</li>
+<li>order by、group by、distinct 这些 SQL 尽量利用索引直接检索出排序好的数据。如 where a=1 order by可以利用 key(a,b)。</li>
+<li>包含了 order by、group by、distinct 这些查询的语句，where 条件过滤出来的结果集请保持在1000行以内，否则 SQL 会很慢。</li>
+</ol>
+<h3 id="线上禁止使用的sql">线上禁止使用的SQL</h3>
+<ol>
+<li><strong><em>禁用 update|delete t1 … where a=XX limit XX; 这种带 limit 的更新语句。因为会导致主从不一致，导致数据错乱。建议加上 order by 主键。</em></strong></li>
+<li><strong><em>禁止使用关联子查询，如 update t1 set … where name in(select name from user where…); 效率极其低下。</em></strong></li>
+<li><strong><em>禁用 procedure、function、trigger、views、event、外键约束。因为他们消耗数据库资源，降低数据库实例可扩展性。推荐都在程序端实现。</em></strong></li>
+<li><strong><em>禁用 insert into …on duplicate key update… 在高并发环境下，会造成主从不一致。</em></strong></li>
+<li><strong><em>禁止联表更新语句，如 update t1,t2 where <a href="http://t1.id=t2.id" target="_blank" rel="noopener">t1.id=t2.id</a>…。</em></strong></li>
+</ol>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/人生感悟/hello/" data-toggle="tooltip" data-placement="top" title="北京这座城市有很多灯">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/人生感悟/2017-12-21/" data-toggle="tooltip" data-placement="top" title="生活教会我的21件事">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                    <!--  css & js -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#配置规范"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">配置规范</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#建表规范"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">建表规范</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#命名规范"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">命名规范</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#索引规范"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">索引规范</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#sql规范-dml语句"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">SQL规范 DML语句</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#多表连接"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">多表连接</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#事务"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">事务</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#排序分组"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">排序分组</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#线上禁止使用的sql"><span class="toc-nav-number">9.</span> <span class="toc-nav-text">线上禁止使用的SQL</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#数据库" title="数据库">数据库</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "http://www.wangxiaohuan.com/Mysql%E8%A7%84%E8%8C%83/2018-01-03/";
+    var disqus_url = "http://www.wangxiaohuan.com/Mysql%E8%A7%84%E8%8C%83/2018-01-03/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/work_wxh">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/2742646782">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/wxh.work">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/xiaohuanwang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 吃素的左撇子 2021 
+                    <br>
+                    Theme by <a href="http://beantech.org" target="_blank" rel="noopener">BeanTech</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="http://www.wangxiaohuan.com">吃素的左撇子</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=xiaohuanwang&repo=hexo-theme-xiaohuanwang&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/hux-blog.min.js"></script>
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://www.wangxiaohuan.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = 'xxx';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://www.wangxiaohuan.com/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

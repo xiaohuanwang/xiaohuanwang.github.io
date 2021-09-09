@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          stream 使用技巧 - 吃素的左撇子 | Blog
+        
+    </title>
+
+    <link rel="canonical" href="http://www.wangxiaohuan.com/stream-表达式/2019-04-03/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+<link rel="stylesheet" href="/css/beantech.min.css">
+
+
+    
+<link rel="stylesheet" href="/css/donate.css">
+
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="/css/widget.css">
+
+
+    
+<link rel="stylesheet" href="/css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="/css/signature.css">
+
+
+    
+<link rel="stylesheet" href="/css/toc.css">
+
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('http://image.wangxiaohuan.com/blog/image/ev8Uk_S8cFg.jpg')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Java" title="Java">Java</a>
+                            
+                        </div>
+                        <h1>stream 使用技巧</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 吃素的左撇子 on
+                            2019-04-03
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">吃素的左撇子</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About Me</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archive</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h3 id="什么是流">什么是流？</h3>
+<p>流是Java8引入的全新概念，它用来处理集合中的数据，暂且可以把它理解为一种高级集合。</p>
+<p>众所周知，集合操作非常麻烦，若要对集合进行筛选、投影，需要写大量的代码，而流是以声明的形式操作集合，它就像SQL语句，我们只需告诉流需要对集合进行什么操作，它就会自动进行操作，并将执行结果交给你，无需我们自己手写代码。</p>
+<p>因此，流的集合操作对我们来说是透明的，我们只需向流下达命令，它就会自动把我们想要的结果给我们。由于操作过程完全由Java处理，因此它可以根据当前硬件环境选择最优的方法处理，我们也无需编写复杂又容易出错的多线程代码了。</p>
+<h3 id="流的特点">流的特点</h3>
+<ol>
+<li>只能遍历一次<br>
+我们可以把流想象成一条流水线，流水线的源头是我们的数据源(一个集合)，数据源中的元素依次被输送到流水线上，我们可以在流水线上对元素进行各种操作。<br>
+一旦元素走到了流水线的另一头，那么这些元素就被“消费掉了”，我们无法再对这个流进行操作。当然，我们可以从数据源那里再获得一个新的流重新遍历一遍。</li>
+<li>采用内部迭代方式<br>
+若要对集合进行处理，则需我们手写处理代码，这就叫做外部迭代。<br>
+而要对流进行处理，我们只需告诉流我们需要什么结果，处理过程由流自行完成，这就称为内部迭代。</li>
+</ol>
+<h3 id="流的操作种类">流的操作种类</h3>
+<p>流的操作分为两种，分别为中间操作和终端操作。</p>
+<ol>
+<li>中间操作<br>
+当数据源中的数据上了流水线后，这个过程对数据进行的所有操作都称为“中间操作”。<br>
+中间操作仍然会返回一个流对象，因此多个中间操作可以串连起来形成一个流水线。</li>
+<li>终端操作<br>
+当所有的中间操作完成后，若要将数据从流水线上拿下来，则需要执行终端操作。<br>
+终端操作将返回一个执行结果，这就是你想要的数据。</li>
+</ol>
+<h3 id="流的操作过程">流的操作过程</h3>
+<p>使用流一共需要三步：</p>
+<ol>
+<li>准备一个数据源</li>
+<li>执行中间操作<br>
+中间操作可以有多个，它们可以串连起来形成流水线。</li>
+<li>执行终端操作<br>
+执行终端操作后本次流结束，你将获得一个执行结果。</li>
+</ol>
+<h2 id="使用流">使用流</h2>
+<h3 id="创建流">创建流</h3>
+<p>在使用流之前，首先需要拥有一个数据源，并通过StreamAPI提供的一些方法获取该数据源的流对象。数据源可以有多种形式：</p>
+<p><strong>1. 集合</strong></p>
+<p>这种数据源较为常用，通过stream()方法即可获取流对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Person&gt; list &#x3D; new ArrayList&lt;Person&gt;(); </span><br><span class="line">Stream&lt;Person&gt; stream &#x3D; list.stream();</span><br></pre></td></tr></table></figure>
+<p><strong>2. 数组</strong></p>
+<p>通过Arrays类提供的静态函数stream()获取数组的流对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String[] names &#x3D; &#123;&quot;chaimm&quot;,&quot;peter&quot;,&quot;john&quot;&#125;;</span><br><span class="line">Stream&lt;String&gt; stream &#x3D; Arrays.stream(names);</span><br></pre></td></tr></table></figure>
+<p><strong>3. 值</strong></p>
+<p>直接将几个值变成流对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;String&gt; stream &#x3D; Stream.of(&quot;chaimm&quot;,&quot;peter&quot;,&quot;john&quot;);</span><br></pre></td></tr></table></figure>
+<p><strong>4. 文件</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">try(Stream lines &#x3D; Files.lines(Paths.get(“文件路径名”),Charset.defaultCharset()))&#123;</span><br><span class="line">    &#x2F;&#x2F;可对lines做一些操作</span><br><span class="line">&#125;catch(IOException e)&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>5. iterator</strong></p>
+<p><strong>创建无限流</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Stream.iterate(0, n -&gt; n + 2)</span><br><span class="line">      .limit(10)</span><br><span class="line">      .forEach(System.out::println);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>PS：Java7简化了IO操作，把打开IO操作放在try后的括号中即可省略关闭IO的代码。</p>
+</blockquote>
+<h3 id="筛选-filter">筛选 filter</h3>
+<p>filter 函数接收一个Lambda表达式作为参数，该表达式返回boolean，在执行过程中，流将元素逐一输送给filter，并筛选出执行结果为true的元素。</p>
+<p>如，筛选出所有学生：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Person&gt; result &#x3D; list.stream()</span><br><span class="line">                    .filter(Person::isStudent)</span><br><span class="line">                    .collect(toList());</span><br></pre></td></tr></table></figure>
+<h3 id="去重distinct">去重distinct</h3>
+<p>去掉重复的结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Person&gt; result &#x3D; list.stream()</span><br><span class="line">                    .distinct()</span><br><span class="line">                    .collect(toList());</span><br></pre></td></tr></table></figure>
+<h3 id="截取">截取</h3>
+<p>截取流的前N个元素：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Person&gt; result &#x3D; list.stream()</span><br><span class="line">                    .limit(3)</span><br><span class="line">                    .collect(toList());</span><br></pre></td></tr></table></figure>
+<h3 id="跳过">跳过</h3>
+<p>跳过流的前n个元素：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Person&gt; result &#x3D; list.stream()</span><br><span class="line">                    .skip(3)</span><br><span class="line">                    .collect(toList());</span><br></pre></td></tr></table></figure>
+<h3 id="映射">映射</h3>
+<p>对流中的每个元素执行一个函数，使得元素转换成另一种类型输出。流会将每一个元素输送给map函数，并执行map中的Lambda表达式，最后将执行结果存入一个新的流中。</p>
+<p>如，获取每个人的姓名(实则是将Perosn类型转换成String类型)：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; result &#x3D; list.stream()</span><br><span class="line">                    .map(Person::getName)</span><br><span class="line">                    .collect(toList());</span><br></pre></td></tr></table></figure>
+<h3 id="合并多个流">合并多个流</h3>
+<p>例：列出List中各不相同的单词，List集合如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list &#x3D; new ArrayList&lt;String&gt;();</span><br><span class="line">list.add(&quot;I am a boy&quot;);</span><br><span class="line">list.add(&quot;I love the girl&quot;);</span><br><span class="line">list.add(&quot;But the girl loves another girl&quot;);</span><br></pre></td></tr></table></figure>
+<p>思路如下：</p>
+<p>首先将list变成流：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.stream();</span><br></pre></td></tr></table></figure>
+<p>按空格分词：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">list.stream()</span><br><span class="line">            .map(line-&gt;line.split(&quot; &quot;));</span><br></pre></td></tr></table></figure>
+<p>分完词之后，每个元素变成了一个String[]数组。</p>
+<p>将每个 <code>String[]</code> 变成流：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">list.stream()</span><br><span class="line">            .map(line-&gt;line.split(&quot; &quot;))</span><br><span class="line">            .map(Arrays::stream)</span><br></pre></td></tr></table></figure>
+<p>此时一个大流里面包含了一个个小流，我们需要将这些小流合并成一个流。</p>
+<p>将小流合并成一个大流：用 <code>flatMap</code> 替换刚才的 map</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">list.stream()</span><br><span class="line">    .map(line-&gt;line.split(&quot; &quot;))</span><br><span class="line">    .flatMap(Arrays::stream)</span><br></pre></td></tr></table></figure>
+<p>去重</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">list.stream()</span><br><span class="line">    .map(line-&gt;line.split(&quot; &quot;))</span><br><span class="line">    .flatMap(Arrays::stream)</span><br><span class="line">    .distinct()</span><br><span class="line">    .collect(toList());</span><br></pre></td></tr></table></figure>
+<h3 id="是否匹配任一元素anymatch">是否匹配任一元素：anyMatch</h3>
+<p>anyMatch用于判断流中是否存在至少一个元素满足指定的条件，这个判断条件通过Lambda表达式传递给anyMatch，执行结果为boolean类型。</p>
+<p>如，判断list中是否有学生：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">boolean result &#x3D; list.stream()</span><br><span class="line">            .anyMatch(Person::isStudent);</span><br></pre></td></tr></table></figure>
+<h3 id="是否匹配所有元素allmatch">是否匹配所有元素：allMatch</h3>
+<p>allMatch用于判断流中的所有元素是否都满足指定条件，这个判断条件通过Lambda表达式传递给anyMatch，执行结果为boolean类型。</p>
+<p>如，判断是否所有人都是学生：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">boolean result &#x3D; list.stream()</span><br><span class="line">            .allMatch(Person::isStudent);</span><br></pre></td></tr></table></figure>
+<h3 id="是否未匹配所有元素nonematch">是否未匹配所有元素：noneMatch</h3>
+<p>noneMatch与allMatch恰恰相反，它用于判断流中的所有元素是否都不满足指定条件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">boolean result &#x3D; list.stream()</span><br><span class="line">            .noneMatch(Person::isStudent);</span><br></pre></td></tr></table></figure>
+<h3 id="获取任一元素findany">获取任一元素findAny</h3>
+<p>findAny能够从流中随便选一个元素出来，它返回一个Optional类型的元素。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Optional&lt;Person&gt; person &#x3D; list.stream().findAny();</span><br></pre></td></tr></table></figure>
+<h3 id="获取第一个元素findfirst">获取第一个元素findFirst</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Optional&lt;Person&gt; person &#x3D; list.stream().findFirst();</span><br></pre></td></tr></table></figure>
+<h3 id="归约">归约</h3>
+<p>归约是将集合中的所有元素经过指定运算，折叠成一个元素输出，如：求最值、平均数等，这些操作都是将一个集合的元素折叠成一个元素输出。</p>
+<p>在流中，reduce函数能实现归约。</p>
+<p>reduce函数接收两个参数：</p>
+<ol>
+<li>初始值</li>
+<li>进行归约操作的Lambda表达式</li>
+</ol>
+<p><strong>元素求和：自定义Lambda表达式实现求和</strong></p>
+<p>例：计算所有人的年龄总和</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int age &#x3D; list.stream().reduce(0, (person1,person2)-&gt;person1.getAge()+person2.getAge());</span><br></pre></td></tr></table></figure>
+<ol>
+<li>reduce的第一个参数表示初试值为0；</li>
+<li>reduce的第二个参数为需要进行的归约操作，它接收一个拥有两个参数的Lambda表达式，reduce会把流中的元素两两输给Lambda表达式，最后将计算出累加之和。</li>
+</ol>
+<p><strong>元素求和：使用Integer.sum函数求和</strong></p>
+<p>上面的方法中我们自己定义了Lambda表达式实现求和运算，如果当前流的元素为数值类型，那么可以使用Integer提供了sum函数代替自定义的Lambda表达式，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int age &#x3D; list.stream().reduce(0, Integer::sum);</span><br></pre></td></tr></table></figure>
+<p>Integer类还提供了 <code>min</code>、<code>max</code> 等一系列数值操作，当流中元素为数值类型时可以直接使用。</p>
+<h3 id="数值流的使用">数值流的使用</h3>
+<p>采用reduce进行数值操作会涉及到基本数值类型和引用数值类型之间的装箱、拆箱操作，因此效率较低。</p>
+<p>当流操作为纯数值操作时，使用数值流能获得较高的效率。</p>
+<p><strong>将普通流转换成数值流</strong></p>
+<p>StreamAPI提供了三种数值流：IntStream、DoubleStream、LongStream，也提供了将普通流转换成数值流的三种方法：mapToInt、mapToDouble、mapToLong。</p>
+<p>如，将Person中的age转换成数值流：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IntStream stream &#x3D; list.stream().mapToInt(Person::getAge);</span><br></pre></td></tr></table></figure>
+<p><strong>数值计算</strong></p>
+<p>每种数值流都提供了数值计算函数，如max、min、sum等。如，找出最大的年龄：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">OptionalInt maxAge &#x3D; list.stream()</span><br><span class="line">                                .mapToInt(Person::getAge)</span><br><span class="line">                                .max();</span><br></pre></td></tr></table></figure>
+<p>由于数值流可能为空，并且给空的数值流计算最大值是没有意义的，因此max函数返回OptionalInt，它是Optional的一个子类，能够判断流是否为空，并对流为空的情况作相应的处理。</p>
+<p>此外，mapToInt、mapToDouble、mapToLong进行数值操作后的返回结果分别为：OptionalInt、OptionalDouble、OptionalLong</p>
+<h2 id="中间操作和收集操作">中间操作和收集操作</h2>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>类型</th>
+<th>返回类型</th>
+<th>使用的类型/函数式接口</th>
+<th>函数描述符</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>filter</code></td>
+<td>中间</td>
+<td><code>Stream&lt;T&gt;</code></td>
+<td><code>Predicate&lt;T&gt;</code></td>
+<td><code>T -&gt; boolean</code></td>
+</tr>
+<tr>
+<td><code>distinct</code></td>
+<td>中间</td>
+<td><code>Stream&lt;T&gt;</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>skip</code></td>
+<td>中间</td>
+<td><code>Stream&lt;T&gt;</code></td>
+<td>long</td>
+<td></td>
+</tr>
+<tr>
+<td><code>map</code></td>
+<td>中间</td>
+<td><code>Stream&lt;R&gt;</code></td>
+<td><code>Function&lt;T, R&gt;</code></td>
+<td><code>T -&gt; R</code></td>
+</tr>
+<tr>
+<td><code>flatMap</code></td>
+<td>中间</td>
+<td><code>Stream&lt;R&gt;</code></td>
+<td><code>Function&lt;T, Stream&lt;R&gt;&gt;</code></td>
+<td><code>T -&gt; Stream&lt;R&gt;</code></td>
+</tr>
+<tr>
+<td><code>limit</code></td>
+<td>中间</td>
+<td><code>Stream&lt;T&gt;</code></td>
+<td>long</td>
+<td></td>
+</tr>
+<tr>
+<td><code>sorted</code></td>
+<td>中间</td>
+<td><code>Stream&lt;T&gt;</code></td>
+<td><code>Comparator&lt;T&gt;</code></td>
+<td><code>(T, T) -&gt; int</code></td>
+</tr>
+<tr>
+<td><code>anyMatch</code></td>
+<td>终端</td>
+<td><code>boolean</code></td>
+<td><code>Predicate&lt;T&gt;</code></td>
+<td><code>T -&gt; boolean</code></td>
+</tr>
+<tr>
+<td><code>noneMatch</code></td>
+<td>终端</td>
+<td><code>boolean</code></td>
+<td><code>Predicate&lt;T&gt;</code></td>
+<td><code>T -&gt; boolean</code></td>
+</tr>
+<tr>
+<td><code>allMatch</code></td>
+<td>终端</td>
+<td><code>boolean</code></td>
+<td><code>Predicate&lt;T&gt;</code></td>
+<td><code>T -&gt; boolean</code></td>
+</tr>
+<tr>
+<td><code>findAny</code></td>
+<td>终端</td>
+<td><code>Optional&lt;T&gt;</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>findFirst</code></td>
+<td>终端</td>
+<td><code>Optional&lt;T&gt;</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>forEach</code></td>
+<td>终端</td>
+<td><code>void</code></td>
+<td><code>Consumer&lt;T&gt;</code></td>
+<td><code>T -&gt; void</code></td>
+</tr>
+<tr>
+<td><code>collect</code></td>
+<td>终端</td>
+<td><code>R</code></td>
+<td><code>Collector&lt;T, A, R&gt;</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>reduce</code></td>
+<td>终端</td>
+<td><code>Optional&lt;T&gt;</code></td>
+<td><code>BinaryOperator&lt;T&gt;</code></td>
+<td><code>(T, T) -&gt; T</code></td>
+</tr>
+<tr>
+<td><code>count</code></td>
+<td>终端</td>
+<td><code>long</code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="collector-收集">Collector 收集</h2>
+<p>收集器用来将经过筛选、映射的流进行最后的整理，可以使得最后的结果以不同的形式展现。</p>
+<p><code>collect</code> 方法即为收集器，它接收 <code>Collector</code> 接口的实现作为具体收集器的收集方法。</p>
+<p><code>Collector</code> 接口提供了很多默认实现的方法，我们可以直接使用它们格式化流的结果；也可以自定义 <code>Collector</code> 接口的实现，从而定制自己的收集器。</p>
+<h3 id="归约">归约</h3>
+<p>流由一个个元素组成，归约就是将一个个元素“折叠”成一个值，如求和、求最值、求平均值都是归约操作。</p>
+<h3 id="一般性归约">一般性归约</h3>
+<p>若你需要自定义一个归约操作，那么需要使用 <code>Collectors.reducing</code> 函数，该函数接收三个参数：</p>
+<ul>
+<li>第一个参数为归约的初始值</li>
+<li>第二个参数为归约操作进行的字段</li>
+<li>第三个参数为归约操作的过程</li>
+</ul>
+<h2 id="汇总">汇总</h2>
+<p>Collectors类专门为汇总提供了一个工厂方法：<code>Collectors.summingInt</code>。</p>
+<p>它可接受一 个把对象映射为求和所需int的函数，并返回一个收集器；该收集器在传递给普通的 <code>collect</code> 方法后即执行我们需要的汇总操作。</p>
+<h3 id="分组">分组</h3>
+<p>数据分组是一种更自然的分割数据操作，分组就是将流中的元素按照指定类别进行划分，类似于SQL语句中的 <code>GROUPBY</code>。</p>
+<h3 id="多级分组">多级分组</h3>
+<p>多级分组可以支持在完成一次分组后，分别对每个小组再进行分组。</p>
+<p>使用具有两个参数的 <code>groupingBy</code> 重载方法即可实现多级分组。</p>
+<ul>
+<li>第一个参数：一级分组的条件</li>
+<li>第二个参数：一个新的 <code>groupingBy</code> 函数，该函数包含二级分组的条件</li>
+</ul>
+<p><strong>Collectors 类的静态工厂方法</strong></p>
+<table>
+<thead>
+<tr>
+<th>工厂方法</th>
+<th>返回类型</th>
+<th>用途</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>toList</code></td>
+<td><code>List&lt;T&gt;</code></td>
+<td>把流中所有项目收集到一个 List</td>
+<td><code>List&lt;Project&gt; projects = projectStream.collect(toList());</code></td>
+</tr>
+<tr>
+<td><code>toSet</code></td>
+<td><code>Set&lt;T&gt;</code></td>
+<td>把流中所有项目收集到一个 Set，删除重复项</td>
+<td><code>Set&lt;Project&gt; projects = projectStream.collect(toSet());</code></td>
+</tr>
+<tr>
+<td><code>toCollection</code></td>
+<td><code>Collection&lt;T&gt;</code></td>
+<td>把流中所有项目收集到给定的供应源创建的集合</td>
+<td><code>Collection&lt;Project&gt; projects = projectStream.collect(toCollection(), ArrayList::new);</code></td>
+</tr>
+<tr>
+<td><code>counting</code></td>
+<td><code>Long</code></td>
+<td>计算流中元素的个数</td>
+<td><code>long howManyProjects = projectStream.collect(counting());</code></td>
+</tr>
+<tr>
+<td><code>summingInt</code></td>
+<td><code>Integer</code></td>
+<td>对流中项目的一个整数属性求和</td>
+<td><code>int totalStars = projectStream.collect(summingInt(Project::getStars));</code></td>
+</tr>
+<tr>
+<td><code>averagingInt</code></td>
+<td><code>Double</code></td>
+<td>计算流中项目 Integer 属性的平均值</td>
+<td><code>double avgStars = projectStream.collect(averagingInt(Project::getStars));</code></td>
+</tr>
+<tr>
+<td><code>summarizingInt</code></td>
+<td><code>IntSummaryStatistics</code></td>
+<td>收集关于流中项目 Integer 属性的统计值，例如最大、最小、 总和与平均值</td>
+<td><code>IntSummaryStatistics projectStatistics = projectStream.collect(summarizingInt(Project::getStars));</code></td>
+</tr>
+<tr>
+<td><code>joining</code></td>
+<td><code>String</code></td>
+<td>连接对流中每个项目调用 toString 方法所生成的字符串</td>
+<td><code>String shortProject = projectStream.map(Project::getName).collect(joining(&quot;, &quot;));</code></td>
+</tr>
+<tr>
+<td><code>maxBy</code></td>
+<td><code>Optional&lt;T&gt;</code></td>
+<td>按照给定比较器选出的最大元素的 Optional， 或如果流为空则为 Optional.empty()</td>
+<td><code>Optional&lt;Project&gt; fattest = projectStream.collect(maxBy(comparingInt(Project::getStars)));</code></td>
+</tr>
+<tr>
+<td><code>minBy</code></td>
+<td><code>Optional&lt;T&gt;</code></td>
+<td>按照给定比较器选出的最小元素的 Optional， 或如果流为空则为 Optional.empty()</td>
+<td><code>Optional&lt;Project&gt; fattest = projectStream.collect(minBy(comparingInt(Project::getStars)));</code></td>
+</tr>
+<tr>
+<td><code>reducing</code></td>
+<td>归约操作产生的类型</td>
+<td>从一个作为累加器的初始值开始，利用 BinaryOperator 与流中的元素逐个结合，从而将流归约为单个值</td>
+<td><code>int totalStars = projectStream.collect(reducing(0, Project::getStars, Integer::sum));</code></td>
+</tr>
+<tr>
+<td><code>collectingAndThen</code></td>
+<td>转换函数返回的类型</td>
+<td>包含另一个收集器，对其结果应用转换函数</td>
+<td><code>int howManyProjects = projectStream.collect(collectingAndThen(toList(), List::size));</code></td>
+</tr>
+<tr>
+<td><code>groupingBy</code></td>
+<td><code>Map&lt;K, List&lt;T&gt;&gt;</code></td>
+<td>根据项目的一个属性的值对流中的项目作问组，并将属性值作 为结果 Map 的键</td>
+<td><code>Map&lt;String,List&lt;Project&gt;&gt; projectByLanguage = projectStream.collect(groupingBy(Project::getLanguage));</code></td>
+</tr>
+<tr>
+<td><code>partitioningBy</code></td>
+<td><code>Map&lt;Boolean,List&lt;T&gt;&gt;</code></td>
+<td>根据对流中每个项目应用断言的结果来对项目进行分区</td>
+<td><code>Map&lt;Boolean,List&lt;Project&gt;&gt; vegetarianDishes = projectStream.collect(partitioningBy(Project::isVegetarian));</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="转换类型">转换类型</h3>
+<p>有一些收集器可以生成其他集合。比如前面已经见过的 <code>toList</code>，生成了 <code>java.util.List</code> 类的实例。</p>
+<p>还有 <code>toSet</code> 和 <code>toCollection</code>，分别生成 <code>Set</code> 和 <code>Collection</code> 类的实例。</p>
+<p>到目前为止， 我已经讲了很多流上的链式操作，但总有一些时候，需要最终生成一个集合——比如：</p>
+<ul>
+<li>已有代码是为集合编写的，因此需要将流转换成集合传入；</li>
+<li>在集合上进行一系列链式操作后，最终希望生成一个值；</li>
+<li>写单元测试时，需要对某个具体的集合做断言。</li>
+</ul>
+<p>使用 <code>toCollection</code>，用定制的集合收集元素</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stream.collect(toCollection(TreeSet::new));</span><br></pre></td></tr></table></figure>
+<p>还可以利用收集器让流生成一个值。 <code>maxBy</code> 和 <code>minBy</code> 允许用户按某种特定的顺序生成一个值。</p>
+<h3 id="数据分区">数据分区</h3>
+<p>分区是分组的特殊情况：由一个断言（返回一个布尔值的函数）作为分类函数，它称分区函数。</p>
+<p>分区函数返回一个布尔值，这意味着得到的分组 <code>Map</code> 的键类型是 <code>Boolean</code>，于是它最多可以分为两组: true是一组，false是一组。</p>
+<p>分区的好处在于保留了分区函数返回true或false的两套流元素列表。</p>
+<h3 id="并行流">并行流</h3>
+<p>并行流就是一个把内容分成多个数据块，并用不同的线程分别处理每个数据块的流。最后合并每个数据块的计算结果。</p>
+<p>将一个顺序执行的流转变成一个并发的流只要调用 <code>parallel()</code> 方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public static long parallelSum(long n)&#123;</span><br><span class="line">    return Stream.iterate(1L, i -&gt; i +1).limit(n).parallel().reduce(0L,Long::sum);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将一个并发流转成顺序的流只要调用 <code>sequential()</code> 方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stream.parallel().filter(...).sequential().map(...).parallel().reduce();</span><br></pre></td></tr></table></figure>
+<p>这两个方法可以多次调用，只有最后一个调用决定这个流是顺序的还是并发的。</p>
+<p>并发流使用的默认线程数等于你机器的处理器核心数。</p>
+<p>通过这个方法可以修改这个值，这是全局属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.setProperty(&quot;java.util.concurrent.ForkJoinPool.common.parallelism&quot;, &quot;12&quot;);</span><br></pre></td></tr></table></figure>
+<p>并非使用多线程并行流处理数据的性能一定高于单线程顺序流的性能，因为性能受到多种因素的影响。</p>
+<p>如何高效使用并发流的一些建议：</p>
+<ol>
+<li>如果不确定， 就自己测试。</li>
+<li>尽量使用基本类型的流 IntStream, LongStream, DoubleStream</li>
+<li>有些操作使用并发流的性能会比顺序流的性能更差，比如limit，findFirst，依赖元素顺序的操作在并发流中是极其消耗性能的。findAny的性能就会好很多，应为不依赖顺序。</li>
+<li>考虑流中计算的性能(Q)和操作的性能(N)的对比, Q表示单个处理所需的时间，N表示需要处理的数量，如果Q的值越大, 使用并发流的性能就会越高。</li>
+<li>数据量不大时使用并发流，性能得不到提升。</li>
+<li>考虑数据结构：并发流需要对数据进行分解，不同的数据结构被分解的性能时不一样的。</li>
+</ol>
+<p><strong>流的数据源和可分解性</strong></p>
+<table>
+<thead>
+<tr>
+<th>源</th>
+<th>可分解性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ArrayList</code></td>
+<td>非常好</td>
+</tr>
+<tr>
+<td><code>LinkedList</code></td>
+<td>差</td>
+</tr>
+<tr>
+<td><code>IntStream.range</code></td>
+<td>非常好</td>
+</tr>
+<tr>
+<td><code>Stream.iterate</code></td>
+<td>差</td>
+</tr>
+<tr>
+<td><code>HashSet</code></td>
+<td>好</td>
+</tr>
+<tr>
+<td><code>TreeSet</code></td>
+<td>好</td>
+</tr>
+</tbody>
+</table>
+<p><strong>流的特性以及中间操作对流的修改都会对数据对分解性能造成影响。 比如固定大小的流在任务分解的时候就可以平均分配，但是如果有filter操作，那么流就不能预先知道在这个操作后还会剩余多少元素。</strong></p>
+<p><strong>考虑终端操作的性能：如果终端操作在合并并发流的计算结果时的性能消耗太大，那么使用并发流提升的性能就会得不偿失。</strong></p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/其他/2019-04-19/" data-toggle="tooltip" data-placement="top" title="购买房子注意事项">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/lambda-表达式/2019-03-24/" data-toggle="tooltip" data-placement="top" title="lambda 表达式使用及其技巧">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                    <!--  css & js -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#什么是流"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">什么是流？</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#流的特点"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">流的特点</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#流的操作种类"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">流的操作种类</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#流的操作过程"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">流的操作过程</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#使用流"><span class="toc-nav-number"></span> <span class="toc-nav-text">使用流</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#创建流"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">创建流</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#筛选-filter"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">筛选 filter</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#去重distinct"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">去重distinct</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#截取"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">截取</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#跳过"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">跳过</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#映射"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">映射</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#合并多个流"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">合并多个流</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#是否匹配任一元素anymatch"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">是否匹配任一元素：anyMatch</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#是否匹配所有元素allmatch"><span class="toc-nav-number">9.</span> <span class="toc-nav-text">是否匹配所有元素：allMatch</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#是否未匹配所有元素nonematch"><span class="toc-nav-number">10.</span> <span class="toc-nav-text">是否未匹配所有元素：noneMatch</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#获取任一元素findany"><span class="toc-nav-number">11.</span> <span class="toc-nav-text">获取任一元素findAny</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#获取第一个元素findfirst"><span class="toc-nav-number">12.</span> <span class="toc-nav-text">获取第一个元素findFirst</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#归约"><span class="toc-nav-number">13.</span> <span class="toc-nav-text">归约</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#数值流的使用"><span class="toc-nav-number">14.</span> <span class="toc-nav-text">数值流的使用</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#中间操作和收集操作"><span class="toc-nav-number"></span> <span class="toc-nav-text">中间操作和收集操作</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#collector-收集"><span class="toc-nav-number"></span> <span class="toc-nav-text">Collector 收集</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#归约"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">归约</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#一般性归约"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">一般性归约</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#汇总"><span class="toc-nav-number"></span> <span class="toc-nav-text">汇总</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#分组"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">分组</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#多级分组"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">多级分组</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#转换类型"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">转换类型</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#数据分区"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">数据分区</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#并行流"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">并行流</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Java" title="Java">Java</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "http://www.wangxiaohuan.com/stream-%E8%A1%A8%E8%BE%BE%E5%BC%8F/2019-04-03/";
+    var disqus_url = "http://www.wangxiaohuan.com/stream-%E8%A1%A8%E8%BE%BE%E5%BC%8F/2019-04-03/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/work_wxh">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/2742646782">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/wxh.work">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/xiaohuanwang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 吃素的左撇子 2021 
+                    <br>
+                    Theme by <a href="http://beantech.org" target="_blank" rel="noopener">BeanTech</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="http://www.wangxiaohuan.com">吃素的左撇子</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=xiaohuanwang&repo=hexo-theme-xiaohuanwang&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/hux-blog.min.js"></script>
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://www.wangxiaohuan.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = 'xxx';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://www.wangxiaohuan.com/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>
