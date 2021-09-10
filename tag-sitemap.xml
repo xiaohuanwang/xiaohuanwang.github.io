@@ -23,14 +23,14 @@
     </url>
 
     <url>
-        <loc>http://www.wangxiaohuan.com/tags/Nginx/</loc>
+        <loc>http://www.wangxiaohuan.com/tags/Git/</loc>
         <lastmod>2021-09-08T06:51:16.945Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://www.wangxiaohuan.com/tags/Git/</loc>
+        <loc>http://www.wangxiaohuan.com/tags/Nginx/</loc>
         <lastmod>2021-09-08T06:51:16.945Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -79,13 +79,6 @@
     </url>
 
     <url>
-        <loc>http://www.wangxiaohuan.com/tags/%25E9%259A%258F%25E7%25AC%2594/</loc>
-        <lastmod>2021-09-08T06:51:16.961Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://www.wangxiaohuan.com/tags/%25E6%2595%25B0%25E6%258D%25AE%25E7%25BB%2593%25E6%259E%2584/</loc>
         <lastmod>2021-09-08T06:51:16.961Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -95,6 +88,13 @@
     <url>
         <loc>http://www.wangxiaohuan.com/tags/%25E5%25B7%25A5%25E5%2585%25B7/</loc>
         <lastmod>2021-09-09T06:11:40.153Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://www.wangxiaohuan.com/tags/%25E9%259A%258F%25E7%25AC%2594/</loc>
+        <lastmod>2021-09-10T04:31:54.933Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
