@@ -24,3 +24,4 @@ npm i -g @cloudbase/cli
 cloudbase login
 
 cloudbase hosting deploy public -e blog-2gbsc2o321c689df
+
