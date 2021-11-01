@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          Java 命名规范 - 吃素的左撇子 | Blog
+        
+    </title>
+
+    <link rel="canonical" href="http://www.wangxiaohuan.com/Java-命名规范/2017-03-22/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+<link rel="stylesheet" href="/css/beantech.min.css">
+
+
+    
+<link rel="stylesheet" href="/css/donate.css">
+
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="/css/widget.css">
+
+
+    
+<link rel="stylesheet" href="/css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="/css/signature.css">
+
+
+    
+<link rel="stylesheet" href="/css/toc.css">
+
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('http://image.wangxiaohuan.com/blog/image/202109101235884.png')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Java" title="Java">Java</a>
+                            
+                        </div>
+                        <h1>Java 命名规范</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 吃素的左撇子 on
+                            2017-02-22
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">吃素的左撇子</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About Me</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archive</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h3 id="为什么要-java-命名规范">为什么要 Java 命名规范</h3>
+<p>无规矩不成方圆，编程也一样,程序中的包命名，类命名，接口命名，方法命名，变量命名，常类命名，抽象类命名，异常类命名以及扩展类命名等。合适的命名， 可以体现出元素的特征、职责 ，以及元素之间的差异性和协同性。</p>
+<h3 id="包命名规范">包命名规范</h3>
+<p>包(Package)的作用是将功能相似或相关的类或者接口进行分组管理，便于类的定位和查找，同时也可以使用包来避免类名的冲突和访问控制，使代码更容易维护。通常，包名使用小写英文字母进行命名，并使用“.”进行分割，每个被分割的单元只能包含一个名词。</p>
+<p>一般地，包命名常采用顶级域名作为前缀，例如com，net，org，edu，gov，cn，io等，随后紧跟公司/组织/个人名称以及功能模块名称。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">package org.springframework.boot.autoconfigure.cloud</span><br><span class="line">package org.springframework.boot.util</span><br><span class="line">package org.hibernate.action</span><br><span class="line">package org.hibernate.cfg</span><br><span class="line">package com.alibaba.druid</span><br><span class="line">package com.alibaba.druid.filter</span><br><span class="line">package com.alibaba.nacos.client.config</span><br><span class="line">package com.ramostear.blog.web</span><br></pre></td></tr></table></figure>
+<h3 id="类命名规范">类命名规范</h3>
+<p>类(Class)通常采用名词进行命名，且首字母大写，如果一个类名包含两个以上名词，建议使用驼峰命名(Camel-Case)法书写类名,每个名词首字母也应该大写。一般地，类名的书写尽量使其保持简单和描述的完整性，因此在书写类名时不建议使用缩写。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class UserDTO&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">class EmployeeService&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">class StudentDAO&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">class OrderItemEntity&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">public class UserServiceImpl&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">public class OrderItemController&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="接口命名规范">接口命名规范</h3>
+<p>接口(Interface)是一种表述某一类型对象动作的特殊类；简单来说，接口也是类(不太严谨)，所以，接口的名称的书写也应该符合类名书写规范，首字母应该大写，与普通类名不同的是，接口命名时通常采用形容词或动词来描述接口的动作行为。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public interface Closeable&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">public interface Cloneable&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">public interface Runnable&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">public interface Comparable&lt;T&gt;&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">public interface CompletionService&lt;V&gt;&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">public interface Iterable&lt;T&gt;&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">public interface EventListener&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="接口实现类">接口实现类</h3>
+<p>为了便于阅读，在通常情况下，建议接口实现类使用“Impl作为后缀”，不建议使用大写的“I”作为接口前缀。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public interface OrderService&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">public class OrderServiceImpl implements OrderService&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="抽象类命名规范">抽象类命名规范</h3>
+<p>抽象类(Abstract Class)是一种特殊的类，其命名与普通类的命名规范相当。一般地，为了将抽象类与普通类和接口做出区别，提高抽象类的可读性，在命名抽象类时，会以“Abstract”/“Base”作为类名的前缀。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public abstract class AbstractRepository&lt;T&gt;&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">public abstract class AbstractController&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">public abstract class BaseDao&lt;T,ID&gt;&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">public abstract class AbstractCommonService&lt;T&gt;&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="异常类命名规范">异常类命名规范</h3>
+<p>异常类(Exception Class)也是类的一种，但与普通类命名不同的是，异常类在命名时需要使用“Exception”作为其后缀。</p>
+<p>在Java中还有另外一类异常类，它们属于系统异常，这一类异常类的命名使用“Error”作为其后缀，以区分Exception(编码，环境，操作等异常)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class FileNotFoundException&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">public class UserAlreadyExistException&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">public class TransactionException&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">public class ClassNotFoundException&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">public class IllegalArgumentException&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">public class IndexOutOfBoundsException&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="方法命名规范">方法命名规范</h3>
+<p>方法(Method)命名时,其首字母应该小写，如果方法签名由多个单词组成，则从第二个单词起，使用驼峰命名法进行书写。一般地，在对方法进行命名时，通常采用动词/动词+名词的组合，下面是方法命名的一些常见示例。</p>
+<p><strong>表述获取</strong></p>
+<p>如果一个方法用于获取某个值，通常使用“get”作为其前缀。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public String getUserName()&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">public List&lt;Integer&gt; getUserIds()&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">public User getOne()&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>表述查询</strong></p>
+<p>如果方法需要通过查询或筛选的方式获取某个数据，通常使用“find”/“query”作为其前缀。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public List&lt;User&gt; findOne(Integer id)&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">public List&lt;Integer&gt; findAll()&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">public List&lt;String&gt; queryOrders()&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>表述条件</strong></p>
+<p>如果一个方法需要一些条件参数，则可以使用“by”/“with”等字符作为方法名中条件的连接符。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public User findByUsername(String username)&#123;</span><br><span class="line">&#125;</span><br><span class="line">public List&lt;Integer&gt; getUserIdsWithState(boolean state)&#123;</span><br><span class="line">&#125;</span><br><span class="line">public List&lt;User&gt; findAllByUsernameOrderByIdDesc(String username)&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>表述设置</strong></p>
+<p>如果一个方法是要设置，插入，修改，删除等操作，应该将对应的动词(set,insert,update,delete)作为其名词的前缀。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public void setName(String name)&#123;</span><br><span class="line">&#125;</span><br><span class="line">public User insert(User user)&#123;</span><br><span class="line">&#125;</span><br><span class="line">public void update(User user)&#123;</span><br><span class="line">&#125;</span><br><span class="line">public void clearAll()&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>其他规范</strong></p>
+<p>如果一个方法用于获取某组数据的长度或数量，则该方法应该使用length或size命名；如果方法的返回值为布尔类型(Boolean)，则该方法应该使用“is”或”has”作为前缀；</p>
+<p>如果方法用于将一种类型的数据转换为另一种数据数类型，则可以使用“to”作为前缀。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public long length()&#123;</span><br><span class="line">&#125;</span><br><span class="line">public int size()&#123;</span><br><span class="line">&#125;</span><br><span class="line">public boolean isOpen()&#123;</span><br><span class="line">&#125;</span><br><span class="line">public boolean isNotEmpty()&#123;</span><br><span class="line">&#125;</span><br><span class="line">public boolean hasLength()&#123;</span><br><span class="line">&#125;</span><br><span class="line">public Set&lt;Integer&gt; mapToSet(Map map)&#123;</span><br><span class="line">&#125;</span><br><span class="line">public UserDto convertTo(User user)&#123;</span><br><span class="line">&#125;</span><br><span class="line">public String toString(Object obj)&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="变量命名规范">变量命名规范</h3>
+<p>变量(Variable)命名包括参数名称，成员变量和局部变量。变量命名通常以小写字母开头，如果变量名由多个单词构成，则从第二个单词起首字母需要大写，在变量命名过程中，不建议使用“_”作为前缀或者单词之间的分割符号。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">private String nickName;</span><br><span class="line">private String mobileNumber;</span><br><span class="line">private Long id;</span><br><span class="line">private String username;</span><br><span class="line">private Long orderId;</span><br><span class="line">private Long orderItemId;</span><br></pre></td></tr></table></figure>
+<h3 id="常量命名规范">常量命名规范</h3>
+<p>常量名称采用全部大写的英文单词书写，如果常量名称由多个单词组成，则单词之间统一使用“_”进行分割。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public static final String LOGIN_USER_SESSION_KEY &#x3D; &quot;current_login_user&quot;;</span><br><span class="line">public static final int MAX_AGE_VALUE &#x3D; 120;</span><br><span class="line">public static final int DEFAULT_PAGE_NO &#x3D; 1;</span><br><span class="line">public static final long MAX_PAGE_SIZE &#x3D; 1000;</span><br><span class="line">public static final boolean HAS_LICENSE &#x3D; false;</span><br><span class="line">public static final boolean IS_CHECKED &#x3D; false;</span><br></pre></td></tr></table></figure>
+<h3 id="枚举命名规范">枚举命名规范</h3>
+<p>枚举(Enum)类是一种特殊的类，其命名规范遵循普通类的命名约束条件，首字母大写，采用驼峰命名法；枚举类中定义的值的名称遵循常量的命名规范，且枚举值的名称需要与类名有一定的关联性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public enum Color&#123;</span><br><span class="line">   RED,YELLOW,BLUE,GREEN,WHITE;</span><br><span class="line">&#125;</span><br><span class="line">public enum PhysicalSize&#123;    </span><br><span class="line">   TINY,SMALL,MEDIUM,LARGE,HUGE,GIGANTIC;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="泛型类">泛型类</h3>
+<p>在书写泛型类时，通常做以下的约定：</p>
+<ul>
+<li>E表示Element，通常用在集合中；</li>
+<li>ID用于表示对象的唯一标识符类型</li>
+<li>T表示Type(类型)，通常指代类；</li>
+<li>K表示Key(键),通常用于Map中；</li>
+<li>V表示Value(值),通常用于Map中，与K结对出现；</li>
+<li>N表示Number,通常用于表示数值类型；</li>
+<li>？表示不确定的Java类型；</li>
+<li>X用于表示异常；</li>
+<li>U,S表示任意的类型。</li>
+</ul>
+<h3 id="测试类和测试方法">测试类和测试方法</h3>
+<p>测试类采用被测试业务模块名/被测试接口/被测试类+“Test”的方法进行书写，测试类中的测试函数采用“test”+用例操作_状态的组合方式进行书写。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class UserServiceTest&#123;    </span><br><span class="line">  public void testFindByUsernameAndPassword()&#123;</span><br><span class="line">  &#125;    </span><br><span class="line">  public void testUsernameExist_notExist()&#123;</span><br><span class="line">  &#125;    </span><br><span class="line">  public void testDeleteById_isOk()&#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/JDK和Maven/2017-02-25/" data-toggle="tooltip" data-placement="top" title="Linux安装JDK和Maven">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/集合/2017-02-20/" data-toggle="tooltip" data-placement="top" title="Java-Map集合介绍-HashMap和TreeMap区别">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                    <!--  css & js -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#为什么要-java-命名规范"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">为什么要 Java 命名规范</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#包命名规范"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">包命名规范</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#类命名规范"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">类命名规范</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#接口命名规范"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">接口命名规范</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#接口实现类"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">接口实现类</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#抽象类命名规范"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">抽象类命名规范</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#异常类命名规范"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">异常类命名规范</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#方法命名规范"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">方法命名规范</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#变量命名规范"><span class="toc-nav-number">9.</span> <span class="toc-nav-text">变量命名规范</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#常量命名规范"><span class="toc-nav-number">10.</span> <span class="toc-nav-text">常量命名规范</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#枚举命名规范"><span class="toc-nav-number">11.</span> <span class="toc-nav-text">枚举命名规范</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#泛型类"><span class="toc-nav-number">12.</span> <span class="toc-nav-text">泛型类</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#测试类和测试方法"><span class="toc-nav-number">13.</span> <span class="toc-nav-text">测试类和测试方法</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Java" title="Java">Java</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "http://www.wangxiaohuan.com/Java-%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83/2017-03-22/";
+    var disqus_url = "http://www.wangxiaohuan.com/Java-%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83/2017-03-22/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/work_wxh">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/2742646782">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/wxh.work">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/xiaohuanwang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 吃素的左撇子 2021 
+                    <br>
+                    Theme by <a href="http://beantech.org" target="_blank" rel="noopener">BeanTech</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="http://www.wangxiaohuan.com">吃素的左撇子</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=xiaohuanwang&repo=hexo-theme-xiaohuanwang&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/hux-blog.min.js"></script>
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://www.wangxiaohuan.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = 'xxx';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://www.wangxiaohuan.com/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>
