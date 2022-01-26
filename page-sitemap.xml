@@ -8,28 +8,28 @@
     
     <url>
         <loc>http://www.wangxiaohuan.com/tags/</loc>
-        <lastmod>2021-09-08T06:51:17.164Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    
-    <url>
-        <loc>http://www.wangxiaohuan.com/about/</loc>
-        <lastmod>2021-09-08T06:51:16.961Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    
-    <url>
-        <loc>http://www.wangxiaohuan.com/archive/</loc>
-        <lastmod>2021-09-08T06:51:16.961Z</lastmod>
+        <lastmod>2021-09-08T06:51:17.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     
     <url>
         <loc>http://www.wangxiaohuan.com/404.html</loc>
-        <lastmod>2021-09-08T06:51:16.927Z</lastmod>
+        <lastmod>2021-09-08T06:51:16.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>http://www.wangxiaohuan.com/about/</loc>
+        <lastmod>2021-09-08T06:51:16.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>http://www.wangxiaohuan.com/archive/</loc>
+        <lastmod>2021-09-08T06:51:16.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
