@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          如何保证接口的幂等性 - 吃素的左撇子 | Blog
+          Nacos 快速开始 - 吃素的左撇子 | Blog
         
     </title>
 
-    <link rel="canonical" href="http://www.wangxiaohuan.com/接口幂等性/2020-03-30/">
+    <link rel="canonical" href="http://www.wangxiaohuan.com/技术/2019-04-06/">
 
     <!-- Bootstrap Core CSS -->
     
@@ -87,7 +87,7 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('http://image.wangxiaohuan.com/blog/image/20210416225011.png')
+            background-image: url('http://image.wangxiaohuan.com/blog/image/202201271530743.png')
             /*post*/
         
     }
@@ -107,11 +107,11 @@
                               <a class="tag" href="/tags/#微服务" title="微服务">微服务</a>
                             
                         </div>
-                        <h1>如何保证接口的幂等性</h1>
+                        <h1>Nacos 快速开始</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by 吃素的左撇子 on
-                            2020-03-30
+                            2019-03-02
                         </span>
                     </div>
                 
@@ -228,130 +228,48 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h3 id="幂等性介绍">幂等性介绍</h3>
-<p>接口幂等性：多次调用方法或者接口不会改变业务状态，可以保证重复调用的结果和单次调用的结果一致。</p>
-<h3 id="幂等性出现的场景">幂等性出现的场景</h3>
+                <h1 id="nacos-快速开始">Nacos 快速开始</h1>
+<p>这个快速开始手册是帮忙您快速在您的电脑上，下载、安装并使用 Nacos。</p>
+<h2 id="0版本选择">0.版本选择</h2>
+<p>您可以在Nacos的<a href="https://github.com/alibaba/nacos/releases" target="_blank" rel="noopener">release notes</a>及<a href="https://nacos.io/zh-cn/blog/index.html" target="_blank" rel="noopener">博客</a>中找到每个版本支持的功能的介绍，当前推荐的稳定版本为2.0.3。</p>
+<h2 id="1预备环境准备">1.预备环境准备</h2>
+<p>Nacos 依赖 <a href="https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javahome_t/" target="_blank" rel="noopener">Java</a> 环境来运行。如果您是从代码开始构建并运行Nacos，还需要为此配置 <a href="https://maven.apache.org/index.html" target="_blank" rel="noopener">Maven</a>环境，请确保是在以下版本环境中安装使用:</p>
 <ol>
-<li>
-<p>前端重复提交。</p>
-<p>用户在客户端，点击按钮，发送后端请求数据服务，后端需要，存储客户端提交的数据，由于后端没有及时返回状态，导致用户一直在客户端重复点击按钮，发送相同的数据。就会出现在数据库中创建同样的数据，这就是接口没有幂等性出现的bug。</p>
-</li>
-<li>
-<p>接口超时重试。</p>
-<p>对于给第三方调用的接口，有可能会因为网络原因而调用失败，这时，一般在设计的时候会对接口调用加上失败重试的机制。如果第一次调用已经执行了一半时，发生了网络异常。这时再次调用时就会因为脏数据的存在而出现调用异常。</p>
-</li>
-<li>
-<p>消息重复消费。</p>
-<p>在使用消息中间件来处理消息队列，且手动 ack 确认消息被正常消费时。如果消费者突然断开连接，那么已经执行了一半的消息会重新放回队列。<br>
-当消息被其他消费者重新消费时，如果没有幂等性，就会导致消息重复消费时结果异常，如数据库重复数据，数据库数据冲突，资源重复等。</p>
-</li>
+<li>64 bit OS，支持 Linux/Unix/Mac/Windows，推荐选用 Linux/Unix/Mac。</li>
+<li>64 bit JDK 1.8+；<a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="noopener">下载</a> &amp; <a href="https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javahome_t/" target="_blank" rel="noopener">配置</a>。</li>
+<li>Maven 3.2.x+；<a href="https://maven.apache.org/download.cgi" target="_blank" rel="noopener">下载</a> &amp; <a href="https://maven.apache.org/settings.html" target="_blank" rel="noopener">配置</a>。</li>
 </ol>
-<h3 id="幂等性解决方案">幂等性解决方案</h3>
-<ol>
-<li>基于前端按钮判断。</li>
-</ol>
-<p>用户点击一次按钮后，立即更改按钮状态，使按钮不可点击状态，防止用户一个请求，重复多次提交。但是这种方法，只能用于前端重复提交，还是有漏洞，比如用户可以通过修改代码的方式，从新使按钮变为可点击提交的状态。</p>
-<ol>
-<li>
-<p>基于token机制实现。</p>
-<p>通过token 机制实现接口的幂等性,这是一种比较通用性的实现方法。示意图如下：</p>
-<p><img src="http://image.wangxiaohuan.com/blog/image/20210417220719.png" alt="image"></p>
-<p>具体流程步骤：</p>
-<ol>
-<li>客户端会先发送一个请求去获取 token，服务端会生成一个全局唯一的 ID 作为 token 保存在 redis 中，同时把这个 ID 返回给客户端(全局唯一 ID 可以用百度的 uid-generator、美团的 Leaf 去生成)。</li>
-<li>客户端第二次调用业务请求的时候必须携带这个 token。</li>
-<li>服务端会校验这个 token，如果校验成功，则执行业务，并删除 redis 中的 token(对 redis 中是否存在 token 以及删除的代码逻辑建议用 Lua 脚本实现，保证原子性)。</li>
-<li>如果校验失败，说明 redis 中已经没有对应的 token，则表示重复操作，直接返回指定的结果给客户端。</li>
-</ol>
-</li>
-<li>
-<p>基于mysql实现。</p>
-<p>实现方式是利用 mysql 唯一索引的特性。示意图如下：</p>
-<p><img src="http://image.wangxiaohuan.com/blog/image/20210417220708.png" alt="image"></p>
-<p>具体流程步骤：</p>
-<ol>
-<li>建立一张去重表，其中某个字段需要建立唯一索引。</li>
-<li>客户端去请求服务端，服务端会将这次请求的一些信息插入这张去重表中。</li>
-<li>因为表中某个字段带有唯一索引，如果插入成功，证明表中没有这次请求的信息，则执行后续的业务逻辑。</li>
-<li>如果插入失败，则代表已经执行过当前请求，直接返回。</li>
-</ol>
-</li>
-<li>
-<p>基于redis实现。</p>
-<p>实现方式是基于 SETNX 命令实现的。</p>
-<p>SETNX key value：将 key 的值设为 value ，当且仅当 key 不存在。若给定的 key 已经存在，则 SETNX 不做任何动作。</p>
-<p>该命令在设置成功时返回 1，设置失败时返回 0。</p>
-<p>示意图如下：</p>
-<p><img src="http://image.wangxiaohuan.com/blog/image/20210417220738.png" alt="image"></p>
-<p>具体流程步骤：</p>
-<ol>
-<li>客户端先请求服务端，会拿到一个能代表这次请求业务的唯一字段。</li>
-<li>将该字段以 SETNX 的方式存入 redis 中，并根据业务设置相应的超时时间。</li>
-<li>如果设置成功，证明这是第一次请求，则执行后续的业务逻辑。</li>
-<li>如果设置失败，则代表已经执行过当前请求，直接返回。</li>
-</ol>
-</li>
-<li>
-<p>基于悲观锁实现。</p>
-<p>实现方式是基于悲观锁来实现的。将更改的数据行锁住，在同一时刻只允许一个请求获得锁，更新数据，其他的请求则等待。</p>
-<p>通常情况下通过如下sql锁住单行数据：<br>
-select * from 表名 列名=value for update;</p>
-<p>具体流程如下：</p>
-<p><img src="http://image.wangxiaohuan.com/blog/image/20210417222851.png" alt="image"></p>
-<p>具体步骤：</p>
-<ol>
-<li>多个请求同时根据id查询用户信息。</li>
-<li>判断余额是否不足100，如果余额不足，则直接返回余额不足。</li>
-<li>如果余额充足，则通过for update再次查询用户信息，并且尝试获取锁。</li>
-<li>只有第一个请求能获取到行锁，其余没有获取锁的请求，则等待下一次获取锁的机会。</li>
-<li>第一个请求获取到锁之后，判断余额是否不足100，如果余额足够，则进行update操作。</li>
-<li>如果余额不足，说明是重复请求，则直接返回成功。</li>
-</ol>
-<p><em>悲观锁需要在同一个事务操作过程中锁住一行数据，如果事务耗时比较长，会造成大量的请求等待，影响接口性能。<br>
-此外，每次请求接口很难保证都有相同的返回值，所以不适合幂等性设计场景，但是在防重场景中是可以的使用的。</em></p>
-</li>
-<li>
-<p>基于乐观锁实现。</p>
-<p>实现方式是基于乐观锁来实现的。需要在表中增加一个timestamp或者version字段，这里以version字段为例。</p>
-<p>在更新数据之前先查询一下数据：</p>
-<p>select id,amount,version from user id=123;</p>
-<p>如果数据存在，假设查到的version等于1，再使用id和version字段作为查询条件更新数据：</p>
-<p>update user set amount=amount+100,version=version+1<br>
-where id=123 and version=1;</p>
-<p>更新数据的同时version+1，然后判断本次update操作的影响行数，如果大于0，则说明本次更新成功，如果等于0，则说明本次更新没有让数据变更。</p>
-<p>由于第一次请求version等于1是可以成功的，操作成功后version变成2了。这时如果并发的请求过来，再执行相同的sql：</p>
-<p>update user set amount=amount+100,version=version+1 where id=123 and version=1;</p>
-<p>该update操作不会真正更新数据，最终sql的执行结果影响行数是0，因为version已经变成2了，where中的version=1肯定无法满足条件。但为了保证接口幂等性，接口可以直接返回成功，因为version值已经修改了，那么前面必定已经成功过一次，后面都是重复的请求。</p>
-<p>具体流程如下：</p>
-<p><img src="http://image.wangxiaohuan.com/blog/image/20210417223532.png" alt="image"></p>
-<p>具体步骤：</p>
-<ol>
-<li>先根据id查询用户信息，包含version字段</li>
-<li>根据id和version字段值作为where条件的参数，更新用户信息，同时version+1</li>
-<li>判断操作影响行数，如果影响1行，则说明是一次请求，可以做其他数据操作。</li>
-<li>如果影响0行，说明是重复请求，则直接返回成功。</li>
-</ol>
-</li>
-<li>
-<p>基于状态机实现。</p>
-<p>实现方式是基于状态机来实现的。</p>
-<p>业务表是有状态的，比如订单表中有：1-下单、2-已支付、3-完成、4-撤销等状态。如果这些状态的值是有规律的，按照业务节点正好是从小到大，我们就能通过它来保证接口的幂等性。</p>
-<p>假如id=123的订单状态是已支付，现在要变成完成状态。</p>
-<p>update <code>order</code> set status=3 where id=123 and status=2;</p>
-<p>第一次请求时，该订单的状态是已支付，值是2，所以该update语句可以正常更新数据，sql执行结果的影响行数是1，订单状态变成了3。</p>
-<p>后面有相同的请求过来，再执行相同的sql时，由于订单状态变成了3，再用status=2作为条件，无法查询出需要更新的数据，所以最终sql执行结果的影响行数是0，即不会真正的更新数据。但为了保证接口幂等性，影响行数是0时，接口也可以直接返回成功。</p>
-<p>具体流程图如下：</p>
-<p><img src="http://image.wangxiaohuan.com/blog/image/20210417223836.png" alt="image"></p>
-<p>具体步骤：</p>
-<ol>
-<li>用户通过浏览器发起请求，服务端收集数据。</li>
-<li>根据id和当前状态作为条件，更新成下一个状态</li>
-<li>判断操作影响行数，如果影响了1行，说明当前操作成功，可以进行其他数据操作。</li>
-<li>如果影响了0行，说明是重复请求，直接返回成功。</li>
-</ol>
-<p><em>主要特别注意的是，该方案仅限于要更新的表有状态字段，并且刚好要更新状态字段的这种特殊情况，并非所有场景都适用。</em></p>
-</li>
-</ol>
+<h2 id="2下载源码或者安装包">2.下载源码或者安装包</h2>
+<p>你可以通过源码和发行包两种方式来获取 Nacos。</p>
+<h3 id="从-github-上下载源码方式">从 Github 上下载源码方式</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/alibaba/nacos.git</span><br><span class="line"><span class="built_in">cd</span> nacos/</span><br><span class="line">mvn -Prelease-nacos -Dmaven.test.skip=<span class="literal">true</span> clean install -U  </span><br><span class="line">ls -al distribution/target/</span><br><span class="line"></span><br><span class="line">// change the <span class="variable">$version</span> to your actual path</span><br><span class="line"><span class="built_in">cd</span> distribution/target/nacos-server-<span class="variable">$version</span>/nacos/bin</span><br></pre></td></tr></table></figure>
+<h3 id="下载编译后压缩包方式">下载编译后压缩包方式</h3>
+<p>您可以从 <a href="https://github.com/alibaba/nacos/releases" target="_blank" rel="noopener">最新稳定版本</a> 下载 <code>nacos-server-$version.zip</code> 包。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">unzip nacos-server-<span class="variable">$version</span>.zip 或者 tar -xvf nacos-server-<span class="variable">$version</span>.tar.gz</span><br><span class="line"><span class="built_in">cd</span> nacos/bin</span><br></pre></td></tr></table></figure>
+<h2 id="3启动服务器">3.启动服务器</h2>
+<h3 id="linuxunixmac">Linux/Unix/Mac</h3>
+<p>启动命令(standalone代表着单机模式运行，非集群模式):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh startup.sh -m standalone</span><br></pre></td></tr></table></figure>
+<p>如果您使用的是ubuntu系统，或者运行脚本报错提示[[符号找不到，可尝试如下运行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash startup.sh -m standalone</span><br></pre></td></tr></table></figure>
+<h3 id="windows">Windows</h3>
+<p>启动命令(standalone代表着单机模式运行，非集群模式):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">startup.cmd -m standalone</span><br></pre></td></tr></table></figure>
+<h2 id="4服务注册amp发现和配置管理">4.服务注册&amp;发现和配置管理</h2>
+<h3 id="服务注册">服务注册</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST &#39;http:&#x2F;&#x2F;127.0.0.1:8848&#x2F;nacos&#x2F;v1&#x2F;ns&#x2F;instance?serviceName&#x3D;nacos.naming.serviceName&amp;ip&#x3D;20.18.7.10&amp;port&#x3D;8080&#39;</span><br></pre></td></tr></table></figure>
+<h3 id="服务发现">服务发现</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X GET &#39;http:&#x2F;&#x2F;127.0.0.1:8848&#x2F;nacos&#x2F;v1&#x2F;ns&#x2F;instance&#x2F;list?serviceName&#x3D;nacos.naming.serviceName&#39;</span><br></pre></td></tr></table></figure>
+<h3 id="发布配置">发布配置</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST &quot;http:&#x2F;&#x2F;127.0.0.1:8848&#x2F;nacos&#x2F;v1&#x2F;cs&#x2F;configs?dataId&#x3D;nacos.cfg.dataId&amp;group&#x3D;test&amp;content&#x3D;HelloWorld&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="获取配置">获取配置</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X GET &quot;http:&#x2F;&#x2F;127.0.0.1:8848&#x2F;nacos&#x2F;v1&#x2F;cs&#x2F;configs?dataId&#x3D;nacos.cfg.dataId&amp;group&#x3D;test&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="5关闭服务器">5.关闭服务器</h2>
+<h3 id="linuxunixmac">Linux/Unix/Mac</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh shutdown.sh</span><br></pre></td></tr></table></figure>
+<h3 id="windows">Windows</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutdown.cmd</span><br></pre></td></tr></table></figure>
+<p>或者双击shutdown.cmd运行文件。</p>
 
                 
 
@@ -360,12 +278,12 @@ where id=123 and version=1;</p>
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/Vue3介绍/2020-10-10/" data-toggle="tooltip" data-placement="top" title="Vue3 介绍">&larr; Previous Post</a>
+                            <a href="/技术/2019-03-01/" data-toggle="tooltip" data-placement="top" title="微服务的监控追踪和治理">&larr; Previous Post</a>
                         </li>
                     
                     
                         <li class="next">
-                            <a href="/并发和多线程/2020-03-25/" data-toggle="tooltip" data-placement="top" title="并发和多线程总结">Next Post &rarr;</a>
+                            <a href="/人生感悟/2019-02-22/" data-toggle="tooltip" data-placement="top" title="人生的轨迹">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -425,7 +343,7 @@ where id=123 and version=1;</p>
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#幂等性介绍"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">幂等性介绍</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#幂等性出现的场景"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">幂等性出现的场景</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#幂等性解决方案"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">幂等性解决方案</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#nacos-快速开始"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Nacos 快速开始</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#0版本选择"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">0.版本选择</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#1预备环境准备"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">1.预备环境准备</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#2下载源码或者安装包"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">2.下载源码或者安装包</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#从-github-上下载源码方式"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">从 Github 上下载源码方式</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#下载编译后压缩包方式"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">下载编译后压缩包方式</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#3启动服务器"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">3.启动服务器</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#linuxunixmac"><span class="toc-nav-number">1.4.1.</span> <span class="toc-nav-text">Linux&#x2F;Unix&#x2F;Mac</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#windows"><span class="toc-nav-number">1.4.2.</span> <span class="toc-nav-text">Windows</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#4服务注册amp发现和配置管理"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">4.服务注册&amp;发现和配置管理</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#服务注册"><span class="toc-nav-number">1.5.1.</span> <span class="toc-nav-text">服务注册</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#服务发现"><span class="toc-nav-number">1.5.2.</span> <span class="toc-nav-text">服务发现</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#发布配置"><span class="toc-nav-number">1.5.3.</span> <span class="toc-nav-text">发布配置</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#获取配置"><span class="toc-nav-number">1.5.4.</span> <span class="toc-nav-text">获取配置</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#5关闭服务器"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">5.关闭服务器</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#linuxunixmac"><span class="toc-nav-number">1.6.1.</span> <span class="toc-nav-text">Linux&#x2F;Unix&#x2F;Mac</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#windows"><span class="toc-nav-number">1.6.2.</span> <span class="toc-nav-text">Windows</span></a></li></ol></li></ol></li></ol>
         
         </div>
       </aside>
@@ -465,8 +383,8 @@ where id=123 and version=1;</p>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "your-disqus-ID";
-    var disqus_identifier = "http://www.wangxiaohuan.com/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89%E6%80%A7/2020-03-30/";
-    var disqus_url = "http://www.wangxiaohuan.com/%E6%8E%A5%E5%8F%A3%E5%B9%82%E7%AD%89%E6%80%A7/2020-03-30/";
+    var disqus_identifier = "http://www.wangxiaohuan.com/%E6%8A%80%E6%9C%AF/2019-04-06/";
+    var disqus_url = "http://www.wangxiaohuan.com/%E6%8A%80%E6%9C%AF/2019-04-06/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
