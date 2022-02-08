@@ -228,8 +228,7 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h3 id="centos7-安装jdk18">centos7 安装JDK1.8</h3>
-<p>查看 JDK 版本</p>
+                <h3 id="centos7-安装jdk18"><a href="#centos7-安装JDK1-8" class="headerlink" title="centos7 安装JDK1.8"></a>centos7 安装JDK1.8</h3><p>查看 JDK 版本</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@tool tool]# java -version </span><br><span class="line">java version &quot;1.8.0_241&quot; Java(TM) SE Runtime Environment (build 1.8.0_241-b07) Java HotSpot(TM) 64-Bit Server VM (build 25.241-b07, mixed mode)</span><br></pre></td></tr></table></figure>
 <p>查看 JDK 相关</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@tool tool]#rpm -qa | grep java</span><br></pre></td></tr></table></figure>
@@ -240,23 +239,21 @@
 <p>下载 JDK 安装包</p>
 <p><a href="https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html" target="_blank" rel="noopener">https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html</a></p>
 <p>注册下载得到文件: jdk-8u241-linux-x64.tar.gz</p>
-<p>链接：<a href="https://pan.baidu.com/s/1UX3qi6XbJZF8lzlpqFr9Fg" target="_blank" rel="noopener">https://pan.baidu.com/s/1UX3qi6XbJZF8lzlpqFr9Fg</a><br>
-提取码：wajb</p>
+<p>链接：<a href="https://pan.baidu.com/s/1UX3qi6XbJZF8lzlpqFr9Fg" target="_blank" rel="noopener">https://pan.baidu.com/s/1UX3qi6XbJZF8lzlpqFr9Fg</a><br>提取码：wajb</p>
 <p>把下载 JDK 安装包传输到服务器</p>
 <p><img src="http://image.wangxiaohuan.com/blog/image/20210514142656.png" alt="img"></p>
 <p>切换到相关目录解压</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@tool &#x2F;]# cd usr&#x2F;java</span><br><span class="line">[root@tool java]# ls</span><br><span class="line">jdk-8u241-linux-x64.tar.gz</span><br><span class="line">[root@tool java]# tar -zxvf jdk-8u241-linux-x64.tar.gz</span><br></pre></td></tr></table></figure>
 <p>配置 JDK 环境变量，并生效</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@tool &#x2F;]#vi &#x2F;etc&#x2F;profile</span><br><span class="line"></span><br><span class="line">#java environment</span><br><span class="line"></span><br><span class="line">export JAVA_HOME&#x3D;&#x2F;usr&#x2F;java&#x2F;jdk1.8.0_241</span><br><span class="line"></span><br><span class="line">export CLASSPATH&#x3D;.:$&#123;JAVA_HOME&#125;&#x2F;jre&#x2F;lib&#x2F;rt.jar:$&#123;JAVA_HOME&#125;&#x2F;lib&#x2F;dt.jar:$&#123;JAVA_HOME&#125;&#x2F;lib&#x2F;tools.jar</span><br><span class="line"></span><br><span class="line">export PATH&#x3D;$PATH:$&#123;JAVA_HOME&#125;&#x2F;bin</span><br><span class="line"></span><br><span class="line">[root@tool &#x2F;]# source &#x2F;etc&#x2F;profile</span><br></pre></td></tr></table></figure>
-<h3 id="centos7-安装-maven">centos7 安装 Maven</h3>
-<p>下载 Maven 包</p>
+<h3 id="centos7-安装-maven"><a href="#centos7-安装-Maven" class="headerlink" title="centos7 安装 Maven"></a>centos7 安装 Maven</h3><p>下载 Maven 包</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@tool tool]# wget https:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;apache&#x2F;maven&#x2F;maven-3&#x2F;3.6.3&#x2F;binaries&#x2F;apache-maven-3.6.3-bin.tar.gz</span><br></pre></td></tr></table></figure>
 <p>解压 Maven 包</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@tool tool]# tar -xf apache-maven-3.6.3-bin.tar.gz -C &#x2F;usr&#x2F;local&#x2F;</span><br><span class="line">[root@tool tool]# mv &#x2F;usr&#x2F;local&#x2F;apache-maven-3.6.3&#x2F; maven3.6</span><br></pre></td></tr></table></figure>
 <p>配置环境变量</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@tool &#x2F;]#vi &#x2F;etc&#x2F;profile #maven environment export PATH&#x3D;$PATH:&#x2F;usr&#x2F;local&#x2F;maven3.6&#x2F;bin</span><br></pre></td></tr></table></figure>
 <p>验证</p>
-<p><strong>运行maven需要Java环境----系统安装有jdk，并且在系统中配置了JAVA_HOME。</strong></p>
+<p><strong>运行maven需要Java环境——系统安装有jdk，并且在系统中配置了JAVA_HOME。</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@tool tool]# mvn -version Apache Maven 3.6.3 (cecedd343002696d0abb50b32b541b8a6ba2883f) Maven home: &#x2F;usr&#x2F;local&#x2F;maven3.6 Java version: 1.8.0_241, vendor: Oracle Corporation, runtime: &#x2F;usr&#x2F;java&#x2F;jdk1.8.0_241&#x2F;jre Default locale: de_DE, platform encoding: UTF-8 OS name: &quot;linux&quot;, version: &quot;3.10.0-229.el7.x86_64&quot;, arch: &quot;amd64&quot;, family: &quot;unix&quot;</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi &#x2F;etc&#x2F;profile #java environment export JAVA_HOME&#x3D;&#x2F;usr&#x2F;java&#x2F;jdk1.8.0_241 export CLASSPATH&#x3D;.:$&#123;JAVA_HOME&#125;&#x2F;jre&#x2F;lib&#x2F;rt.jar:$&#123;JAVA_HOME&#125;&#x2F;lib&#x2F;dt.jar:$&#123;JAVA_HOME&#125;&#x2F;lib&#x2F;tools.jar export PATH&#x3D;$PATH:$&#123;JAVA_HOME&#125;&#x2F;bin</span><br></pre></td></tr></table></figure>
                 

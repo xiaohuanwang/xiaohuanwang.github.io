@@ -235,13 +235,11 @@
             
         </h3>
         <div class="post-content-preview">
-            线程死锁介绍
-死锁是指两个或两个以上的线程在执行过程中，因争夺资源而造成的互相等待的现象，在无外力的作用的情况下，线程会一直互相等待而无法继续运行下去。如下图所示
+            线程死锁介绍死锁是指两个或两个以上的线程在执行过程中，因争夺资源而造成的互相等待的现象，在无外力的作用的情况下，线程会一直互相等待而无法继续运行下去。如下图所示
 
 线程 A 持有资源 2，线程 B 持有资源 1，他们同时都想申请对方的资源，所以这两个线程就会互相等待而进入死锁状态。
 线程死锁产生条件
-
-互斥条件：指线程以对已经获取到的资源进行排它性使用，即改资源同时只由一个线程占用。如果此......
+互斥条件：指线程以对已经获取到的资源进行排它性使用，即改资源同时只由一个线程占用。如果此时还......
         </div>
     </a>
     
@@ -269,8 +267,7 @@
             
         </h3>
         <div class="post-content-preview">
-            Java线程池介绍
-程序执行的过程中，可以单独的开启一个线程来处理任务，开启一个线程很简单，但是如果开启的线程过多，线程执行的时间很短，系统频繁的创建和销毁线程，很耗费时间，浪费系统的资源。于是就需要把线程管理起来，形成一个线程池。线程池（ThreadPool）是一种基于池化思想管理和使用线程的机制。它是将多个线程预先存储在一个“池子”内，当有任务出现时可以避免重新创建和销毁线程所带来性能开......
+            Java线程池介绍程序执行的过程中，可以单独的开启一个线程来处理任务，开启一个线程很简单，但是如果开启的线程过多，线程执行的时间很短，系统频繁的创建和销毁线程，很耗费时间，浪费系统的资源。于是就需要把线程管理起来，形成一个线程池。线程池（ThreadPool）是一种基于池化思想管理和使用线程的机制。它是将多个线程预先存储在一个“池子”内，当有任务出现时可以避免重新创建和销毁线程所带来性能开销......
         </div>
     </a>
     
@@ -298,8 +295,7 @@
             
         </h3>
         <div class="post-content-preview">
-            线程介绍
-线程是程序运行的基本执行单元.
+            线程介绍线程是程序运行的基本执行单元.
 使用线程的优点：
 
 充分利用CPU资源。
@@ -307,12 +303,11 @@
 简化异步事件的处理。
 节约成本。
 
-线程的实现方式
-Java中线程的实现有三种方式，分别是继承Thread类、实现Runnable接口和实现Callable接口。
+线程的实现方式Java中线程的实现有三种方式，分别是继承Thread类、实现Runnable接口和实现Callable接口。
 
 继承Thread类
 
-继承Thread类是Java中比较常见，也是很基础的一种实现Java多线程的方式。实现的方式也比较简单，只......
+继承Thread类是Java中比较常见，也是很基础的一种实现Java多线程的方式。实现的方式也比较简单，只要将......
         </div>
     </a>
     
@@ -340,21 +335,15 @@ Java中线程的实现有三种方式，分别是继承Thread类、实现Runnabl
             
         </h3>
         <div class="post-content-preview">
-            Redis简介
-Redis 是完全开源的，遵守 BSD 协议，是一个高性能的 key-value 数据库。
+            Redis简介Redis 是完全开源的，遵守 BSD 协议，是一个高性能的 key-value 数据库。
 特点和优势
-
-
 Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。
-
 
 Redis不仅仅支持简单的key-value类型的数据，还有以下的5种数据类型：
 
-
 string 字符串（可以为整形、浮点型和字符串，统称为元素）
 
-
-list 列表（实......
+list 列表（实现队列,元素......
         </div>
     </a>
     
@@ -383,17 +372,13 @@ list 列表（实......
         </h3>
         <div class="post-content-preview">
             服务注册和发现原理
-
 服务提供者、服务消费者、服务发现组件这三者之间的关系大致如下：
-
 
 各个微服务在启动时，将自己的网络地址等信息注册到服务发现组件中，服务发现组件会存储这些信息；
 
-
 服务消费者可从服务发现组件查询服务提供者的网络地址，并使用该地址调用服务提供者的接口；
 
-
-各个微服务与服务发现组件使用一定机制（例如心跳）通信。服务发现组件如长时间无法与某微服务实例通信，就会自动注销（即......
+各个微服务与服务发现组件使用一定机制（例如心跳）通信。服务发现组件如长时间无法与某微服务实例通信，就会自动注销（即：删除）......
         </div>
     </a>
     
@@ -421,12 +406,11 @@ list 列表（实......
             
         </h3>
         <div class="post-content-preview">
-            网关概念
-1.路由网关
-网关是系统的唯一对外的入口，介于客户端和服务器端之间的中间层，处理非业务功能 提供路由请求、鉴权、监控、缓存、限流等功能。它将&quot;1对N&quot;问题转换成了&quot;1对1”问题。
+            网关概念1.路由网关
+网关是系统的唯一对外的入口，介于客户端和服务器端之间的中间层，处理非业务功能 提供路由请求、鉴权、监控、缓存、限流等功能。它将”1对N”问题转换成了”1对1”问题。
 通过服务路由的功能，可以在对外提供服务时，只暴露 网关中配置的调用地址，而调用方就不需要了解后端具体的微服务主机。
 2. 为什么要使用微服务网关
-不同的微服务一般会有不同的网......
+不同的微服务一般会有不同的网络地址，而客户端可能需要调用多个......
         </div>
     </a>
     
@@ -455,17 +439,14 @@ list 列表（实......
         </h3>
         <div class="post-content-preview">
             数组时一种最常用的数据结构，下标索引从0开始。
-数组的定义和特点
-数组：数组（Array）是一种线性表数据结构。用一组连续的内存空间，储存一组具有相同类型的数据。
+数组的定义和特点  数组：数组（Array）是一种线性表数据结构。用一组连续的内存空间，储存一组具有相同类型的数据。
 
 线性表，线性表就是数据排成一条线一样的数据结构。上面的数据最多只有前和后两个方向。
 连续的内存空间和相同类型的数据。
 
-数组的优点和缺点
-优点
-
+数组的优点和缺点优点
 数组支持随机访问，根据下标随机访问的时间复杂度为O(1)。
-构建非常简单。 int......
+构建非常简单。 int[......
         </div>
     </a>
     
@@ -494,7 +475,6 @@ list 列表（实......
         </h3>
         <div class="post-content-preview">
             MySQL的日志类型简介
-
 重做日志（redo log）
 回滚日志（undo log）
 二进制日志（binlog）
@@ -503,7 +483,7 @@ list 列表（实......
 一般查询日志（general log）
 中继日志（relay log）
 
-本文主要介绍重做日志和回滚日志的关系，他们都属于事务操作相关，是InnoDB引擎特有的。二进制日志也与事务有一定的关系，是Serv......
+本文主要介绍重做日志和回滚日志的关系，他们都属于事务操作相关，是InnoDB引擎特有的。二进制日志也与事务有一定的关系，是Serve......
         </div>
     </a>
     
@@ -531,15 +511,13 @@ list 列表（实......
             
         </h3>
         <div class="post-content-preview">
-            购买房子注意事项
-买房是人生大事，但是买房的过程中却充满了崎岖坎坷的悲剧，废话少说。买房需要注意的事情真不少，买房需要先  看房（新房，期房，二手房）
+            购买房子注意事项买房是人生大事，但是买房的过程中却充满了崎岖坎坷的悲剧，废话少说。买房需要注意的事情真不少，买房需要先  看房（新房，期房，二手房） 
 看房需要注意那些问题：地理位置、周边环境、小区管理、房子本身。
 地理位置
-
 是否处于学区房
 周边交通是否方便（公交站，火车站，客运站，地铁）
 周边生活服务（超市，菜市场，便利店，饭店，游乐园，公园）
-周边商业服务（商场，大型购物中心，银行，加......
+周边商业服务（商场，大型购物中心，银行，加油......
         </div>
     </a>
     
@@ -567,13 +545,11 @@ list 列表（实......
             
         </h3>
         <div class="post-content-preview">
-            Nacos 快速开始
-这个快速开始手册是帮忙您快速在您的电脑上，下载、安装并使用 Nacos。
-0.版本选择
-您可以在Nacos的release notes及博客中找到每个版本支持的功能的介绍，当前推荐的稳定版本为2.0.3。
-1.预备环境准备
-Nacos 依赖 Java 环境来运行。如果您是从代码开始构建并运行Nacos，还需要为此配置 Maven环境，请确保是在以下版本环境中安装使用:
-......
+            Nacos 快速开始这个快速开始手册是帮忙您快速在您的电脑上，下载、安装并使用 Nacos。
+0.版本选择您可以在Nacos的release notes及博客中找到每个版本支持的功能的介绍，当前推荐的稳定版本为2.0.3。
+1.预备环境准备Nacos 依赖 Java 环境来运行。如果您是从代码开始构建并运行Nacos，还需要为此配置 Maven环境，请确保是在以下版本环境中安装使用:
+
+64......
         </div>
     </a>
     
@@ -636,11 +612,11 @@ Nacos 依赖 Java 环境来运行。如果您是从代码开始构建并运行Na
     <div class="tags">
         
             
-            <a href="/tags/#Linux" title="Linux" rel="3">Linux</a>
+            <a href="/tags/#随笔" title="随笔" rel="10">随笔</a>
             
         
             
-            <a href="/tags/#随笔" title="随笔" rel="10">随笔</a>
+            <a href="/tags/#Linux" title="Linux" rel="3">Linux</a>
             
         
             
@@ -648,7 +624,7 @@ Nacos 依赖 Java 环境来运行。如果您是从代码开始构建并运行Na
             
         
             
-            <a href="/tags/#Git" title="Git" rel="3">Git</a>
+            <a href="/tags/#Git" title="Git" rel="4">Git</a>
             
         
             
@@ -792,7 +768,7 @@ Nacos 依赖 Java 环境来运行。如果您是从代码开始构建并运行Na
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">1</span></li></ul>
     </div>
 
         <hr>

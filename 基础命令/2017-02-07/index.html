@@ -228,22 +228,17 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h3 id="centos-7防火墙端口配置">CentOS 7防火墙端口配置</h3>
-<p>CentOS 升级到7之后，无法使用 iptables控制 Linuxs 的端口。Centos 7使用 firewalld 代替了原来的iptables。</p>
-<h4 id="防火墙基本命令如下">防火墙基本命令如下：</h4>
-<p>查看防火墙状态：systemctl status firewalld</p>
+                <h3 id="centos-7防火墙端口配置"><a href="#CentOS-7防火墙端口配置" class="headerlink" title="CentOS 7防火墙端口配置"></a>CentOS 7防火墙端口配置</h3><p>CentOS 升级到7之后，无法使用 iptables控制 Linuxs 的端口。Centos 7使用 firewalld 代替了原来的iptables。</p>
+<h4 id="防火墙基本命令如下"><a href="#防火墙基本命令如下：" class="headerlink" title="防火墙基本命令如下："></a>防火墙基本命令如下：</h4><p>查看防火墙状态：systemctl status firewalld</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@tool tool]# systemctl status firewalld</span><br><span class="line">firewalld.service - firewalld - dynamic firewall daemon</span><br><span class="line">Loaded: loaded (&#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;firewalld.service; enabled; vendor preset: enabled)</span><br><span class="line">Active: active (running) since So 2021-05-16 15:56:56 CEST; 39min ago</span><br><span class="line">Docs: man:firewalld(1)</span><br><span class="line">Main PID: 656 (firewalld)</span><br><span class="line">CGroup: &#x2F;system.slice&#x2F;firewalld.service</span><br><span class="line">└─656 &#x2F;usr&#x2F;bin&#x2F;python2 -Es &#x2F;usr&#x2F;sbin&#x2F;firewalld --nofork --nopid</span><br><span class="line"></span><br><span class="line">Mai 16 15:56:55 tool systemd[1]: Starting firewalld - dynamic firewall daemon...</span><br><span class="line">Mai 16 15:56:56 tool systemd[1]: Started firewalld - dynamic firewall daemon.</span><br><span class="line">Mai 16 15:56:56 tool firewalld[656]: WARNING: AllowZoneDrifting is enabled. This is considered an ins... now.</span><br><span class="line">Mai 16 16:19:20 tool firewalld[656]: WARNING: AllowZoneDrifting is enabled. This is considered an ins... now.</span><br><span class="line">Mai 16 16:30:10 tool firewalld[656]: WARNING: AllowZoneDrifting is enabled. This is considered an ins... now.</span><br><span class="line">Hint: Some lines were ellipsized, use -l to show in full.</span><br></pre></td></tr></table></figure>
-<p>防火墙开通端口：firewall-cmd --zone=public --add-port=8080/tcp --permanent</p>
+<p>防火墙开通端口：firewall-cmd —zone=public —add-port=8080/tcp —permanent</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@tool tool]# firewall-cmd --zone&#x3D;public --add-port&#x3D;8080&#x2F;tcp --permanent</span><br><span class="line">success</span><br></pre></td></tr></table></figure>
-<p><u>命令含义：<br>
-–zone #作用域<br>
-–add-port=80/tcp #添加端口，格式为：端口/通讯协议<br>
-–permanent #永久生效，没有此参数重启后失效</u></p>
-<p>重启防火墙：firewall-cmd --reload</p>
+<p><u>命令含义：<br>—zone #作用域<br>—add-port=80/tcp #添加端口，格式为：端口/通讯协议<br>—permanent #永久生效，没有此参数重启后失效</u></p>
+<p>重启防火墙：firewall-cmd —reload</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@tool tool]# firewall-cmd --reload</span><br><span class="line">success</span><br></pre></td></tr></table></figure>
-<p>查询有哪些端口是开启的: firewall-cmd --list-port</p>
+<p>查询有哪些端口是开启的: firewall-cmd —list-port</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@tool tool]# firewall-cmd --list-port</span><br><span class="line">3306&#x2F;tcp 8080&#x2F;tcp</span><br></pre></td></tr></table></figure>
-<p>防火墙关闭端口：firewall-cmd --zone=public --remove-port=8080/tcp --permanent</p>
+<p>防火墙关闭端口：firewall-cmd —zone=public —remove-port=8080/tcp —permanent</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@tool tool]# firewall-cmd --zone&#x3D;public --remove-port&#x3D;8080&#x2F;tcp --permanent</span><br><span class="line">success</span><br></pre></td></tr></table></figure>
 <p>关闭firewall：</p>
 <p>systemctl stop firewalld.service #停止firewall</p>

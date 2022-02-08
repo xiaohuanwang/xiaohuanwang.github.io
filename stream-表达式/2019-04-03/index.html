@@ -228,41 +228,25 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h3 id="什么是流">什么是流？</h3>
-<p>流是Java8引入的全新概念，它用来处理集合中的数据，暂且可以把它理解为一种高级集合。</p>
+                <h3 id="什么是流"><a href="#什么是流？" class="headerlink" title="什么是流？"></a>什么是流？</h3><p>流是Java8引入的全新概念，它用来处理集合中的数据，暂且可以把它理解为一种高级集合。</p>
 <p>众所周知，集合操作非常麻烦，若要对集合进行筛选、投影，需要写大量的代码，而流是以声明的形式操作集合，它就像SQL语句，我们只需告诉流需要对集合进行什么操作，它就会自动进行操作，并将执行结果交给你，无需我们自己手写代码。</p>
 <p>因此，流的集合操作对我们来说是透明的，我们只需向流下达命令，它就会自动把我们想要的结果给我们。由于操作过程完全由Java处理，因此它可以根据当前硬件环境选择最优的方法处理，我们也无需编写复杂又容易出错的多线程代码了。</p>
-<h3 id="流的特点">流的特点</h3>
-<ol>
-<li>只能遍历一次<br>
-我们可以把流想象成一条流水线，流水线的源头是我们的数据源(一个集合)，数据源中的元素依次被输送到流水线上，我们可以在流水线上对元素进行各种操作。<br>
-一旦元素走到了流水线的另一头，那么这些元素就被“消费掉了”，我们无法再对这个流进行操作。当然，我们可以从数据源那里再获得一个新的流重新遍历一遍。</li>
-<li>采用内部迭代方式<br>
-若要对集合进行处理，则需我们手写处理代码，这就叫做外部迭代。<br>
-而要对流进行处理，我们只需告诉流我们需要什么结果，处理过程由流自行完成，这就称为内部迭代。</li>
+<h3 id="流的特点"><a href="#流的特点" class="headerlink" title="流的特点"></a>流的特点</h3><ol>
+<li>只能遍历一次<br>我们可以把流想象成一条流水线，流水线的源头是我们的数据源(一个集合)，数据源中的元素依次被输送到流水线上，我们可以在流水线上对元素进行各种操作。<br>一旦元素走到了流水线的另一头，那么这些元素就被“消费掉了”，我们无法再对这个流进行操作。当然，我们可以从数据源那里再获得一个新的流重新遍历一遍。</li>
+<li>采用内部迭代方式<br>若要对集合进行处理，则需我们手写处理代码，这就叫做外部迭代。<br>而要对流进行处理，我们只需告诉流我们需要什么结果，处理过程由流自行完成，这就称为内部迭代。</li>
 </ol>
-<h3 id="流的操作种类">流的操作种类</h3>
-<p>流的操作分为两种，分别为中间操作和终端操作。</p>
+<h3 id="流的操作种类"><a href="#流的操作种类" class="headerlink" title="流的操作种类"></a>流的操作种类</h3><p>流的操作分为两种，分别为中间操作和终端操作。</p>
 <ol>
-<li>中间操作<br>
-当数据源中的数据上了流水线后，这个过程对数据进行的所有操作都称为“中间操作”。<br>
-中间操作仍然会返回一个流对象，因此多个中间操作可以串连起来形成一个流水线。</li>
-<li>终端操作<br>
-当所有的中间操作完成后，若要将数据从流水线上拿下来，则需要执行终端操作。<br>
-终端操作将返回一个执行结果，这就是你想要的数据。</li>
+<li>中间操作<br>当数据源中的数据上了流水线后，这个过程对数据进行的所有操作都称为“中间操作”。<br>中间操作仍然会返回一个流对象，因此多个中间操作可以串连起来形成一个流水线。</li>
+<li>终端操作<br>当所有的中间操作完成后，若要将数据从流水线上拿下来，则需要执行终端操作。<br>终端操作将返回一个执行结果，这就是你想要的数据。</li>
 </ol>
-<h3 id="流的操作过程">流的操作过程</h3>
-<p>使用流一共需要三步：</p>
+<h3 id="流的操作过程"><a href="#流的操作过程" class="headerlink" title="流的操作过程"></a>流的操作过程</h3><p>使用流一共需要三步：</p>
 <ol>
 <li>准备一个数据源</li>
-<li>执行中间操作<br>
-中间操作可以有多个，它们可以串连起来形成流水线。</li>
-<li>执行终端操作<br>
-执行终端操作后本次流结束，你将获得一个执行结果。</li>
+<li>执行中间操作<br>中间操作可以有多个，它们可以串连起来形成流水线。</li>
+<li>执行终端操作<br>执行终端操作后本次流结束，你将获得一个执行结果。</li>
 </ol>
-<h2 id="使用流">使用流</h2>
-<h3 id="创建流">创建流</h3>
-<p>在使用流之前，首先需要拥有一个数据源，并通过StreamAPI提供的一些方法获取该数据源的流对象。数据源可以有多种形式：</p>
+<h2 id="使用流"><a href="#使用流" class="headerlink" title="使用流"></a>使用流</h2><h3 id="创建流"><a href="#创建流" class="headerlink" title="创建流"></a>创建流</h3><p>在使用流之前，首先需要拥有一个数据源，并通过StreamAPI提供的一些方法获取该数据源的流对象。数据源可以有多种形式：</p>
 <p><strong>1. 集合</strong></p>
 <p>这种数据源较为常用，通过stream()方法即可获取流对象：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Person&gt; list &#x3D; new ArrayList&lt;Person&gt;(); </span><br><span class="line">Stream&lt;Person&gt; stream &#x3D; list.stream();</span><br></pre></td></tr></table></figure>
@@ -280,25 +264,19 @@
 <blockquote>
 <p>PS：Java7简化了IO操作，把打开IO操作放在try后的括号中即可省略关闭IO的代码。</p>
 </blockquote>
-<h3 id="筛选-filter">筛选 filter</h3>
-<p>filter 函数接收一个Lambda表达式作为参数，该表达式返回boolean，在执行过程中，流将元素逐一输送给filter，并筛选出执行结果为true的元素。</p>
+<h3 id="筛选-filter"><a href="#筛选-filter" class="headerlink" title="筛选 filter"></a>筛选 filter</h3><p>filter 函数接收一个Lambda表达式作为参数，该表达式返回boolean，在执行过程中，流将元素逐一输送给filter，并筛选出执行结果为true的元素。</p>
 <p>如，筛选出所有学生：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Person&gt; result &#x3D; list.stream()</span><br><span class="line">                    .filter(Person::isStudent)</span><br><span class="line">                    .collect(toList());</span><br></pre></td></tr></table></figure>
-<h3 id="去重distinct">去重distinct</h3>
-<p>去掉重复的结果：</p>
+<h3 id="去重distinct"><a href="#去重distinct" class="headerlink" title="去重distinct"></a>去重distinct</h3><p>去掉重复的结果：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Person&gt; result &#x3D; list.stream()</span><br><span class="line">                    .distinct()</span><br><span class="line">                    .collect(toList());</span><br></pre></td></tr></table></figure>
-<h3 id="截取">截取</h3>
-<p>截取流的前N个元素：</p>
+<h3 id="截取"><a href="#截取" class="headerlink" title="截取"></a>截取</h3><p>截取流的前N个元素：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Person&gt; result &#x3D; list.stream()</span><br><span class="line">                    .limit(3)</span><br><span class="line">                    .collect(toList());</span><br></pre></td></tr></table></figure>
-<h3 id="跳过">跳过</h3>
-<p>跳过流的前n个元素：</p>
+<h3 id="跳过"><a href="#跳过" class="headerlink" title="跳过"></a>跳过</h3><p>跳过流的前n个元素：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Person&gt; result &#x3D; list.stream()</span><br><span class="line">                    .skip(3)</span><br><span class="line">                    .collect(toList());</span><br></pre></td></tr></table></figure>
-<h3 id="映射">映射</h3>
-<p>对流中的每个元素执行一个函数，使得元素转换成另一种类型输出。流会将每一个元素输送给map函数，并执行map中的Lambda表达式，最后将执行结果存入一个新的流中。</p>
+<h3 id="映射"><a href="#映射" class="headerlink" title="映射"></a>映射</h3><p>对流中的每个元素执行一个函数，使得元素转换成另一种类型输出。流会将每一个元素输送给map函数，并执行map中的Lambda表达式，最后将执行结果存入一个新的流中。</p>
 <p>如，获取每个人的姓名(实则是将Perosn类型转换成String类型)：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; result &#x3D; list.stream()</span><br><span class="line">                    .map(Person::getName)</span><br><span class="line">                    .collect(toList());</span><br></pre></td></tr></table></figure>
-<h3 id="合并多个流">合并多个流</h3>
-<p>例：列出List中各不相同的单词，List集合如下：</p>
+<h3 id="合并多个流"><a href="#合并多个流" class="headerlink" title="合并多个流"></a>合并多个流</h3><p>例：列出List中各不相同的单词，List集合如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list &#x3D; new ArrayList&lt;String&gt;();</span><br><span class="line">list.add(&quot;I am a boy&quot;);</span><br><span class="line">list.add(&quot;I love the girl&quot;);</span><br><span class="line">list.add(&quot;But the girl loves another girl&quot;);</span><br></pre></td></tr></table></figure>
 <p>思路如下：</p>
 <p>首先将list变成流：</p>
@@ -313,24 +291,18 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">list.stream()</span><br><span class="line">    .map(line-&gt;line.split(&quot; &quot;))</span><br><span class="line">    .flatMap(Arrays::stream)</span><br></pre></td></tr></table></figure>
 <p>去重</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">list.stream()</span><br><span class="line">    .map(line-&gt;line.split(&quot; &quot;))</span><br><span class="line">    .flatMap(Arrays::stream)</span><br><span class="line">    .distinct()</span><br><span class="line">    .collect(toList());</span><br></pre></td></tr></table></figure>
-<h3 id="是否匹配任一元素anymatch">是否匹配任一元素：anyMatch</h3>
-<p>anyMatch用于判断流中是否存在至少一个元素满足指定的条件，这个判断条件通过Lambda表达式传递给anyMatch，执行结果为boolean类型。</p>
+<h3 id="是否匹配任一元素anymatch"><a href="#是否匹配任一元素：anyMatch" class="headerlink" title="是否匹配任一元素：anyMatch"></a>是否匹配任一元素：anyMatch</h3><p>anyMatch用于判断流中是否存在至少一个元素满足指定的条件，这个判断条件通过Lambda表达式传递给anyMatch，执行结果为boolean类型。</p>
 <p>如，判断list中是否有学生：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">boolean result &#x3D; list.stream()</span><br><span class="line">            .anyMatch(Person::isStudent);</span><br></pre></td></tr></table></figure>
-<h3 id="是否匹配所有元素allmatch">是否匹配所有元素：allMatch</h3>
-<p>allMatch用于判断流中的所有元素是否都满足指定条件，这个判断条件通过Lambda表达式传递给anyMatch，执行结果为boolean类型。</p>
+<h3 id="是否匹配所有元素allmatch"><a href="#是否匹配所有元素：allMatch" class="headerlink" title="是否匹配所有元素：allMatch"></a>是否匹配所有元素：allMatch</h3><p>allMatch用于判断流中的所有元素是否都满足指定条件，这个判断条件通过Lambda表达式传递给anyMatch，执行结果为boolean类型。</p>
 <p>如，判断是否所有人都是学生：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">boolean result &#x3D; list.stream()</span><br><span class="line">            .allMatch(Person::isStudent);</span><br></pre></td></tr></table></figure>
-<h3 id="是否未匹配所有元素nonematch">是否未匹配所有元素：noneMatch</h3>
-<p>noneMatch与allMatch恰恰相反，它用于判断流中的所有元素是否都不满足指定条件：</p>
+<h3 id="是否未匹配所有元素nonematch"><a href="#是否未匹配所有元素：noneMatch" class="headerlink" title="是否未匹配所有元素：noneMatch"></a>是否未匹配所有元素：noneMatch</h3><p>noneMatch与allMatch恰恰相反，它用于判断流中的所有元素是否都不满足指定条件：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">boolean result &#x3D; list.stream()</span><br><span class="line">            .noneMatch(Person::isStudent);</span><br></pre></td></tr></table></figure>
-<h3 id="获取任一元素findany">获取任一元素findAny</h3>
-<p>findAny能够从流中随便选一个元素出来，它返回一个Optional类型的元素。</p>
+<h3 id="获取任一元素findany"><a href="#获取任一元素findAny" class="headerlink" title="获取任一元素findAny"></a>获取任一元素findAny</h3><p>findAny能够从流中随便选一个元素出来，它返回一个Optional类型的元素。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Optional&lt;Person&gt; person &#x3D; list.stream().findAny();</span><br></pre></td></tr></table></figure>
-<h3 id="获取第一个元素findfirst">获取第一个元素findFirst</h3>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Optional&lt;Person&gt; person &#x3D; list.stream().findFirst();</span><br></pre></td></tr></table></figure>
-<h3 id="归约">归约</h3>
-<p>归约是将集合中的所有元素经过指定运算，折叠成一个元素输出，如：求最值、平均数等，这些操作都是将一个集合的元素折叠成一个元素输出。</p>
+<h3 id="获取第一个元素findfirst"><a href="#获取第一个元素findFirst" class="headerlink" title="获取第一个元素findFirst"></a>获取第一个元素findFirst</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Optional&lt;Person&gt; person &#x3D; list.stream().findFirst();</span><br></pre></td></tr></table></figure>
+<h3 id="归约"><a href="#归约" class="headerlink" title="归约"></a>归约</h3><p>归约是将集合中的所有元素经过指定运算，折叠成一个元素输出，如：求最值、平均数等，这些操作都是将一个集合的元素折叠成一个元素输出。</p>
 <p>在流中，reduce函数能实现归约。</p>
 <p>reduce函数接收两个参数：</p>
 <ol>
@@ -348,8 +320,7 @@
 <p>上面的方法中我们自己定义了Lambda表达式实现求和运算，如果当前流的元素为数值类型，那么可以使用Integer提供了sum函数代替自定义的Lambda表达式，如：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int age &#x3D; list.stream().reduce(0, Integer::sum);</span><br></pre></td></tr></table></figure>
 <p>Integer类还提供了 <code>min</code>、<code>max</code> 等一系列数值操作，当流中元素为数值类型时可以直接使用。</p>
-<h3 id="数值流的使用">数值流的使用</h3>
-<p>采用reduce进行数值操作会涉及到基本数值类型和引用数值类型之间的装箱、拆箱操作，因此效率较低。</p>
+<h3 id="数值流的使用"><a href="#数值流的使用" class="headerlink" title="数值流的使用"></a>数值流的使用</h3><p>采用reduce进行数值操作会涉及到基本数值类型和引用数值类型之间的装箱、拆箱操作，因此效率较低。</p>
 <p>当流操作为纯数值操作时，使用数值流能获得较高的效率。</p>
 <p><strong>将普通流转换成数值流</strong></p>
 <p>StreamAPI提供了三种数值流：IntStream、DoubleStream、LongStream，也提供了将普通流转换成数值流的三种方法：mapToInt、mapToDouble、mapToLong。</p>
@@ -360,7 +331,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">OptionalInt maxAge &#x3D; list.stream()</span><br><span class="line">                                .mapToInt(Person::getAge)</span><br><span class="line">                                .max();</span><br></pre></td></tr></table></figure>
 <p>由于数值流可能为空，并且给空的数值流计算最大值是没有意义的，因此max函数返回OptionalInt，它是Optional的一个子类，能够判断流是否为空，并对流为空的情况作相应的处理。</p>
 <p>此外，mapToInt、mapToDouble、mapToLong进行数值操作后的返回结果分别为：OptionalInt、OptionalDouble、OptionalLong</p>
-<h2 id="中间操作和收集操作">中间操作和收集操作</h2>
+<h2 id="中间操作和收集操作"><a href="#中间操作和收集操作" class="headerlink" title="中间操作和收集操作"></a>中间操作和收集操作</h2><div class="table-container">
 <table>
 <thead>
 <tr>
@@ -482,36 +453,31 @@
 <td>终端</td>
 <td><code>long</code></td>
 <td></td>
-<td></td>
 </tr>
 </tbody>
 </table>
-<h2 id="collector-收集">Collector 收集</h2>
-<p>收集器用来将经过筛选、映射的流进行最后的整理，可以使得最后的结果以不同的形式展现。</p>
+</div>
+<h2 id="collector-收集"><a href="#Collector-收集" class="headerlink" title="Collector 收集"></a>Collector 收集</h2><p>收集器用来将经过筛选、映射的流进行最后的整理，可以使得最后的结果以不同的形式展现。</p>
 <p><code>collect</code> 方法即为收集器，它接收 <code>Collector</code> 接口的实现作为具体收集器的收集方法。</p>
 <p><code>Collector</code> 接口提供了很多默认实现的方法，我们可以直接使用它们格式化流的结果；也可以自定义 <code>Collector</code> 接口的实现，从而定制自己的收集器。</p>
-<h3 id="归约">归约</h3>
-<p>流由一个个元素组成，归约就是将一个个元素“折叠”成一个值，如求和、求最值、求平均值都是归约操作。</p>
-<h3 id="一般性归约">一般性归约</h3>
-<p>若你需要自定义一个归约操作，那么需要使用 <code>Collectors.reducing</code> 函数，该函数接收三个参数：</p>
+<h3 id="归约"><a href="#归约-1" class="headerlink" title="归约"></a>归约</h3><p>流由一个个元素组成，归约就是将一个个元素“折叠”成一个值，如求和、求最值、求平均值都是归约操作。</p>
+<h3 id="一般性归约"><a href="#一般性归约" class="headerlink" title="一般性归约"></a>一般性归约</h3><p>若你需要自定义一个归约操作，那么需要使用 <code>Collectors.reducing</code> 函数，该函数接收三个参数：</p>
 <ul>
 <li>第一个参数为归约的初始值</li>
 <li>第二个参数为归约操作进行的字段</li>
 <li>第三个参数为归约操作的过程</li>
 </ul>
-<h2 id="汇总">汇总</h2>
-<p>Collectors类专门为汇总提供了一个工厂方法：<code>Collectors.summingInt</code>。</p>
+<h2 id="汇总"><a href="#汇总" class="headerlink" title="汇总"></a>汇总</h2><p>Collectors类专门为汇总提供了一个工厂方法：<code>Collectors.summingInt</code>。</p>
 <p>它可接受一 个把对象映射为求和所需int的函数，并返回一个收集器；该收集器在传递给普通的 <code>collect</code> 方法后即执行我们需要的汇总操作。</p>
-<h3 id="分组">分组</h3>
-<p>数据分组是一种更自然的分割数据操作，分组就是将流中的元素按照指定类别进行划分，类似于SQL语句中的 <code>GROUPBY</code>。</p>
-<h3 id="多级分组">多级分组</h3>
-<p>多级分组可以支持在完成一次分组后，分别对每个小组再进行分组。</p>
+<h3 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h3><p>数据分组是一种更自然的分割数据操作，分组就是将流中的元素按照指定类别进行划分，类似于SQL语句中的 <code>GROUPBY</code>。</p>
+<h3 id="多级分组"><a href="#多级分组" class="headerlink" title="多级分组"></a>多级分组</h3><p>多级分组可以支持在完成一次分组后，分别对每个小组再进行分组。</p>
 <p>使用具有两个参数的 <code>groupingBy</code> 重载方法即可实现多级分组。</p>
 <ul>
 <li>第一个参数：一级分组的条件</li>
 <li>第二个参数：一个新的 <code>groupingBy</code> 函数，该函数包含二级分组的条件</li>
 </ul>
 <p><strong>Collectors 类的静态工厂方法</strong></p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -608,8 +574,8 @@
 </tr>
 </tbody>
 </table>
-<h3 id="转换类型">转换类型</h3>
-<p>有一些收集器可以生成其他集合。比如前面已经见过的 <code>toList</code>，生成了 <code>java.util.List</code> 类的实例。</p>
+</div>
+<h3 id="转换类型"><a href="#转换类型" class="headerlink" title="转换类型"></a>转换类型</h3><p>有一些收集器可以生成其他集合。比如前面已经见过的 <code>toList</code>，生成了 <code>java.util.List</code> 类的实例。</p>
 <p>还有 <code>toSet</code> 和 <code>toCollection</code>，分别生成 <code>Set</code> 和 <code>Collection</code> 类的实例。</p>
 <p>到目前为止， 我已经讲了很多流上的链式操作，但总有一些时候，需要最终生成一个集合——比如：</p>
 <ul>
@@ -620,12 +586,10 @@
 <p>使用 <code>toCollection</code>，用定制的集合收集元素</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stream.collect(toCollection(TreeSet::new));</span><br></pre></td></tr></table></figure>
 <p>还可以利用收集器让流生成一个值。 <code>maxBy</code> 和 <code>minBy</code> 允许用户按某种特定的顺序生成一个值。</p>
-<h3 id="数据分区">数据分区</h3>
-<p>分区是分组的特殊情况：由一个断言（返回一个布尔值的函数）作为分类函数，它称分区函数。</p>
+<h3 id="数据分区"><a href="#数据分区" class="headerlink" title="数据分区"></a>数据分区</h3><p>分区是分组的特殊情况：由一个断言（返回一个布尔值的函数）作为分类函数，它称分区函数。</p>
 <p>分区函数返回一个布尔值，这意味着得到的分组 <code>Map</code> 的键类型是 <code>Boolean</code>，于是它最多可以分为两组: true是一组，false是一组。</p>
 <p>分区的好处在于保留了分区函数返回true或false的两套流元素列表。</p>
-<h3 id="并行流">并行流</h3>
-<p>并行流就是一个把内容分成多个数据块，并用不同的线程分别处理每个数据块的流。最后合并每个数据块的计算结果。</p>
+<h3 id="并行流"><a href="#并行流" class="headerlink" title="并行流"></a>并行流</h3><p>并行流就是一个把内容分成多个数据块，并用不同的线程分别处理每个数据块的流。最后合并每个数据块的计算结果。</p>
 <p>将一个顺序执行的流转变成一个并发的流只要调用 <code>parallel()</code> 方法</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public static long parallelSum(long n)&#123;</span><br><span class="line">    return Stream.iterate(1L, i -&gt; i +1).limit(n).parallel().reduce(0L,Long::sum);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>将一个并发流转成顺序的流只要调用 <code>sequential()</code> 方法</p>
@@ -645,6 +609,7 @@
 <li>考虑数据结构：并发流需要对数据进行分解，不同的数据结构被分解的性能时不一样的。</li>
 </ol>
 <p><strong>流的数据源和可分解性</strong></p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -679,6 +644,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <p><strong>流的特性以及中间操作对流的修改都会对数据对分解性能造成影响。 比如固定大小的流在任务分解的时候就可以平均分配，但是如果有filter操作，那么流就不能预先知道在这个操作后还会剩余多少元素。</strong></p>
 <p><strong>考虑终端操作的性能：如果终端操作在合并并发流的计算结果时的性能消耗太大，那么使用并发流提升的性能就会得不偿失。</strong></p>
 
