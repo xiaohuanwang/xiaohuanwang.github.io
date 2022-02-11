@@ -228,8 +228,12 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h3 id="git配置命令"><a href="#Git配置命令" class="headerlink" title="Git配置命令"></a>Git配置命令</h3><h4 id="初始化git管理"><a href="#初始化git管理" class="headerlink" title="初始化git管理"></a>初始化git管理</h4><p>对于已创建的文件夹，直接在文件夹目录下执行：<code>git init</code><br>创建并初始化git，可以执行：<code>git init 文件夹名</code></p>
-<h4 id="配置user信息"><a href="#配置user信息" class="headerlink" title="配置user信息"></a>配置user信息</h4><ul>
+                <h3 id="git配置命令">Git配置命令</h3>
+<h4 id="初始化git管理">初始化git管理</h4>
+<p>对于已创建的文件夹，直接在文件夹目录下执行：<code>git init</code><br>
+创建并初始化git，可以执行：<code>git init 文件夹名</code></p>
+<h4 id="配置user信息">配置user信息</h4>
+<ul>
 <li>常用参数区别</li>
 </ul>
 <ol>
@@ -239,12 +243,17 @@
 </ol>
 <p>命令如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &#39;user_name&#39;</span><br><span class="line">git config --global user.name &#39;user_name&#39;</span><br></pre></td></tr></table></figure>
-<h4 id="查看user配置"><a href="#查看user配置" class="headerlink" title="查看user配置"></a>查看user配置</h4><p>命令如下：</p>
+<h4 id="查看user配置">查看user配置</h4>
+<p>命令如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --list --local</span><br><span class="line">git config --list --global</span><br><span class="line">git config --list --system</span><br></pre></td></tr></table></figure>
-<h4 id="清除user配置"><a href="#清除user配置" class="headerlink" title="清除user配置"></a>清除user配置</h4><p>命令如下：</p>
+<h4 id="清除user配置">清除user配置</h4>
+<p>命令如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">清除local</span><br><span class="line">git config --unset --local user.name</span><br><span class="line">git config --unset --local user.email</span><br><span class="line">清除global</span><br><span class="line">git config --unset --global user.name</span><br><span class="line">git config --unset --global user.email</span><br><span class="line">清除system</span><br><span class="line">git config --unset --system user.name</span><br><span class="line">git config --unset --system user.email</span><br></pre></td></tr></table></figure>
-<h4 id="配置config目录位置"><a href="#配置config目录位置" class="headerlink" title="配置config目录位置"></a>配置config目录位置</h4><p>local的在.git/config里面；global的在个人home目录下的.gitconfig里面；system应该在git安装目录的下</p>
-<h3 id="git文件添加命令"><a href="#git文件添加命令" class="headerlink" title="git文件添加命令"></a>git文件添加命令</h3><h4 id="git-add-命令介绍"><a href="#git-add-命令介绍" class="headerlink" title="git add 命令介绍"></a>git add 命令介绍</h4><p>将工作区的文件或目录通过add命令添加到git暂存区,命令如下：</p>
+<h4 id="配置config目录位置">配置config目录位置</h4>
+<p>local的在.git/config里面；global的在个人home目录下的.gitconfig里面；system应该在git安装目录的下</p>
+<h3 id="git文件添加命令">git文件添加命令</h3>
+<h4 id="git-add-命令介绍">git add 命令介绍</h4>
+<p>将工作区的文件或目录通过add命令添加到git暂存区,命令如下：</p>
 <p>将单个新建文件，添加到暂存区：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add index.html</span><br></pre></td></tr></table></figure>
 <p>将多个新建文件夹和文件，添加到暂存存：</p>
@@ -257,7 +266,8 @@
 <p><code>git mv old_name new_name</code> <em>从新命名后，不需要从新提交到暂存区，直接commit提交就行</em></p>
 <p>清空暂存区和工作区的变动，使文件还原为当初的样子，命令如下：</p>
 <p><code>git reset --hard</code> <strong>⚠️危险命令，不推荐使用</strong></p>
-<h4 id="git-log命令介绍"><a href="#git-log命令介绍" class="headerlink" title="git log命令介绍"></a>git log命令介绍</h4><p>查看所有分支的历史</p>
+<h4 id="git-log命令介绍">git log命令介绍</h4>
+<p>查看所有分支的历史</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log --all</span><br></pre></td></tr></table></figure>
 <p>查看图形化的 log 地址</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log --all --graph</span><br></pre></td></tr></table></figure>

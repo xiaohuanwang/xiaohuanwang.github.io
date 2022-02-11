@@ -228,16 +228,20 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h3 id="mac-重置-mysql-密码"><a href="#Mac-重置-MySql-密码" class="headerlink" title="Mac 重置 MySql 密码"></a>Mac 重置 MySql 密码</h3><h4 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h4><p>关闭 MySql 服务，在 Mac 中，点击系统偏好，最下方找到 MySql ，点击进去，关闭正在运行的 MySql 服务</p>
+                <h3 id="mac-重置-mysql-密码">Mac 重置 MySql 密码</h3>
+<h4 id="第一步">第一步</h4>
+<p>关闭 MySql 服务，在 Mac 中，点击系统偏好，最下方找到 MySql ，点击进去，关闭正在运行的 MySql 服务</p>
 <p><img src="http://image.wangxiaohuan.com/blog/image/202109291108303.png" alt="202109291108303"></p>
 <p><img src="http://image.wangxiaohuan.com/blog/image/202109291109511.png" alt="202109291109511"></p>
-<h4 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h4><p>进入终端，找到 MySql 的安装目录，输入 cd /usr/local/mysql/bin/  进入目录 </p>
+<h4 id="第二步">第二步</h4>
+<p>进入终端，找到 MySql 的安装目录，输入 cd /usr/local/mysql/bin/  进入目录</p>
 <p>用登录管理员权限 sudo su 需要输入 Mac 登录密码，</p>
-<p>输入以下命令，禁止 Mysql 的验证功能 ./mysqld_safe —skip-grant-tables &amp;  后MySql 会自动重新启动</p>
+<p>输入以下命令，禁止 Mysql 的验证功能 ./mysqld_safe --skip-grant-tables &amp;  后MySql 会自动重新启动</p>
 <p><img src="http://image.wangxiaohuan.com/blog/image/202109291122719.png" alt="image-20210929112239733"></p>
-<h4 id="第三步"><a href="#第三步" class="headerlink" title="第三步"></a>第三步</h4><p>输入命令 ./mysql</p>
+<h4 id="第三步">第三步</h4>
+<p>输入命令 ./mysql</p>
 <p>回车后，输入命令 FLUSH PRIVILEGES;</p>
-<p>回车后，输入命令 SET PASSWORD FOR ‘root’@’localhost’ = ‘xxx新密码x x x’;</p>
+<p>回车后，输入命令 SET PASSWORD FOR ‘root’@‘localhost’ = ‘xxx新密码x x x’;</p>
 <p>重置密码成功后，从新启动 MySql 服务。</p>
 <p><img src="http://image.wangxiaohuan.com/blog/image/202109291125759.png" alt="image-20210929112504921"></p>
 
@@ -248,7 +252,7 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/人生感悟/hello/" data-toggle="tooltip" data-placement="top" title="北京这座城市有很多灯">&larr; Previous Post</a>
+                            <a href="/人生感悟/2018-01-12/" data-toggle="tooltip" data-placement="top" title="读懂自己">&larr; Previous Post</a>
                         </li>
                     
                     

@@ -232,17 +232,20 @@
 <blockquote>
 <p>大多数开发人员不愿意写接口文档的原因是：<code>写文档短期收益远低于付出的成本</code>，然而并不是所有人都能够坚持做有<code>长期收益</code>的事情的。你因为写文档而耽误了当前项目进度，老板会直接找你麻烦；但是因为没写文档而带来的长期收益低，老板是看不见的。这就是现实，让人去做违反人性的事情是非常困难的。</p>
 </blockquote>
-<p>作为一个前后端分离模式开发的团队，我们经常会看到这样的场景：前端开发和后端开发在一起热烈的讨论“你这接口参数怎么又变了？”，“接口怎么又不通了？”，“稍等，我调试下”，“你再试试…”。</p>
+<p>作为一个前后端分离模式开发的团队，我们经常会看到这样的场景：前端开发和后端开发在一起热烈的讨论“你这接口参数怎么又变了？”，“接口怎么又不通了？”，“稍等，我调试下”，“你再试试…&quot;。</p>
 <p>那能不能写好接口文档，大家都按文档来开发？很难，程序员最讨厌的两件事：1. 写文档，2. 别人不写文档。因为写文档、维护文档比较麻烦，而且费时，还会经常出现 API 更新了，但文档还是旧的，各种同步不一致的情况，从而耽搁彼此的时间。</p>
 <p>之前我们团队也遇到了同样的问题，那么作为研发团队的负责人，我是如何带领团队解决这个问题的呢？</p>
-<h2 id="如何做"><a href="#如何做？" class="headerlink" title="如何做？"></a>如何做？</h2><p>方法其实很简单，如果能做到让写文档 /维护文档这件事情的<code>短期收益</code>就能远高于<code>付出的成本</code>，那么所有问题都能迎刃而解，开发人员就会非常乐意去写接口文档。</p>
-<h4 id="团队原来的工作模式"><a href="#团队原来的工作模式" class="headerlink" title="团队原来的工作模式"></a>团队原来的工作模式</h4><ol>
+<h2 id="如何做">如何做？</h2>
+<p>方法其实很简单，如果能做到让写文档 /维护文档这件事情的<code>短期收益</code>就能远高于<code>付出的成本</code>，那么所有问题都能迎刃而解，开发人员就会非常乐意去写接口文档。</p>
+<h4 id="团队原来的工作模式">团队原来的工作模式</h4>
+<ol>
 <li>使用 Swagger 写接口文档</li>
 <li><strong>前端开发</strong> 使用 RAP mock 接口数据</li>
 <li><strong>后端开发</strong> 使用 Postman 调试接口</li>
 <li><strong>测试人员</strong> 使用 JMeter 测试接口</li>
 </ol>
-<h4 id="我们遇到的问题"><a href="#我们遇到的问题" class="headerlink" title="我们遇到的问题"></a>我们遇到的问题</h4><ol>
+<h4 id="我们遇到的问题">我们遇到的问题</h4>
+<ol>
 <li>我们团队是前后端同步进入开发的，不能等后端开发完了才出接口文档，前端再进入开发，所以使用后端代码注释自动生成 Swagger 不适合我们。</li>
 <li>写 Swagger 文档效率很低，并且有学习门槛，让团队所有人都熟练手写 Swagger 文档是不现实的，更何况团队不停有新人进来。</li>
 <li>开发人员在 Swagger 定义好文档后，接口调试的时候还需要去 Postman 再定义一遍。</li>
@@ -253,7 +256,8 @@
 <li>开发过程，经常会有发现开始定义的接口文档有不合理的地方，需要临时调整，经常出现接口改了，但是文档没有更新。</li>
 <li>时间久了，各种不一致会越来越严重。</li>
 </ol>
-<h3 id="如何解决"><a href="#如何解决" class="headerlink" title="如何解决"></a>如何解决</h3><p>要做到写文档和及时维护文档的<code>短期收益</code>就能远高于<code>付出的成本</code>，无非两个方向：</p>
+<h3 id="如何解决">如何解决</h3>
+<p>要做到写文档和及时维护文档的<code>短期收益</code>就能远高于<code>付出的成本</code>，无非两个方向：</p>
 <ol>
 <li>降低写文档的成本</li>
 <li>增加写文档后的收益</li>
@@ -272,9 +276,11 @@
 <blockquote>
 <p>通过一套系统、一份数据，解决多个系统之间的数据同步问题。只要定义好接口文档，接口调试、数据 Mock 、接口测试就可以直接使用，无需再次定义；接口文档和接口开发调试使用同一个工具，接口调试完成后即可保证和接口文档定义完全一致。高效、及时、准确！</p>
 </blockquote>
-<h4 id="怎么办自己干"><a href="#怎么办？自己干！" class="headerlink" title="怎么办？自己干！"></a>怎么办？自己干！</h4><p>于是，我们自己实现了一个<code>Postman + Swagger + RAP + JMeter</code></p>
+<h4 id="怎么办自己干">怎么办？自己干！</h4>
+<p>于是，我们自己实现了一个<code>Postman + Swagger + RAP + JMeter</code></p>
 <p>这个工具就是 <code>Apifox</code>，经常很长一段时间不断更新迭代后，我们基本上完全实现了最初的设想，几乎完美解决了最开始遇到的所有问题，在公司内部大受欢迎。并且也形成了我们自己的最佳实践。</p>
-<h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><ol>
+<h2 id="最佳实践">最佳实践</h2>
+<ol>
 <li><strong>前端</strong>（或<strong>后端</strong>）在 <strong>Apifox</strong> 上定好<code>接口文档</code>初稿。</li>
 <li><strong>前后端</strong> 一起评审、完善<code>接口文档</code>，定好<code>接口用例</code>。</li>
 <li><strong>前端</strong> 使用系统根据接口文档自动生成的 <code>Mock 数据</code>进入开发。</li>
@@ -282,9 +288,11 @@
 <li><strong>后端</strong> 开发完成后，<strong>测试人员</strong>（也可以是<strong>后端</strong>）使用<code>集合测试</code>功能进行多接口集成测试，完整测试整个接口调用流程。</li>
 <li><strong>前后端</strong> 都开发完，前端从<code>Mock 数据</code>切换到<code>正式数据</code>，联调通常都会非常顺利，因为前后端双方都完全遵守了接口定义的规范。</li>
 </ol>
-<h2 id="对外服务"><a href="#对外服务" class="headerlink" title="对外服务"></a>对外服务</h2><p>没错，现在我们已经将<code>Apifox</code>产品化对外服务了，你们团队也可以直接使用<code>Apifox</code>了。</p>
+<h2 id="对外服务">对外服务</h2>
+<p>没错，现在我们已经将<code>Apifox</code>产品化对外服务了，你们团队也可以直接使用<code>Apifox</code>了。</p>
 <p>官网：<a href="https://www.apifox.cn/" target="_blank" rel="noopener">www.apifox.cn</a></p>
-<h2 id="apifox-主要功能"><a href="#Apifox-主要功能" class="headerlink" title="Apifox 主要功能"></a>Apifox 主要功能</h2><ol>
+<h2 id="apifox-主要功能">Apifox 主要功能</h2>
+<ol>
 <li><strong>接口设计</strong>：Apifox 接口文档遵循 <a href="https://www.openapis.org/" target="_blank" rel="noopener">OpenApi</a>3.0 (原 Swagger)、<a href="https://json-schema.org/" target="_blank" rel="noopener">JSON Schema</a> 规范的同时，提供了非常好用的<code>可视化</code>文档管理功能，零学习成本，非常高效。</li>
 <li><strong>数据模型</strong>：可复用的数据结构，定义接口<code>返回数据结构</code>及<code>请求参数数据结构</code>（仅 JSON 和 XML 模式）时可直接引用。</li>
 <li><strong>接口调试</strong>：Postman 有的功能，比如环境变量、前置 /后置脚本、Cookie/Session 全局共享 等功能，Apifox 都有，并且和 Postman 一样高效好用。接口运行完之后点击<code>保存为用例</code>按钮，即可生成<code>接口用例</code>，后续可直接运行接口用例，无需再输入参数，非常方便。</li>
@@ -295,8 +303,10 @@
 <li><strong>代码生成</strong>：根据接口及数据数据模型定义，系统自动生成<code>接口请求代码</code>、<code>前端业务代码</code>及<code>后端业务代码</code>。</li>
 <li><strong>团队协作</strong>：Apifox 天生就是为团队协作而生的，接口云端实时同步更新，成熟的<code>团队 /项目 /成员权限</code>管理，满足各类企业的需求。</li>
 </ol>
-<h2 id="apifox-截图"><a href="#Apifox-截图" class="headerlink" title="Apifox 截图"></a>Apifox 截图</h2><p><img src="https://cdn3.apifox.cn/www/screenshot/apifox-api-case-1.png" alt="Apifox 接口文档工具"></p>
-<p><a href="https://www.apifox.cn/" target="_blank" rel="noopener">接口文档工具</a><br>官网：<a href="https://www.apifox.cn/" target="_blank" rel="noopener">www.apifox.cn</a></p>
+<h2 id="apifox-截图">Apifox 截图</h2>
+<p><img src="https://cdn3.apifox.cn/www/screenshot/apifox-api-case-1.png" alt="Apifox 接口文档工具"></p>
+<p><a href="https://www.apifox.cn/" target="_blank" rel="noopener">接口文档工具</a><br>
+官网：<a href="https://www.apifox.cn/" target="_blank" rel="noopener">www.apifox.cn</a></p>
 
                 
 
