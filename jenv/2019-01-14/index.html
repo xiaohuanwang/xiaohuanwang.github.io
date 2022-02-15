@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          Eclipse+JRebel+Tomcat热部署 - 吃素的左撇子 | Blog
+          Mac 下使用 jenv 管理多个 JDK 版本 - 吃素的左撇子 | Blog
         
     </title>
 
-    <link rel="canonical" href="http://www.wangxiaohuan.com/插件/2019-01-11/">
+    <link rel="canonical" href="http://www.wangxiaohuan.com/jenv/2019-01-14/">
 
     <!-- Bootstrap Core CSS -->
     
@@ -87,7 +87,7 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('/img/header_img/timg.jpg')
+            background-image: url('http://image.wangxiaohuan.com/blog/image/202201271526441.png')
             /*post*/
         
     }
@@ -107,11 +107,11 @@
                               <a class="tag" href="/tags/#工具" title="工具">工具</a>
                             
                         </div>
-                        <h1>Eclipse+JRebel+Tomcat热部署</h1>
+                        <h1>Mac 下使用 jenv 管理多个 JDK 版本</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by 吃素的左撇子 on
-                            2019-01-11
+                            2019-01-14
                         </span>
                     </div>
                 
@@ -228,32 +228,73 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>作为一名程序猿，在写程序的时候，总是不能一气呵成的写出无bug的代码，就算是噼里啪啦的一顿敲，可能会出现10行代码9个bug，这时候咋办啊，有bug就改吧。于是就心平气和的一步一步的debug，运气好的好，能一眼看出问题的所在，直接命中目标，三两下改好了，重新编译，部署到服务器，正在欣喜之中，又发现一个bug，于是耐着心思看了一眼代码，没有发现bug，于是冷静了一下，开始调试，发现问题所在，稍微改动一下，又重新编译部署到服务器，经过漫长的等待，发现bug还在，又改了一下，重新编译部署到服务器，经过漫长的等待，bug依然在。这可咋办，改一行代码参数3秒，服务启动1分钟。来来回回半个小时过去了，这可咋办，于是JRebel就出现了。</p>
-<p><strong>JRebel是一款十分方便的插件，在Java Web项目中，我们一般修改了java代码后需要重启tomcat才能生效，而Jrebel支持热部署，也就是说不用重新启动Tomcat，修改的代码同样可以生效不必每次都等待服务器（如tomcat）的启动，当即修改当即生效，能够节省大批的时间，提高了个人开发效率。</strong></p>
-<h3 id="jrebel项目配置">JRebel项目配置</h3>
+                <h3 id="jdk-介绍">JDK 介绍</h3>
+<p>JDK，全称：Java Development Kit，也就是<strong>Java开发人员发布的免费软件开发工具包</strong>。JDK一般包括JRE（Java Runtime Environment），所以我们需要使用Java环境，习惯性叫<strong>配置JDK环境</strong>。</p>
+<p>一般，我们需要用到基于Java虚拟机的操作服务时，需要有JDK的环境，这样的Java有两个特点（<strong>Write once, run anywhere</strong>）：</p>
+<ul>
+<li>易于移植：只需要有Java的虚拟机（JDK）环境，即可运行Java程序。</li>
+<li>需要平台有Java虚拟机支持：Java程序有所限制，需要有Java环境支持</li>
+</ul>
+<h3 id="jdk选择">JDK选择</h3>
+<p>在配置JDK前，我们先来看看如何选择JDK。JDK的版本分支很多，大体上分为：</p>
+<ul>
+<li>OpenJDK：开源的JDK</li>
+<li>OracleJDK：Oracle公司开发的JDK</li>
+</ul>
+<p>这个其实是看个人喜好，但是如果问我，<strong>我更推荐OpenJDK，避免项目因为版权问题而引发纠纷</strong>（每个程序员，都有个项目做大做强的梦……）</p>
+<p>其中，软件包管理器的JDK，也属于OpenJDK的一种。</p>
+<h3 id="openjdk">OpenJDK</h3>
+<p>最开始，JDK由SUN公司开发，但是后来被Oracle公司收购，现在的OracleJDK，其License 协议已经从BCL换成了OTN，这就意味着，你不能在生产环境使用这个版本了（可能要被反薅了🥲）。</p>
+<p>不过呢？早在2006 年的 Java One 大会上，Sun公司（那时候还没被Oracle收购）就宣布Java技术的开源，随之诞生了OpenJDK，并在随着Google的Android全面使用OpenJDK开始，OpenJDK使用的人数越来越多。</p>
+<p>目前，OpenJDK 基本满足所有开发的需求和需要，小部分需要使用 OracleJDK 的包时，基本也可以通过引用外部包和自己编写依赖包解决（如：sun 包下的 Base64）。所以，目前使用 OpenJDK，<strong>不管作为开发还是生产环境，都是不错的选择。</strong></p>
+<h3 id="jdk-版本选择">JDK 版本选择</h3>
+<p>JD K的版本怎么选择呢？一般而言，<strong>JDK的版本并不是越高版本越好</strong>。JDK一般是一个稳定长期支持版本，然后经过两个快速开发版本迭代，再出一个稳定长期版本。比如：JDK8 发布，JDK9、JDK10 就是开发版本，之后的JDK11 又是一个稳定长期支持版本。</p>
+<p>所以，<strong>通常情况下，我们使用稳定长期支持版本比较好，如：JDK8、JDK11、JDK17.</strong></p>
+<p><strong><em>MAC 上安装了多个 JDK 版本，但是根据开发环境的需要如何在这些 JDK 版本之间切换呢？</em></strong></p>
+<h4 id="这就需要使用-mac-上的-java-版本管理工具-jevn">这就需要使用 MAC 上的 JAVA 版本管理工具 <a href="https://www.jenv.be/" target="_blank" rel="noopener">jevn</a></h4>
+<h3 id="jenv">Jenv</h3>
+<p><a href="https://www.jenv.be/" target="_blank" rel="noopener">Jenv项目地址：https://www.jenv.be</a><br>
+按照官网的解释:<br>
+<em>jEnv is a command line tool to help you forget how to set the JAVA_HOME environment variable</em><br>
+简单地说：<strong>使用一条命令可以轻松配置JAVA_HOME到环境变量。</strong></p>
+<h3 id="安装-jenv">安装 Jenv</h3>
+<p>Homebrew 是一款 Mac OS 平台下的软件包管理工具，拥有安装、卸载、更新、查看、搜索等很多实用的功能。简单的一条指令，就可以实现包管理，而不用你关心各种依赖和文件路径的情况，十分方便快捷。</p>
+<p>在<a href="https://link.jianshu.com?t=https%3A%2F%2Fbrew.sh" target="_blank" rel="noopener">Homebrew</a>官网上有详细的安装说明，总结如下：</p>
 <ol>
-<li>打开eclipse，help -&gt; Eclipse Marketplace</li>
+<li>将以下命令粘贴至终端</li>
 </ol>
-<p><img src="578B9227-A1F6-482F-9995-7A8D4529363F.png" alt="578B9227-A1F6-482F-9995-7A8D4529363F"></p>
-<p>2.搜索Jrebel 安装并重启，这里我已经安装过了</p>
-<p><img src="D6807145-C875-4652-A354-119AF69C61C1.png" alt="D6807145-C875-4652-A354-119AF69C61C1"></p>
-<p>3.重启后在 Help -&gt; Jrebel -&gt; Activation 激活</p>
-<p><img src="08F5331B-6E4C-436E-A3BD-1FC6D681D6EF.png" alt="08F5331B-6E4C-436E-A3BD-1FC6D681D6EF"></p>
-<p>4.这里有三种方式可以选择，具体激活方法可自行百度。激活之后重启。</p>
-<p><img src="E0AFB149-8AB6-4C53-A57F-88D81D142E17.png" alt="E0AFB149-8AB6-4C53-A57F-88D81D142E17"></p>
-<h3 id="jrebel项目配置">JRebel项目配置</h3>
-<p>1.打开eclipse，Window-&gt;Preferrences-&gt;JRebel。或者点击菜单“Help-&gt;JRebel Configuration”进入JReble配置中心</p>
-<p><img src="ABA631DF-5E28-41BE-8AA0-D9E991CEDA86.png" alt="ABA631DF-5E28-41BE-8AA0-D9E991CEDA86"></p>
-<p>2.设置JRebel重加载时间，本人设置为5秒</p>
-<p><img src="919469EB-E2EF-4CB0-BD7D-F89B0901EDD5.png" alt="919469EB-E2EF-4CB0-BD7D-F89B0901EDD5"></p>
-<p>3.选择project，将项目添加到Jrebel中，项目后面有两个绿色图标，在第一个打勾即可</p>
-<p><img src="1C23D3D8-B0F5-496C-9732-CFB66DDAF1F4.png" alt="1C23D3D8-B0F5-496C-9732-CFB66DDAF1F4"></p>
-<p>4.选择一个WEB服务器，开启JRebel支持</p>
-<p><img src="476E989C-A010-4B53-87C5-5B3CF0A4B94F.png" alt="476E989C-A010-4B53-87C5-5B3CF0A4B94F"></p>
-<p>5.启动自动编译：eclipse选择菜单Projecy-&gt;Build Automatically打钩。启动Tomcat，输出下面2句话表示JRebel启动。</p>
-<p><img src="CA751927-F474-4A9D-94A2-8703E879A369.png" alt="CA751927-F474-4A9D-94A2-8703E879A369"></p>
-<p>6.尝试修改Java 代码，会发现控制台输出热部署信息</p>
-<p><img src="FA7D3945-ADE6-4A5C-9E72-266AE2C4B774.png" alt="FA7D3945-ADE6-4A5C-9E72-266AE2C4B774"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;usr&#x2F;bin&#x2F;ruby -e &quot;$(curl -fsSL https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;Homebrew&#x2F;install&#x2F;master&#x2F;install)&quot;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>输入以下命令进行安装 jenv</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install jenv</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>安装成功后进行配置</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ echo &#39;export PATH&#x3D;&quot;$HOME&#x2F;.jenv&#x2F;bin:$PATH&quot;&#39; &gt;&gt; ~&#x2F;.bash_profile</span><br><span class="line"></span><br><span class="line">$ echo &#39;eval &quot;$(jenv init -)&quot;&#39; &gt;&gt; ~&#x2F;.bash_profile</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>输入以下命令查看找到的java版本</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> $ jenv versions</span><br><span class="line"></span><br><span class="line">* system (set by &#x2F;Users&#x2F;wangxiaohuan&#x2F;.jenv&#x2F;version)</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>
+<p>下载安装JDK</p>
+<p><a href="https://www.oracle.com/java/technologies/downloads/#java8-mac" target="_blank" rel="noopener">JDK8</a>，<a href="https://www.oracle.com/java/technologies/downloads/#java11-mac" target="_blank" rel="noopener">JDK11</a>，<a href="https://www.oracle.com/java/technologies/downloads/#jdk17-mac" target="_blank" rel="noopener">JDK17</a></p>
+<p>注：<em>下载下的JDK都存放在 /Library/Java/JavaVirtualMachines/ 目录下</em></p>
+</li>
+<li>
+<p>使用 jenv add 命令将JDK 加入jenv中</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#添加JDK8</span><br><span class="line">$ jenv add &#x2F;Library&#x2F;Java&#x2F;JavaVirtualMachines&#x2F;jdk1.8.0_151.jdk&#x2F;Contents&#x2F;Home</span><br><span class="line"></span><br><span class="line">oracle64-1.8.0.151 added</span><br><span class="line">1.8.0.151 added</span><br><span class="line">1.8 added</span><br><span class="line"></span><br><span class="line">#添加JDK11</span><br><span class="line">$ jenv add &#x2F;Library&#x2F;Java&#x2F;JavaVirtualMachines&#x2F;jdk-11.0.10.jdk&#x2F;Contents&#x2F;Home</span><br><span class="line"></span><br><span class="line">oracle64-11.0.10 added</span><br><span class="line">11.0.10 added</span><br><span class="line">11.0 added</span><br><span class="line">11 added</span><br><span class="line"></span><br><span class="line">#添加JDK17</span><br><span class="line">$ jenv add &#x2F;Library&#x2F;Java&#x2F;JavaVirtualMachines&#x2F;jdk-17.0.2.jdk&#x2F;Contents&#x2F;Home</span><br><span class="line"></span><br><span class="line">oracle64-17.0.2 added</span><br><span class="line">17.0.2 added</span><br><span class="line">17.0 added</span><br><span class="line">17 added</span><br></pre></td></tr></table></figure>
+<ol start="7">
+<li>运行jenv versions 命令</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ jenv versions</span><br><span class="line"></span><br><span class="line">* system (set by &#x2F;Users&#x2F;wangxiaohuan&#x2F;.jenv&#x2F;version)</span><br><span class="line">  1.8</span><br><span class="line">  1.8.0.151</span><br><span class="line">  11</span><br><span class="line">  11.0</span><br><span class="line">  11.0.10</span><br><span class="line">  17</span><br><span class="line">  17.0</span><br><span class="line">  17.0.2</span><br><span class="line">  oracle64-1.8.0.151</span><br><span class="line">  oracle64-11.0.10</span><br><span class="line">  oracle64-17.0.2</span><br></pre></td></tr></table></figure>
+<ol start="8">
+<li>选择一个JDK 版本，运行（ jenv local /jenv global）命令 注 jenv local 当前目录使用 JDK  jenv global 全局 JDK</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ jenv local 1.8</span><br><span class="line">jenv local 1.8</span><br><span class="line"></span><br><span class="line">#查看JDK 版本</span><br><span class="line">$ java -version</span><br><span class="line">java version &quot;1.8.0_151&quot;</span><br><span class="line">Java(TM) SE Runtime Environment (build 1.8.0_151-b12)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.151-b12, mixed mode)</span><br></pre></td></tr></table></figure>
 
                 
 
@@ -262,12 +303,12 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/jenv/2019-01-14/" data-toggle="tooltip" data-placement="top" title="Mac 下使用 jenv 管理多个 JDK 版本">&larr; Previous Post</a>
+                            <a href="/技术/2019-01-30/" data-toggle="tooltip" data-placement="top" title="提问的智慧">&larr; Previous Post</a>
                         </li>
                     
                     
                         <li class="next">
-                            <a href="/虚拟机/2019-01-07/" data-toggle="tooltip" data-placement="top" title="Mac下使用Vagrant+VirtualBox快速搭建Centos/7虚拟机">Next Post &rarr;</a>
+                            <a href="/插件/2019-01-11/" data-toggle="tooltip" data-placement="top" title="Eclipse+JRebel+Tomcat热部署">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -327,7 +368,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#jrebel项目配置"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">JRebel项目配置</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#jrebel项目配置"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">JRebel项目配置</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#jdk-介绍"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">JDK 介绍</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#jdk选择"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">JDK选择</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#openjdk"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">OpenJDK</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#jdk-版本选择"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">JDK 版本选择</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#这就需要使用-mac-上的-java-版本管理工具-jevn"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">这就需要使用 MAC 上的 JAVA 版本管理工具 jevn</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#jenv"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">Jenv</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#安装-jenv"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">安装 Jenv</span></a></li></ol>
         
         </div>
       </aside>
@@ -367,8 +408,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "your-disqus-ID";
-    var disqus_identifier = "http://www.wangxiaohuan.com/%E6%8F%92%E4%BB%B6/2019-01-11/";
-    var disqus_url = "http://www.wangxiaohuan.com/%E6%8F%92%E4%BB%B6/2019-01-11/";
+    var disqus_identifier = "http://www.wangxiaohuan.com/jenv/2019-01-14/";
+    var disqus_url = "http://www.wangxiaohuan.com/jenv/2019-01-14/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
