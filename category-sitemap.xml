@@ -7,6 +7,13 @@
     </url>
 
     <url>
+        <loc>http://www.wangxiaohuan.com/categories/%25E9%259B%2586%25E5%2590%2588/</loc>
+        <lastmod>2021-09-08T06:51:16.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://www.wangxiaohuan.com/categories/%25E5%259F%25BA%25E7%25A1%2580%25E5%2591%25BD%25E4%25BB%25A4/</loc>
         <lastmod>2021-09-08T06:51:16.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -15,13 +22,6 @@
 
     <url>
         <loc>http://www.wangxiaohuan.com/categories/JDK%25E5%2592%258CMaven/</loc>
-        <lastmod>2021-09-08T06:51:16.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://www.wangxiaohuan.com/categories/%25E9%259B%2586%25E5%2590%2588/</loc>
         <lastmod>2021-09-08T06:51:16.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -63,13 +63,6 @@
     </url>
 
     <url>
-        <loc>http://www.wangxiaohuan.com/categories/%25E5%2585%25B6%25E4%25BB%2596/</loc>
-        <lastmod>2021-09-08T06:51:16.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://www.wangxiaohuan.com/categories/lambda-%25E8%25A1%25A8%25E8%25BE%25BE%25E5%25BC%258F/</loc>
         <lastmod>2021-09-08T06:51:16.000Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -77,7 +70,7 @@
     </url>
 
     <url>
-        <loc>http://www.wangxiaohuan.com/categories/stream-%25E8%25A1%25A8%25E8%25BE%25BE%25E5%25BC%258F/</loc>
+        <loc>http://www.wangxiaohuan.com/categories/%25E5%2585%25B6%25E4%25BB%2596/</loc>
         <lastmod>2021-09-08T06:51:16.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -91,14 +84,14 @@
     </url>
 
     <url>
-        <loc>http://www.wangxiaohuan.com/categories/%25E7%25BA%25BF%25E7%25A8%258B/</loc>
+        <loc>http://www.wangxiaohuan.com/categories/stream-%25E8%25A1%25A8%25E8%25BE%25BE%25E5%25BC%258F/</loc>
         <lastmod>2021-09-08T06:51:16.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://www.wangxiaohuan.com/categories/%25E7%25BA%25BF%25E7%25A8%258B%25E6%25B1%25A0/</loc>
+        <loc>http://www.wangxiaohuan.com/categories/%25E7%25BA%25BF%25E7%25A8%258B/</loc>
         <lastmod>2021-09-08T06:51:16.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -126,7 +119,7 @@
     </url>
 
     <url>
-        <loc>http://www.wangxiaohuan.com/categories/%25E5%25B9%25B6%25E5%258F%2591%25E5%2592%258C%25E5%25A4%259A%25E7%25BA%25BF%25E7%25A8%258B/</loc>
+        <loc>http://www.wangxiaohuan.com/categories/%25E7%25BA%25BF%25E7%25A8%258B%25E6%25B1%25A0/</loc>
         <lastmod>2021-09-08T06:51:16.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -141,6 +134,13 @@
 
     <url>
         <loc>http://www.wangxiaohuan.com/categories/%25E6%258E%25A5%25E5%258F%25A3%25E5%25B9%2582%25E7%25AD%2589%25E6%2580%25A7/</loc>
+        <lastmod>2021-09-08T06:51:16.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://www.wangxiaohuan.com/categories/%25E5%25B9%25B6%25E5%258F%2591%25E5%2592%258C%25E5%25A4%259A%25E7%25BA%25BF%25E7%25A8%258B/</loc>
         <lastmod>2021-09-08T06:51:16.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -196,13 +196,6 @@
     </url>
 
     <url>
-        <loc>http://www.wangxiaohuan.com/categories/%25E5%25AE%2589%25E8%25A3%2585%25E6%258C%2587%25E5%258D%2597/</loc>
-        <lastmod>2022-01-26T02:39:03.734Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://www.wangxiaohuan.com/categories/%25E6%258A%2580%25E6%259C%25AF/</loc>
         <lastmod>2022-01-27T07:34:04.835Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -226,6 +219,13 @@
     <url>
         <loc>http://www.wangxiaohuan.com/categories/jenv/</loc>
         <lastmod>2022-02-15T08:14:20.515Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://www.wangxiaohuan.com/categories/%25E5%25AE%2589%25E8%25A3%2585%25E6%258C%2587%25E5%258D%2597/</loc>
+        <lastmod>2022-03-03T03:36:39.552Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
