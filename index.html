@@ -505,23 +505,22 @@ Vue3 介绍
 
 <div class="post-preview">
 
-    <a href="/事务/2020-03-18/">
+    <a href="/Spring-Event-事件原理/2020-03-24/">
         <h2 class="post-title">
-            Spring 五个事务隔离级别和七个事务传播行为
+            Spring Event 事件原理分析
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            TransactionDefinition 接口五个事务隔离级别
-ISOLATION_DEFAULT :这是一个PlatfromTransactionManager默认的隔离级别，使用数据库默认的事务隔离级别.另外四个与JDBC的隔离级别相对应
-ISOLATION_READ_UNCOMMITTED :这是事务最低的隔离级别，它充许别外一个事务可以看到这个事务未提交的数据。这种隔离级别会产生脏......
+            Spring Events 实现
+ApplicationContext 通过 ApplicationEvent 类和 ApplicationListener 接口进行事件处理。 如果将实现 ApplicationListener 接口的 bean 注入到上下文中，则每次使用 ApplicationContext 发布 ApplicationEvent 时，都会通知该 bean。 本质上，这是......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by 吃素的左撇子 on
-            2020-03-18
+            2020-03-22
         </p>
         <div class="tags">
             
@@ -535,28 +534,25 @@ ISOLATION_READ_UNCOMMITTED :这是事务最低的隔离级别，它充许别外�
 
 <div class="post-preview">
 
-    <a href="/Bean-生命周期/2020-03-12/">
+    <a href="/Spring-Event-事件/2020-03-22/">
         <h2 class="post-title">
-            Spring 中 Bean 的生命周期
+            Spring Event 事件介绍
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            Bean 的完整生命周期
+            Spring Event（Application Event）其实就是一个观察者设计模式，一个 Bean 处理完成任务后希望通知其它 Bean 或者说一个 Bean 想观察监听另一个Bean 的行为。
+要使用Event只要准备三个部分：
 
-Bean 的生命周期还是比较复杂的，下面来对上图每一个步骤做文字描述:
-
-Spring启动，查找并加载需要被Spring管理的bean，进行Bean的实例化
-Bean实例化后对将Bean的引入和值注入到Bean的属性中
-如果Bean实现了BeanNameAware接口的话，Spring将Bean的Id传递给setBeanName()方法
-如果Bean实现了Bean......
+事件类：定义事件，继承ApplicationEvent的类成为一个事件类。
+发布者：发布事件，通过ApplicationEventPublisher发布事......
         </div>
     </a>
     
         <p class="post-meta" style="margin: 10px 0;">
             Posted by 吃素的左撇子 on
-            2020-03-12
+            2020-03-22
         </p>
         <div class="tags">
             
@@ -613,11 +609,11 @@ Bean实例化后对将Bean的引入和值注入到Bean的属性中
             
         
             
-            <a href="/tags/#Java" title="Java" rel="12">Java</a>
+            <a href="/tags/#Linux" title="Linux" rel="3">Linux</a>
             
         
             
-            <a href="/tags/#Linux" title="Linux" rel="3">Linux</a>
+            <a href="/tags/#Java" title="Java" rel="12">Java</a>
             
         
             
@@ -625,9 +621,9 @@ Bean实例化后对将Bean的引入和值注入到Bean的属性中
             
         
             
-        
-            
             <a href="/tags/#MyBatis" title="MyBatis" rel="3">MyBatis</a>
+            
+        
             
         
             
@@ -651,7 +647,7 @@ Bean实例化后对将Bean的引入和值注入到Bean的属性中
             
         
             
-            <a href="/tags/#Spring" title="Spring" rel="2">Spring</a>
+            <a href="/tags/#Spring" title="Spring" rel="4">Spring</a>
             
         
             
@@ -771,7 +767,7 @@ Bean实例化后对将Bean的引入和值注入到Bean的属性中
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">1</span></li></ul>
     </div>
 
         <hr>

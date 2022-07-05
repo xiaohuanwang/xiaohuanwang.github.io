@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          Spring Event 事件原理分析 - 吃素的左撇子 | Blog
+        
+    </title>
+
+    <link rel="canonical" href="http://www.wangxiaohuan.com/Spring-Event-事件原理/2020-03-24/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+<link rel="stylesheet" href="/css/beantech.min.css">
+
+
+    
+<link rel="stylesheet" href="/css/donate.css">
+
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="/css/widget.css">
+
+
+    
+<link rel="stylesheet" href="/css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="/css/signature.css">
+
+
+    
+<link rel="stylesheet" href="/css/toc.css">
+
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('http://image.wangxiaohuan.com/blog/image/202201271528938.png')
+            /*post*/
+        
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Spring" title="Spring">Spring</a>
+                            
+                        </div>
+                        <h1>Spring Event 事件原理分析</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 吃素的左撇子 on
+                            2020-03-22
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">吃素的左撇子</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About Me</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archive</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h3 id="spring-events-实现">Spring Events 实现</h3>
+<p>ApplicationContext 通过 ApplicationEvent 类和 ApplicationListener 接口进行事件处理。 如果将实现 ApplicationListener 接口的 bean 注入到上下文中，则每次使用 ApplicationContext 发布 ApplicationEvent 时，都会通知该 bean。 本质上，这是标准的观察者设计模式，是<strong>事件驱动模型</strong>在设计层面的体现。</p>
+<p>Spring Events 虽然在应用代码中不是很常用，但其框架本身大量使用了事件机制，例如 ApplicationStartedEvent、ApplicationEnvironmentPreparedEvent 等。同时 Spring 允许自定义事件，下面就来演示一下如何实现自定义事件。</p>
+<p>Spring 的事件机制和事件发布是 <code>ApplicationContext</code> 本身提供的功能，要实现 Spring Events 需要遵循以下几点：</p>
+<ul>
+<li>自定义事件必须继承 ApplicationEvent</li>
+<li>事件发布者需要注入并使用ApplicationEventPublisher发布事件，也可以直接使用 <code>ApplicationContext</code> 发布事件，因为它继承了 <code>ApplicationEventPublisher</code> 接口</li>
+<li>事件监听器需要实现ApplicationListener接口，也可以使用注解 <code>@EventListener</code> （推荐）</li>
+</ul>
+<h3 id="spring事件通知原理">Spring事件通知原理</h3>
+<p>首先我们跟踪<code>publishEvent</code>方法，这个方法在<code>AbstractApplicationContext</code>类中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">protected void publishEvent(Object event, @Nullable ResolvableType eventType) &#123;</span><br><span class="line">    Assert.notNull(event, &quot;Event must not be null&quot;);</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Decorate event as an ApplicationEvent if necessary</span><br><span class="line">    ApplicationEvent applicationEvent;</span><br><span class="line">    if (event instanceof ApplicationEvent) &#123;</span><br><span class="line">        &#x2F;&#x2F; 如果event是ApplicationEvent对象</span><br><span class="line">        applicationEvent &#x3D; (ApplicationEvent) event;</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        &#x2F;&#x2F; 如果event不是ApplicationEvent对象，则将其包装成PayloadApplicationEvent事件，并获取对应的事件类型</span><br><span class="line">        applicationEvent &#x3D; new PayloadApplicationEvent&lt;&gt;(this, event);</span><br><span class="line">        if (eventType &#x3D;&#x3D; null) &#123;</span><br><span class="line">            eventType &#x3D; ((PayloadApplicationEvent) applicationEvent).getResolvableType();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Multicast right now if possible - or lazily once the multicaster is initialized</span><br><span class="line">    if (this.earlyApplicationEvents !&#x3D; null) &#123;</span><br><span class="line">        this.earlyApplicationEvents.add(applicationEvent);</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        &#x2F;&#x2F; 获取ApplicationEventMulticaster，调用&#96;multicastEvent&#96;方法广播事件</span><br><span class="line">        getApplicationEventMulticaster().multicastEvent(applicationEvent, eventType);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 如果当前命名空间还有父亲节点，也需要给父亲推送该消息</span><br><span class="line">    &#x2F;&#x2F; Publish event via parent context as well...</span><br><span class="line">    if (this.parent !&#x3D; null) &#123;</span><br><span class="line">        if (this.parent instanceof AbstractApplicationContext) &#123;</span><br><span class="line">            ((AbstractApplicationContext) this.parent).publishEvent(event, eventType);</span><br><span class="line">        &#125;</span><br><span class="line">        else &#123;</span><br><span class="line">            this.parent.publishEvent(event);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 获取ApplicationEventMulticaster</span><br><span class="line">ApplicationEventMulticaster getApplicationEventMulticaster() throws IllegalStateException &#123;</span><br><span class="line">    if (this.applicationEventMulticaster &#x3D;&#x3D; null) &#123;</span><br><span class="line">        throw new IllegalStateException(&quot;ApplicationEventMulticaster not initialized - &quot; +</span><br><span class="line">                &quot;call &#39;refresh&#39; before multicasting events via the context: &quot; + this);</span><br><span class="line">    &#125;</span><br><span class="line">    return this.applicationEventMulticaster;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>经过上面的分析，我们看到事件是通过<code>applicationEventMulticaster</code>来广播出去的。</p>
+<p><code>applicationEventMulticaster</code>在Spring的启动过程中被建立，我们在之前的文章<a href="https://blog.wangqi.love/articles/Spring/Spring%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%901(overview).html" target="_blank" rel="noopener">Spring启动过程分析1(overview)</a>中分析过Spring的启动过程，在核心方法<code>refresh</code>中建立<code>applicationEventMulticaster</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; Initialize message source for this context.</span><br><span class="line">initMessageSource();</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Initialize event multicaster for this context.</span><br><span class="line">&#x2F;&#x2F; 在Spring容器中初始化事件广播器，事件广播器用于事件的发布</span><br><span class="line">initApplicationEventMulticaster();</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Initialize other special beans in specific context subclasses.</span><br><span class="line">onRefresh();</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Check for listener beans and register them.</span><br><span class="line">&#x2F;&#x2F; 把Spring容器内的事件监听器和BeanFactory中的事件监听器都添加的事件广播器中。</span><br><span class="line">registerListeners();</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Instantiate all remaining (non-lazy-init) singletons.</span><br><span class="line">finishBeanFactoryInitialization(beanFactory);</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Last step: publish corresponding event.</span><br><span class="line">finishRefresh();</span><br></pre></td></tr></table></figure>
+<p>关注<code>initApplicationEventMulticaster</code>和<code>registerListeners</code>方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 初始化事件广播器</span><br><span class="line">protected void initApplicationEventMulticaster() &#123;</span><br><span class="line">    ConfigurableListableBeanFactory beanFactory &#x3D; getBeanFactory();</span><br><span class="line">    &#x2F;&#x2F; 如果用户手动新建了一个名为applicationEventMulticaster类型为ApplicationEventMulticaster的bean，则将这个bean作为事件广播器</span><br><span class="line">    if (beanFactory.containsLocalBean(APPLICATION_EVENT_MULTICASTER_BEAN_NAME)) &#123;</span><br><span class="line">        this.applicationEventMulticaster &#x3D;</span><br><span class="line">                beanFactory.getBean(APPLICATION_EVENT_MULTICASTER_BEAN_NAME, ApplicationEventMulticaster.class);</span><br><span class="line">        if (logger.isTraceEnabled()) &#123;</span><br><span class="line">            logger.trace(&quot;Using ApplicationEventMulticaster [&quot; + this.applicationEventMulticaster + &quot;]&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        &#x2F;&#x2F; 否则新建一个SimpleApplicationEventMulticaster作为默认的事件广播器</span><br><span class="line">        this.applicationEventMulticaster &#x3D; new SimpleApplicationEventMulticaster(beanFactory);</span><br><span class="line">        beanFactory.registerSingleton(APPLICATION_EVENT_MULTICASTER_BEAN_NAME, this.applicationEventMulticaster);</span><br><span class="line">        if (logger.isTraceEnabled()) &#123;</span><br><span class="line">            logger.trace(&quot;No &#39;&quot; + APPLICATION_EVENT_MULTICASTER_BEAN_NAME + &quot;&#39; bean, using &quot; +</span><br><span class="line">                    &quot;[&quot; + this.applicationEventMulticaster.getClass().getSimpleName() + &quot;]&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; 注册监听器</span><br><span class="line">protected void registerListeners() &#123;</span><br><span class="line">    &#x2F;&#x2F; Register statically specified listeners first.</span><br><span class="line">    &#x2F;&#x2F; 把提前存储好的监听器添加到监听器容器中</span><br><span class="line">    for (ApplicationListener&lt;?&gt; listener : getApplicationListeners()) &#123;</span><br><span class="line">        getApplicationEventMulticaster().addApplicationListener(listener);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Do not initialize FactoryBeans here: We need to leave all regular beans</span><br><span class="line">    &#x2F;&#x2F; uninitialized to let post-processors apply to them!</span><br><span class="line">    &#x2F;&#x2F; 获取类型是ApplicationListener的beanName集合，此处不会去实例化bean</span><br><span class="line">    String[] listenerBeanNames &#x3D; getBeanNamesForType(ApplicationListener.class, true, false);</span><br><span class="line">    for (String listenerBeanName : listenerBeanNames) &#123;</span><br><span class="line">        getApplicationEventMulticaster().addApplicationListenerBean(listenerBeanName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; Publish early application events now that we finally have a multicaster...</span><br><span class="line">    Set&lt;ApplicationEvent&gt; earlyEventsToProcess &#x3D; this.earlyApplicationEvents;</span><br><span class="line">    this.earlyApplicationEvents &#x3D; null;</span><br><span class="line">    &#x2F;&#x2F; 如果存在earlyEventsToProcess，提前处理这些事件</span><br><span class="line">    if (earlyEventsToProcess !&#x3D; null) &#123;</span><br><span class="line">        for (ApplicationEvent earlyEvent : earlyEventsToProcess) &#123;</span><br><span class="line">            getApplicationEventMulticaster().multicastEvent(earlyEvent);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>经过前面的分析，我们知道了事件广播器<code>applicationEventMulticaster</code>如何被构建，下面我们分析事件的广播过程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void multicastEvent(final ApplicationEvent event, @Nullable ResolvableType eventType) &#123;</span><br><span class="line">    ResolvableType type &#x3D; (eventType !&#x3D; null ? eventType : resolveDefaultEventType(event));</span><br><span class="line">    &#x2F;&#x2F; 根据event类型获取适合的监听器</span><br><span class="line">    for (final ApplicationListener&lt;?&gt; listener : getApplicationListeners(event, type)) &#123;</span><br><span class="line">        &#x2F;&#x2F; 获取SimpleApplicationEventMulticaster中的线程执行器，如果存在线程执行器则在新线程中异步执行，否则直接同步执行监听器中的方法</span><br><span class="line">        Executor executor &#x3D; getTaskExecutor();</span><br><span class="line">        if (executor !&#x3D; null) &#123;</span><br><span class="line">            executor.execute(() -&gt; invokeListener(listener, event));</span><br><span class="line">        &#125;</span><br><span class="line">        else &#123;</span><br><span class="line">            invokeListener(listener, event);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">protected void invokeListener(ApplicationListener&lt;?&gt; listener, ApplicationEvent event) &#123;</span><br><span class="line">    &#x2F;&#x2F; 如果存在ErrorHandler，调用监听器方法如果抛出异常则调用ErrorHandler来处理异常。否则直接调用监听器方法</span><br><span class="line">    ErrorHandler errorHandler &#x3D; getErrorHandler();</span><br><span class="line">    if (errorHandler !&#x3D; null) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            doInvokeListener(listener, event);</span><br><span class="line">        &#125;</span><br><span class="line">        catch (Throwable err) &#123;</span><br><span class="line">            errorHandler.handleError(err);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        doInvokeListener(listener, event);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>经过上面的分析，我们知道了Spring如何发送并响应事件。下面我们来分析如何使Spring能够异步响应事件。</p>
+<h2 id="异步响应event">异步响应Event</h2>
+<p>默认情况下，Spring是同步执行Event的响应方法的。如果响应方法的执行时间很长会阻塞发送事件的方法，因此很多场景下，我们需要让事件的响应异步化。</p>
+<p>为了更直观地说明Event的响应默认是同步的，我们修改一下<code>EventDemoListener</code>并增加一个<code>EventDemoListener2</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">public class EventDemoListener implements ApplicationListener&lt;EventDemo&gt; &#123;</span><br><span class="line">    Logger logger &#x3D; LoggerFactory.getLogger(EventDemoListener.class);</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onApplicationEvent(EventDemo event) &#123;</span><br><span class="line">        logger.info(&quot;receiver &quot; + event.getMessage());</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(1000);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Component</span><br><span class="line">public class EventDemoListener2 implements ApplicationListener&lt;EventDemo&gt; &#123;</span><br><span class="line">    Logger logger &#x3D; LoggerFactory.getLogger(EventDemoListener2.class);</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onApplicationEvent(EventDemo event) &#123;</span><br><span class="line">        logger.info(&quot;receiver 2 &quot; + event.getMessage());</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(1000);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行结果如下：</p>
+<p><a href="https://blog.wangqi.love/articles/Java/media/sync_result.png" target="_blank" rel="noopener"><img src="https://blog.wangqi.love/articles/Java/media/sync_result.png" alt="sync_result"></a></p>
+<p>执行结果显示：<code>EventDemoListener2</code>和<code>EventDemoListener</code>的执行间隔1秒，<code>EventDemoListener2</code>的执行和程序的结束也间隔1秒。结果表示我们的响应程序是同步执行的，一个响应程序的执行会阻塞下一个响应程序的执行。</p>
+<h3 id="自定义simpleapplicationeventmulticaster">自定义SimpleApplicationEventMulticaster</h3>
+<p>通过前面的代码分析，我们发现如果<code>SimpleApplicationEventMulticaster</code>中的<code>taskExecutor</code>如果不为null，将在<code>taskExecutor</code>中异步执行响应程序。<code>applicationEventMulticaster</code>的新建在<code>initApplicationEventMulticaster</code>方法中，默认情况下它会新建一个<code>SimpleApplicationEventMulticaster</code>，其中的<code>taskExecutor</code>为null。因此想要<code>taskExecutor</code>不为null，我们可以自己手动创建一个<code>SimpleApplicationEventMulticaster</code>然后设置一个<code>taskExecutor</code>。</p>
+<p>修改<code>Config</code>类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@ComponentScan(&quot;love.wangqi&quot;)</span><br><span class="line">public class Config &#123;</span><br><span class="line">    @Bean</span><br><span class="line">    public SimpleAsyncTaskExecutor simpleAsyncTaskExecutor() &#123;</span><br><span class="line">        return new SimpleAsyncTaskExecutor();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    public SimpleApplicationEventMulticaster applicationEventMulticaster() &#123;</span><br><span class="line">        SimpleApplicationEventMulticaster simpleApplicationEventMulticaster &#x3D; new SimpleApplicationEventMulticaster();</span><br><span class="line">        simpleApplicationEventMulticaster.setTaskExecutor(simpleAsyncTaskExecutor());</span><br><span class="line">        return simpleApplicationEventMulticaster;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此时再次执行程序，执行结果如下：</p>
+<p><a href="https://blog.wangqi.love/articles/Java/media/async_result.png" target="_blank" rel="noopener"><img src="https://blog.wangqi.love/articles/Java/media/async_result.png" alt="async_result"></a></p>
+<p>可以看到，<code>EventDemoListener</code>和<code>EventDemoListener2</code>是同时执行的，同时它们的执行没有阻塞主程序的执行。事件的响应做到了异步化。</p>
+<h3 id="async">@Async</h3>
+<p>前面我们看到，通过手动新建<code>SimpleApplicationEventMulticaster</code>并设置<code>TaskExecutor</code>可以使所有的事件响应程序都在另外的线程中执行，不阻塞主程序的执行。不过这样也带来一个问题，那就是所有的事件响应程序都异步化了，某些场景下我们希望某些关系密切的响应程序可以同步执行另外一些响应程序异步执行。这种场景下，我们就不能简单地新建<code>SimpleApplicationEventMulticaster</code>并设置<code>TaskExecutor</code>。</p>
+<p>Spring中提供了一个<code>@Async</code>注解，可以将加上这个注解的方法在另外的线程中执行。通过这个注解我们可以将指定的事件响应程序异步化。</p>
+<p>我们修改<code>EventDemoListener</code>，在<code>onApplicationEvent</code>中加上<code>@Async</code>注解；同时修改<code>Config</code>类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">public class EventDemoListener implements ApplicationListener&lt;EventDemo&gt; &#123;</span><br><span class="line">    Logger logger &#x3D; LoggerFactory.getLogger(EventDemoListener.class);</span><br><span class="line"></span><br><span class="line">    @Async</span><br><span class="line">    @Override</span><br><span class="line">    public void onApplicationEvent(EventDemo event) &#123;</span><br><span class="line">        logger.info(&quot;receiver &quot; + event.getMessage());</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(1000);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">@ComponentScan(&quot;love.wangqi&quot;)</span><br><span class="line">@EnableAsync</span><br><span class="line">public class Config &#123;</span><br><span class="line">    @Bean</span><br><span class="line">    public SimpleAsyncTaskExecutor simpleAsyncTaskExecutor() &#123;</span><br><span class="line">        return new SimpleAsyncTaskExecutor();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意<code>Config</code>类中需要加上<code>@EnableAsync</code>注释，并定义<code>TaskExecutor</code>。</p>
+<p>执行结果如下：</p>
+<p><a href="https://blog.wangqi.love/articles/Java/media/async_result_2.png" target="_blank" rel="noopener"><img src="https://blog.wangqi.love/articles/Java/media/async_result_2.png" alt="async_result_2"></a></p>
+<p>我们看到，<code>EventDemoListener</code>是在另外的线程中执行的，但是<code>EventDemoListener2</code>仍然在主线程中执行，因此<code>EventDemoListener2</code>阻塞了主线程的执行。</p>
+<h4 id="async原理">@Async原理</h4>
+<p><code>@Async</code>注解可以将方法异步化，下面我们来看看它的原理是什么。</p>
+<p>我们在<code>Config</code>类中添加了<code>@EnableAsync</code>注释。<code>@EnableAsync</code>注释引入<code>AsyncConfigurationSelector</code>类，<code>AsyncConfigurationSelector</code>类导入<code>ProxyAsyncConfiguration</code>类，<code>ProxyAsyncConfiguration</code>类新建过程中会新建<code>AsyncAnnotationBeanPostProcessor</code>。</p>
+<p><code>AsyncAnnotationBeanPostProcessor</code>类继承了<code>BeanPostProcessor</code>，当每个Bean新建完成后会调用<code>AsyncAnnotationBeanPostProcessor</code>的<code>postProcessAfterInitialization</code>方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public Object postProcessAfterInitialization(Object bean, String beanName) &#123;</span><br><span class="line">    if (this.advisor &#x3D;&#x3D; null || bean instanceof AopInfrastructureBean) &#123;</span><br><span class="line">        &#x2F;&#x2F; Ignore AOP infrastructure such as scoped proxies.</span><br><span class="line">        return bean;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (bean instanceof Advised) &#123;</span><br><span class="line">        Advised advised &#x3D; (Advised) bean;</span><br><span class="line">        if (!advised.isFrozen() &amp;&amp; isEligible(AopUtils.getTargetClass(bean))) &#123;</span><br><span class="line">            &#x2F;&#x2F; Add our local Advisor to the existing proxy&#39;s Advisor chain...</span><br><span class="line">            if (this.beforeExistingAdvisors) &#123;</span><br><span class="line">                advised.addAdvisor(0, this.advisor);</span><br><span class="line">            &#125;</span><br><span class="line">            else &#123;</span><br><span class="line">                advised.addAdvisor(this.advisor);</span><br><span class="line">            &#125;</span><br><span class="line">            return bean;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (isEligible(bean, beanName)) &#123;</span><br><span class="line">        ProxyFactory proxyFactory &#x3D; prepareProxyFactory(bean, beanName);</span><br><span class="line">        if (!proxyFactory.isProxyTargetClass()) &#123;</span><br><span class="line">            evaluateProxyInterfaces(bean.getClass(), proxyFactory);</span><br><span class="line">        &#125;</span><br><span class="line">        proxyFactory.addAdvisor(this.advisor);</span><br><span class="line">        customizeProxyFactory(proxyFactory);</span><br><span class="line">        return proxyFactory.getProxy(getProxyClassLoader());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; No proxy needed.</span><br><span class="line">    return bean;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>postProcessAfterInitialization</code>方法判断bean是否符合要求（方法上是否加了<code>@Async</code>注释），如果符合要求则对bean加上代理，代理类为<code>AnnotationAsyncExecutionInterceptor</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">@Nullable</span><br><span class="line">public Object invoke(final MethodInvocation invocation) throws Throwable &#123;</span><br><span class="line">    Class&lt;?&gt; targetClass &#x3D; (invocation.getThis() !&#x3D; null ? AopUtils.getTargetClass(invocation.getThis()) : null);</span><br><span class="line">    Method specificMethod &#x3D; ClassUtils.getMostSpecificMethod(invocation.getMethod(), targetClass);</span><br><span class="line">    final Method userDeclaredMethod &#x3D; BridgeMethodResolver.findBridgedMethod(specificMethod);</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 获取executor</span><br><span class="line">    AsyncTaskExecutor executor &#x3D; determineAsyncExecutor(userDeclaredMethod);</span><br><span class="line">    if (executor &#x3D;&#x3D; null) &#123;</span><br><span class="line">        throw new IllegalStateException(</span><br><span class="line">                &quot;No executor specified and no default executor set on AsyncExecutionInterceptor either&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 将我们真正的方法包装成一个&#96;Callable&#96;任务</span><br><span class="line">    Callable&lt;Object&gt; task &#x3D; () -&gt; &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Object result &#x3D; invocation.proceed();</span><br><span class="line">            if (result instanceof Future) &#123;</span><br><span class="line">                return ((Future&lt;?&gt;) result).get();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        catch (ExecutionException ex) &#123;</span><br><span class="line">            handleError(ex.getCause(), userDeclaredMethod, invocation.getArguments());</span><br><span class="line">        &#125;</span><br><span class="line">        catch (Throwable ex) &#123;</span><br><span class="line">            handleError(ex, userDeclaredMethod, invocation.getArguments());</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 将任务提交到&#96;executor&#96;中执行</span><br><span class="line">    return doSubmit(task, executor, invocation.getMethod().getReturnType());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用我们的方法时首先调用<code>AnnotationAsyncExecutionInterceptor</code>的<code>invoke</code>方法，<code>invoke</code>方法将我们真正的方法包装成一个<code>Callable</code>任务，将这个任务提交到<code>executor</code>中执行。由此达到了将我们的方法异步化的目的。</p>
+<h2 id="注意点">注意点</h2>
+<ol>
+<li>Spring Events 只能监听同一个 JVM 中的事件，如果需要实现跨应用的事件发布和监听则需要引入消息中间件（RabbitMQ，JMQ等）</li>
+<li>异步事件需要关注线程资源，在大并发的情况下需要自定义线程池</li>
+<li>方法只要注解了<code>@Async</code>并且开启异步即可实现异步，异步是多线程中的知识点，而event是一种设计模式（观察者模式或发布订阅模式）</li>
+</ol>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/并发和多线程/2020-03-25/" data-toggle="tooltip" data-placement="top" title="并发和多线程总结">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/Spring-Event-事件/2020-03-22/" data-toggle="tooltip" data-placement="top" title="Spring Event 事件介绍">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <br>
+
+                <!--打赏-->
+                
+                <!--打赏-->
+
+                <br>
+                <!--分享-->
+                
+                    <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                    <!--  css & js -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!--分享-->
+                <br>                       
+                
+                <!-- require APlayer -->
+                
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+
+                
+
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+  
+    <style>
+      span.toc-nav-number{
+        display: none
+      }
+    </style>
+  
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#spring-events-实现"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Spring Events 实现</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#spring事件通知原理"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Spring事件通知原理</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#异步响应event"><span class="toc-nav-number"></span> <span class="toc-nav-text">异步响应Event</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#自定义simpleapplicationeventmulticaster"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">自定义SimpleApplicationEventMulticaster</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#async"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">@Async</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#async原理"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">@Async原理</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#注意点"><span class="toc-nav-number"></span> <span class="toc-nav-text">注意点</span></a>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Spring" title="Spring">Spring</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "http://www.wangxiaohuan.com/Spring-Event-%E4%BA%8B%E4%BB%B6%E5%8E%9F%E7%90%86/2020-03-24/";
+    var disqus_url = "http://www.wangxiaohuan.com/Spring-Event-%E4%BA%8B%E4%BB%B6%E5%8E%9F%E7%90%86/2020-03-24/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/work_wxh">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/2742646782">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/wxh.work">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/xiaohuanwang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 吃素的左撇子 2022 
+                    <br>
+                    Theme by <a href="http://beantech.org" target="_blank" rel="noopener">BeanTech</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="http://www.wangxiaohuan.com">吃素的左撇子</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=xiaohuanwang&repo=hexo-theme-xiaohuanwang&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/hux-blog.min.js"></script>
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://www.wangxiaohuan.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = 'xxx';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://www.wangxiaohuan.com/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>
