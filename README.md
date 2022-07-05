@@ -2,15 +2,31 @@ git clone git@github.com:xiaohuanwang/xiaohuanwang.github.io.git ./huanBlog
 
 cd huanBlog
 
-初次安装 npm install
+初次安装
 
-hexo new xxxx
+####  npm install
 
-hexo clean
+#### hexo new xxxx
 
-hexo g
+新建一篇文章
 
-hexo d
+#### hexo clean
+
+清除缓存文件 (`db.json`) 和已生成的静态文件 (`public`)。
+
+#### hexo g  
+
+生成静态文件，命令全写 hexo generate
+
+#### hexo server
+
+启动服务器。默认情况下，访问网址为： `http://localhost:4000/`
+
+#### hexo d
+
+部署网站，命令全写 hexo deploy
+
+
 
 git pull
 
