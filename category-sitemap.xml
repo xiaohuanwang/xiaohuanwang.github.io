@@ -21,14 +21,14 @@
     </url>
 
     <url>
-        <loc>http://www.wangxiaohuan.com/categories/Java8%25E8%25B5%2584%25E6%2596%2599/</loc>
+        <loc>http://www.wangxiaohuan.com/categories/JDK%25E5%2592%258CMaven/</loc>
         <lastmod>2021-09-08T06:51:16.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://www.wangxiaohuan.com/categories/JDK%25E5%2592%258CMaven/</loc>
+        <loc>http://www.wangxiaohuan.com/categories/Java8%25E8%25B5%2584%25E6%2596%2599/</loc>
         <lastmod>2021-09-08T06:51:16.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -42,14 +42,14 @@
     </url>
 
     <url>
-        <loc>http://www.wangxiaohuan.com/categories/Mac/</loc>
+        <loc>http://www.wangxiaohuan.com/categories/%25E6%258F%2592%25E4%25BB%25B6/</loc>
         <lastmod>2021-09-08T06:51:16.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://www.wangxiaohuan.com/categories/%25E6%258F%2592%25E4%25BB%25B6/</loc>
+        <loc>http://www.wangxiaohuan.com/categories/Mac/</loc>
         <lastmod>2021-09-08T06:51:16.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -63,14 +63,14 @@
     </url>
 
     <url>
-        <loc>http://www.wangxiaohuan.com/categories/%25E5%2585%25B6%25E4%25BB%2596/</loc>
+        <loc>http://www.wangxiaohuan.com/categories/lambda-%25E8%25A1%25A8%25E8%25BE%25BE%25E5%25BC%258F/</loc>
         <lastmod>2021-09-08T06:51:16.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://www.wangxiaohuan.com/categories/lambda-%25E8%25A1%25A8%25E8%25BE%25BE%25E5%25BC%258F/</loc>
+        <loc>http://www.wangxiaohuan.com/categories/%25E5%2585%25B6%25E4%25BB%2596/</loc>
         <lastmod>2021-09-08T06:51:16.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -91,14 +91,14 @@
     </url>
 
     <url>
-        <loc>http://www.wangxiaohuan.com/categories/Redis%25E6%258C%2581%25E4%25B9%2585%25E5%258C%2596/</loc>
+        <loc>http://www.wangxiaohuan.com/categories/%25E7%25BA%25BF%25E7%25A8%258B/</loc>
         <lastmod>2021-09-08T06:51:16.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://www.wangxiaohuan.com/categories/%25E7%25BA%25BF%25E7%25A8%258B/</loc>
+        <loc>http://www.wangxiaohuan.com/categories/Redis%25E6%258C%2581%25E4%25B9%2585%25E5%258C%2596/</loc>
         <lastmod>2021-09-08T06:51:16.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -247,6 +247,20 @@
     <url>
         <loc>http://www.wangxiaohuan.com/categories/Spring-Event-%25E4%25BA%258B%25E4%25BB%25B6%25E5%258E%259F%25E7%2590%2586/</loc>
         <lastmod>2022-07-05T02:43:48.530Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://www.wangxiaohuan.com/categories/RabbitMQ-%25E4%25BB%258B%25E7%25BB%258D/</loc>
+        <lastmod>2022-07-24T08:38:56.194Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://www.wangxiaohuan.com/categories/%25E6%25B6%2588%25E6%2581%25AF%25E9%2598%259F%25E5%2588%2597%25E4%25BB%258B%25E7%25BB%258D/</loc>
+        <lastmod>2022-07-24T08:39:24.772Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
