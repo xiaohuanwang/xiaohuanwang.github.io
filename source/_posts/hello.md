@@ -1,9 +1,8 @@
-﻿---
-title: "北京这座城市有很多灯"
-catalog: true
+---
+title: 北京这座城市有很多灯
 date: 2018-01-30 14:32:28
-subtitle:
-header-img: "/img/header_img/beijing-yejing.jpg"
+index_img: http://image.wangxiaohuan.com/blog/image/202208251027795.jpg
+banner_img: http://image.wangxiaohuan.com/blog/image/202208251027795.jpg
 categories:
 - 人生感悟
 tags:
@@ -15,7 +14,7 @@ tags:
    北京的夜晚，为何那么明亮，那么灯火通明，车水马龙，流光闪耀。一条条马路上的路灯，一间间房子里的灯光。
     
    到底是何方力量，来维持这一个个的灯泡来发光，直到熄灭，暗淡无光。
-   
+
    我们也许就是一个干电池，用完了就被扔在一边。
     
    还有人就是一个充电宝，每年回家充一次电，充满了在回来。

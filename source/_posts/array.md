@@ -1,13 +1,12 @@
 ---
-title: '数据结构-数组Array'
-catalog: true
+title: 数据结构-数组Array
 date: 2019-10-22 15:29:34
-subtitle:
-header-img: "/img/header_img/array0001.jpg"
+index_img: http://image.wangxiaohuan.com/blog/image/202208251029181.png
+banner_img: http://image.wangxiaohuan.com/blog/image/202208251029181.png
 categories:
-- 数组
-tags:
 - 数据结构
+tags:
+- 数组
 ---
 
 数组时一种最常用的数据结构，下标索引从0开始。
@@ -37,7 +36,7 @@ tags:
 1. 声明数组的名字和类型。
 2. 创建数组。
 3. 初始化数组元素。
- 
+
 ```
 //完整模式
 int[] a;   //声明数组的名字和类型
