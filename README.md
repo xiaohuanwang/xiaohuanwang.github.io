@@ -1,3 +1,9 @@
+安装目录
+
+```
+cd  /usr/local/src/huanBlog
+```
+
 git clone https://github.com/xiaohuanwang/xiaohuanwang.github.io.git ./huanBlog
 
 cd huanBlog
